@@ -13,25 +13,28 @@ import NavBar from './components/NavBar/NavBar';
 import ProductCreationForm from './components/ProductCreationForm/ProductCreationForm'
 import { useSelector } from 'react-redux';
 import NotFound from './components/NotFound/NotFound';
+import ShoppingCart from './components/Cart/ShoppingCart';
 
 function App() {
 
   const loggedUser = useSelector(state => state.loggedUser)
-  if(loggedUser.email) localStorage.setItem("user", loggedUser.email)
-  console.log('Local storage user: ',localStorage.getItem("user"))
+  if (loggedUser.email) localStorage.setItem("user", loggedUser.email)
+  console.log('Local storage user: ', localStorage.getItem("user"))
 
-  const {pathname} = useLocation()
+  const { pathname } = useLocation()
 
-  if(localStorage.getItem("user") === 'santi@mail.com') {
+  if (localStorage.getItem("user") === 'santi@mail.com') {
     return (
       <div className="App">
-        {pathname === '/'?null:<NavBar/>}
+        {pathname === '/' ? null : <NavBar />}
         <Routes>
-          <Route path='/' element={<Landing/>}/>
-          <Route path='/home' element={<Home/>}/>
-          <Route path='/details/:id' element={<Details/>}/>
-          <Route path='/admin' element={<CreateCategory/>}/>
-          <Route path='*' element={<NotFound/>}/>
+          <Route path='/' element={<Landing />} />
+          <Route path='/home' element={<Home />} />
+          <Route path='/details/:id' element={<Details />} />
+          <Route path='/admin' element={<CreateCategory />} />
+          <Route path='/cart' element={<ShoppingCart />} />
+          <Route path='/creationform' element={<ProductCreationForm />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </div>
     )
@@ -39,16 +42,16 @@ function App() {
 
   return (
     <div className="App">
-      {pathname === '/'?null:<NavBar/>}
+      {pathname === '/' ? null : <NavBar />}
       <Routes>
-        <Route path='/' element={<Landing/>}/>
-        <Route path='/home' element={<Home/>}/>
-        <Route path='/details/:id' element={<Details/>}/>
-        <Route path='/admin' element={<CreateCategory/>}/>
-        <Route path='/creationform' element={<ProductCreationForm/>}/>
+        <Route path='/' element={<Landing />} />
+        <Route path='/home' element={<Home />} />
+        <Route path='/details/:id' element={<Details />} />
+        <Route path='/admin' element={<CreateCategory />} />
+        <Route path='/cart' element={<ShoppingCart />} />
         {/* <Route pathelement={<NotFound/>}/> */}
         {/* <Route path='/admin' element={<CreateCategory/>}/> */}
-        <Route path='*' element={<NotFound/>}/>
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </div>
   );
