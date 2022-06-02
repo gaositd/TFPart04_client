@@ -1,0 +1,23 @@
+.landing {
+  margin: 0;
+  margin-top: -50px;
+  width: 100vw;
+  height: 100vh;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+  
+.landingtitle {
+  font-size: 50px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  margin-top: 150px;
+  margin-right: 100px;
+}
+
+.landingLinkHome {
+  text-decoration: none;
+  font-size: 30px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
