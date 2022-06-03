@@ -10,7 +10,7 @@ export const PAGINATION = "PAGINATION";
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
-
+export const PERMISSION = "PERMISSION";
 
 export const getProducts = () => {
   return function (dispatch) {
@@ -130,5 +130,13 @@ export function signUp(user) {
         else alert('Welcome to our platform')
       })
       .catch(error => console.log('Action error in signup: ', error))
+  };
+};
+
+export function changePermission(user) {
+  return function () {
+    return axios.post("http://localhost:3001/user/changePermission", user)
+      .then(console.log('Admin permissions changed'))
+      .catch(error => console.log('Action error in changePermission: ', error))
   };
 };

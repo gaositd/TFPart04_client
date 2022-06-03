@@ -4,7 +4,6 @@ import Filters from '../Filters/Filters';
 import Search from '../Search/Search';
 import styles from './Home.module.css'
 
-
 function Home() {
 
   return (
@@ -13,10 +12,9 @@ function Home() {
         <Search />
         <Filters />
         <ProductCards />
-
       </div>
     </>
   );
 };
-  
+
 export default Home;
