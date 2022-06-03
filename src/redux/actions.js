@@ -17,7 +17,7 @@ export const getProducts = () => {
     return axios.get(`http://localhost:3001/product/all`)
       // return axios.get(`/product/all`)
       .then(resp => dispatch({ type: GET_PRODUCTS, payload: resp.data }))
-      .catch(error => alert(error))
+      .catch(error => console.log('Action error in getProducts: ', error))
   }
 }
 
@@ -26,7 +26,7 @@ export const getProductById = (id) => {
     return axios.get(`http://localhost:3001/product/${id}`)
       // return axios.get(`/product/${id}`)
       .then(resp => dispatch({ type: GET_PRODUCT_ID, payload: resp.data }))
-      .catch(error => alert(error))
+      .catch(error => console.log('Action error in getProductById: ', error))
   }
   // return function(dispatch){
   //   return axios.get(`http://localhost:3001/*BACK ROUTE PENDING*/${id}`)
@@ -40,7 +40,7 @@ export function byName(name) {
     return axios.get(`http://localhost:3001/product/name?name=${name}`)
       // return axios.get(`/product/name?name=${name}`)
       .then(resp => dispatch({ type: BY_NAME, payload: resp.data }))
-      .catch(error => alert(error))
+      .catch(error => console.log('Action error in byName: ', error))
   }
 }
 
@@ -63,7 +63,7 @@ export function createCategory(category) {
     return axios.post("http://localhost:3001/category", category)
       // return axios.post("/category", category)
       .then(alert('Category created successfully!'))
-      .catch(error => console.log('El error en cuestion: ', error))
+      .catch(error => console.log('Action error in createCategory: ', error))
   };
 };
 
@@ -72,7 +72,7 @@ export const getCategories = () => {
     return axios.get(`http://localhost:3001/category`)
       // return axios.get(`/category`)
       .then(resp => dispatch({ type: GET_CATEGORIES, payload: resp.data }))
-      .catch(error => alert(error))
+      .catch(error => console('Action error in getCategories: ', error))
   }
 }
 
@@ -103,7 +103,7 @@ export function createProduct(product) {
           }
         })
     } catch (err) {
-      alert(err.message)
+      console.log('Action error in createProduct: ', err.message)
     };
   };
 };
@@ -112,7 +112,7 @@ export function login(user) {
   return function (dispatch) {
     return axios.post("http://localhost:3001/user/login", user)
       .then(resp => dispatch({ type: LOGIN, payload: resp.data }))
-      .catch(error => console.log('El error en cuestion: ', error))
+      .catch(error => console.log('Action error in login: ', error))
   };
 };
 
@@ -126,10 +126,9 @@ export function signUp(user) {
   return function () {
     return axios.post("http://localhost:3001/user/signup", user)
       .then(resp => {
-        console.log(resp)
         if (typeof (resp.data) === 'string') alert(resp.data)
         else alert('Welcome to our platform')
       })
-      .catch(error => console.log('El error en cuestion: ', error))
+      .catch(error => console.log('Action error in signup: ', error))
   };
 };

@@ -19,7 +19,6 @@ function App() {
 
   const loggedUser = useSelector(state => state.loggedUser)
   if (loggedUser.email) localStorage.setItem("user", loggedUser.email)
-  console.log('Local storage user: ', localStorage.getItem("user"))
 
   const { pathname } = useLocation()
 

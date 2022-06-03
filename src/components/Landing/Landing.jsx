@@ -35,7 +35,6 @@ function Landing() {
   function showSignup() {
     setSign('signup')
   }
-  console.log('Logged user: ',localStorage.user)
 
   return (
     <div className="grid grid-cols-3 gap-4 w-full h-screen">

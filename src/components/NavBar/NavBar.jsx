@@ -18,18 +18,14 @@ export default function NavBarBro() {
   ]
 
   function setActive(e) {
-    console.log(e.target.key)
     navigation = navigation.map(object => {
       if (object.name === e.target.key) {
         // 👇️ change value of name property
-        console.log('El que tiene que ser true: ',object)
-        return {...object, current: 'true'};
+        return { ...object, current: 'true' };
       } else {
-        console.log('Los que tienen que ser false: ',object)
-        return {...object, current: 'false'}
+        return { ...object, current: 'false' }
       }
     });
-    console.log('Navi: ',navigation)
   }
 
   return (
