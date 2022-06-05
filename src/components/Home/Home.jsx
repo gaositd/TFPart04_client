@@ -2,7 +2,8 @@ import React from 'react';
 import ProductCards from '../ProductCards/ProductCards';
 import Filters from '../Filters/Filters';
 import Search from '../Search/Search';
-import styles from './Home.module.css'
+import styles from './Home.module.css';
+import LeaveReview from '../LeaveReview/LeaveReview';
 
 
 function Home() {
@@ -13,10 +14,10 @@ function Home() {
         <Search />
         <Filters />
         <ProductCards />
-
+        <LeaveReview />
       </div>
     </>
   );
 };
-  
+
 export default Home;
