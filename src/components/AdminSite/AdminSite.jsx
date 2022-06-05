@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { changePermission } from '../../redux/actions';
 import CreateCategory from '../CreateCategory/CreateCategory';
 import styles from './AdminSite.module.css';
 
@@ -8,9 +9,6 @@ export default function AdminSite() {
   const dispatch = useDispatch()
 
   const users = useSelector(state => state.users)
-  console.log('users en state: ', users.map(u => {
-    console.log('mi user 1', u)
-  }))
 
   const getProducts = () => {
     return function (dispatch) {
@@ -20,9 +18,19 @@ export default function AdminSite() {
     }
   }
 
+  function handlePermission(e) {
+    e.preventDefault()
+    console.log(e)
+    if (e.target.name === 'Admin') {
+      dispatch(changePermission({ email: e.target.id, usertype: 'User' }))
+    } else {
+      dispatch(changePermission({ email: e.target.id, usertype: 'Admin' }))
+    }
+  }
+
   return (
     <div>
-      <button onClick={() => dispatch(getProducts())}>Traeme rey</button>
+      <button onClick={() => dispatch(getProducts())}>Refresh users</button>
       <div className="overflow-x-auto w-full">
         <table className="table w-full">
           {/* <!-- head --> */}
@@ -33,10 +41,10 @@ export default function AdminSite() {
                   <input type="checkbox" className="checkbox" />
                 </label>
               </th>
+              <th>Permissions</th>
               <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
-              <th></th>
+              <th>User type</th>
+              {/* <th>Favorite Color</th> */}
             </tr>
           </thead>
           <tbody>
@@ -48,28 +56,31 @@ export default function AdminSite() {
                       <input type="checkbox" className="checkbox" />
                     </label>
                   </th>
+                  <th>
+                    <button id={u.mail} name={u.usertype} onClick={e => handlePermission(e)}>Change to {u.usertype === 'Admin' ? 'User' : 'Admin'}</button>
+                  </th>
                   <td>
                     <div className="flex items-center space-x-3">
-                      <div className="avatar">
+                      {/* <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
                           <img src="/tailwind-css-component-profile-2@56w.png" alt="Avatar Tailwind CSS Component" />
                         </div>
-                      </div>
+                      </div> */}
                       <div>
                         <div className="font-bold">{u.nickName}</div>
-                        <div className="text-sm opacity-50">United States</div>
+                        <div className="text-sm opacity-50">{u.country}</div>
                       </div>
                     </div>
                   </td>
                   <td>
-                    Zemlak, Daniel and Leannon
+                    {u.usertype}
                     <br />
                     <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
                   </td>
-                  <td>Purple</td>
-                  <th>
+                  {/* <td>Purple</td> */}
+                  {/* <th>
                     <button className="btn btn-ghost btn-xs">details</button>
-                  </th>
+                  </th> */}
                 </tr>
               })
               : <p>wuachin</p>
@@ -79,10 +90,11 @@ export default function AdminSite() {
           <tfoot>
             <tr>
               <th></th>
+              <th>Permissions</th>
               <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
-              <th></th>
+              <th>User type</th>
+              {/* <th>Favorite Color</th> */}
+              {/* <th></th> */}
             </tr>
           </tfoot>
 
