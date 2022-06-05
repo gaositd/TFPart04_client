@@ -17,7 +17,8 @@ const initialState = {
   productDet: {},
   pagination: 0,
   categories: [],
-  loggedUser: {}
+  loggedUser: {},
+  users: []
 }
 
 export function rootReducer(state = initialState, { type, payload }) {
@@ -68,6 +69,9 @@ export function rootReducer(state = initialState, { type, payload }) {
 
     case LOGOUT:
       return { ...state, loggedUser: {} }
+
+    case 'GET_USERS':
+      return {...state, users: payload}
 
     default: return state;
   }

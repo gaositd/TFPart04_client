@@ -14,6 +14,7 @@ import ProductCreationForm from './components/ProductCreationForm/ProductCreatio
 import { useSelector } from 'react-redux';
 import NotFound from './components/NotFound/NotFound';
 import ShoppingCart from './components/Cart/ShoppingCart';
+import AdminSite from './components/AdminSite/AdminSite';
 
 function App() {
 
@@ -46,10 +47,8 @@ function App() {
         <Route path='/' element={<Landing />} />
         <Route path='/home' element={<Home />} />
         <Route path='/details/:id' element={<Details />} />
-        <Route path='/admin' element={<CreateCategory />} />
         <Route path='/cart' element={<ShoppingCart />} />
-        {/* <Route pathelement={<NotFound/>}/> */}
-        {/* <Route path='/admin' element={<CreateCategory/>}/> */}
+        <Route path='/admin' element={<AdminSite />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </div>
