@@ -31,7 +31,7 @@ export default function AdminSite() {
   return (
     <div>
       <button onClick={() => dispatch(getProducts())}>Refresh users</button>
-      <div className="overflow-x-auto w-full">
+      <div className="overflow-x-auto w-full z-50">
         <table className="table w-full">
           {/* <!-- head --> */}
           <thead>
@@ -44,7 +44,6 @@ export default function AdminSite() {
               <th>Permissions</th>
               <th>Name</th>
               <th>User type</th>
-              {/* <th>Favorite Color</th> */}
             </tr>
           </thead>
           <tbody>
@@ -77,10 +76,6 @@ export default function AdminSite() {
                     <br />
                     <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
                   </td>
-                  {/* <td>Purple</td> */}
-                  {/* <th>
-                    <button className="btn btn-ghost btn-xs">details</button>
-                  </th> */}
                 </tr>
               })
               : <p>wuachin</p>
@@ -93,8 +88,6 @@ export default function AdminSite() {
               <th>Permissions</th>
               <th>Name</th>
               <th>User type</th>
-              {/* <th>Favorite Color</th> */}
-              {/* <th></th> */}
             </tr>
           </tfoot>
 
