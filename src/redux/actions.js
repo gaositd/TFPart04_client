@@ -138,10 +138,14 @@ export function signUp(user) {
 export function modifyProduct(data, id) {
   return function () {
     console.log(data)
-    return axios.put(`http://localhost:3001/product/update/${id}`, data)
+    return axios.put(`http://localhost:3001/product/update/${id}`, data, {
+      // headers: {
+      //   'Content-Type': 'multipart/form-data'
+      // }
+    })
       .then(resp => {
         console.log(resp)
       })
-      .catch(error => console.log('El error en cuestion: ', error))
+      .catch(error => console.log('El error en cuestion: ', error.message))
   };
 };

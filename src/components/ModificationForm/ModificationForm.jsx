@@ -49,11 +49,18 @@ function ModificationForm() {
 
     const handleInputChange = function (e) {
         let data;
+        if (e.target.name === 'image') {
+            // data = e.target.files[0];
+        }
         if (e.target.name === 'ranking') {
             data = Number(e.target.value)
         }
         if (e.target.name === 'stock') {
             if (/^[0-9]{0,2}$/.test(e.target.value)) {
+                setErrors({
+                    ...errors,
+                    stock: null
+                })
                 data = Number(e.target.value)
             }
         }
@@ -61,22 +68,13 @@ function ModificationForm() {
             if (e.target.value.length >= 4) {
                 if ((/^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{2})?$/.test(e.target.value))) {
                     data = parseFloat(e.target.value);
-                } else {
-                    // setErrors(validate({
-                    //     ...input,
-                    //     [e.target.name]: e.target.value
-                    // }))
                 }
             }
         }
         setInput({
             ...input,
-            [e.target.name]: (data === 0 || data) ? data : e.target.value
+            [e.target.name]: ((data === 0) || data) ? data : e.target.value
         });
-        // setErrors(validate({
-        //     ...input,
-        //     [e.target.name]: (data === 0 || data) ? data : e.target.value
-        // }));
     };
 
     const handleCheckboxChange = function (e) {
@@ -90,10 +88,6 @@ function ModificationForm() {
                 ...input,
                 categories: [...input.categories, e.target.value]
             });
-            // setErrors(validate({
-            //     ...input,
-            //     categories: [...input.categories, e.target.value]
-            // }));
         };
     };
 
@@ -120,26 +114,27 @@ function ModificationForm() {
                     })
                 }
                 try {
+                    console.log(input)
                     dispatch(modifyProduct(input, product.id))
                     // e.target.reset();
                 } catch (err) {
                     console.log(err.message);
                 }
             } else {
-                console.log('No changes made')
+                alert('No changes made on the course')
             }
         }
     };
-    console.log(errors);
-    return (
-        <div class="grid grid-cols-2 justify-items-center">
 
-            <div class="card w-[25rem] bg-base-100 shadow-xl justify-center items-center">
+    return (
+        <div className="grid grid-cols-2 justify-items-center">
+
+            <div className="card w-[25rem] bg-base-100 shadow-xl justify-center items-center">
                 <span className="font-bold pt-3 text-lg">Current product data:</span>
-                <figure class="px-10 pt-3 w-[20rem]">
-                    <img src={imageName} alt={product.name} class="rounded-xl" />
+                <figure className="px-10 pt-3 w-[20rem]">
+                    <img src={imageName} alt={product.name} className="rounded-xl" />
                 </figure>
-                <div class="card-body items-center text-center">
+                <div className="card-body items-center text-center">
                     <div><span className="font-bold">Course name: </span>{product.name}</div>
                     <div><span className="font-bold">Description: </span>{product.description}</div>
                     <div><span className="font-bold">Ranking: </span>{product.price}</div>
@@ -159,54 +154,55 @@ function ModificationForm() {
                         <div className="flex flex-col justify-center items-center" >
 
                             <label>Course name:</label>
-                            <div class="flex flex-row items-center justify-center indicator">
-                                <input name="name" onChange={handleInputChange} placeholder="Product's name" class="input input-bordered input-accent w-full max-w-xs" />
+                            <div className="flex flex-row items-center justify-center indicator">
+                                <input name="name" onChange={handleInputChange} placeholder="Product's name" className="input input-bordered input-accent w-full max-w-xs" />
                             </div>
-                            {errors.name && input.name ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.name}</span> : ''}<br />
+                            {errors.name && input.name ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.name}</span> : ''}<br />
 
                             <label>Description:</label>
-                            <div class="flex flex-row items-center justify-center indicator mb-2">
+                            <div className="flex flex-row items-center justify-center indicator mb-2">
                                 <textarea
-                                    class="textarea textarea-accent"
+                                    className="textarea textarea-accent"
                                     placeholder="What`s the course about"
                                     name="description"
                                     onChange={handleInputChange}
                                     rows='3'
                                     cols='40' ></textarea>
                             </div>
-                            {errors.description && input.description ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.description}</span> : ''}<br />
+                            {errors.description && input.description ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.description}</span> : ''}<br />
 
-                            <label>Image:</label>
-                            <div class="flex flex-row items-center justify-center indicator">
-                                <input name="image" onChange={handleInputChange} placeholder="URL Image" class="input input-bordered input-accent w-full max-w-xs" />
-                            </div>
-                            {errors.image && input.image ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.image}</span> : ''}<br />
+                            <label>Image</label>
+                            <label className="btn btn-secondary w-full max-w-xs cursor-pointer">
+                                Select an image from your device
+                                <input type='file' accept=".png, .jpg, .jpeg" name="image" onChange={handleInputChange} className="bg-transparent w-full max-w-xs cursor-pointer hidden" />
+                            </label>
+                            {errors.image && input.image ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.image}</span> : ''}<br />
 
                             <label>ranking:</label>
-                            <div class="flex flex-row items-center justify-center indicator">
-                                <input name="ranking" onChange={handleInputChange} placeholder="Ranking" class="input input-bordered input-accent w-full max-w-xs" />
+                            <div className="flex flex-row items-center justify-center indicator">
+                                <input name="ranking" onChange={handleInputChange} placeholder="Ranking" className="input input-bordered input-accent w-full max-w-xs" />
                             </div>
-                            {errors.ranking && input.ranking ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.ranking}</span> : ''}<br />
+                            {errors.ranking && input.ranking ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.ranking}</span> : ''}<br />
 
                             <label>Created by:</label>
-                            <div class="flex flex-row items-center justify-center indicator">
-                                <input name="createBy" onChange={handleInputChange} placeholder="Created by" class="input input-bordered input-accent w-full max-w-xs" />
+                            <div className="flex flex-row items-center justify-center indicator">
+                                <input name="createBy" onChange={handleInputChange} placeholder="Created by" className="input input-bordered input-accent w-full max-w-xs" />
                             </div>
-                            {errors.createBy && input.createBy ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.createBy}</span> : ''}<br />
+                            {errors.createBy && input.createBy ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.createBy}</span> : ''}<br />
 
 
                             <label>Price:</label>
-                            <div class="flex flex-row items-center justify-center indicator">
-                                <input name="price" onChange={handleInputChange} placeholder="0.00 USD" class="input input-bordered input-accent w-full max-w-xs" />
+                            <div className="flex flex-row items-center justify-center indicator">
+                                <input name="price" onChange={handleInputChange} placeholder="0.00 USD" className="input input-bordered input-accent w-full max-w-xs" />
                             </div>
-                            {errors.price && input.price ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.price}</span> : ''}<br />
+                            {errors.price && input.price ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.price}</span> : ''}<br />
 
 
                             <label>Vacancies:</label>
-                            <div class="flex flex-row items-center justify-center indicator">
-                                <input name="stock" onChange={handleInputChange} placeholder="Stock available" class="input input-bordered input-accent w-full max-w-xs" />
+                            <div className="flex flex-row items-center justify-center indicator">
+                                <input name="stock" onChange={handleInputChange} placeholder="Stock available" className="input input-bordered input-accent w-full max-w-xs" />
                             </div>
-                            {errors.stock && input.stock ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.stock}</span> : ''}<br />
+                            {(errors.stock && input.stock) ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.stock}</span> : ''}<br />
 
                             <label>Categories:</label>
                         </div>
@@ -215,26 +211,26 @@ function ModificationForm() {
                             {allCategories ? allCategories.map(ctgry => {
                                 return (
                                     <div key={ctgry.id}>
-                                        <label class="cursor-pointer label">
-                                            <span class="label-text mr-1">{ctgry.name}</span>
+                                        <label className="cursor-pointer label">
+                                            <span className="label-text mr-1">{ctgry.name}</span>
                                             <input type='checkbox'
                                                 id={ctgry.name}
                                                 name='categories'
                                                 onChange={handleCheckboxChange}
                                                 value={JSON.stringify(
                                                     ctgry.id)}
-                                                class="checkbox checkbox-secondary" />
+                                                className="checkbox checkbox-secondary" />
                                         </label>
                                     </div>
                                 )
                             }) : 'No funca'}
                         </div>
 
-                        <button type='submit' class="btn btn-primary">
+                        <button type='submit' className="btn btn-primary">
                             Modify product
                         </button>
-                    </form>
-                </div>
+                    </form >
+                </div >
             </div >
         </div >
     )
@@ -255,8 +251,8 @@ export const validate = function (input) {
         };
     }
     if (input.ranking) {
-        if (!input.ranking || input.ranking > 5 || input.ranking < 0 || input.ranking % 1 !== 0 || typeof input.ranking !== 'number') {
-            errors.ranking = 'The ranking must be a integer between 0 and 5.';
+        if (!input.ranking || input.ranking > 5 || input.ranking <= 0 || input.ranking % 1 !== 0 || typeof input.ranking !== 'number') {
+            errors.ranking = 'The ranking must be a integer between 1 and 5.';
         };
     }
     // if (input.categories.length) {
@@ -265,27 +261,27 @@ export const validate = function (input) {
     //     }
     // 
     if (input.createBy) {
-        if (!input.createBy || input.createBy.length < 3) {
+        if (!input.createBy || input.createBy.length < 3 || typeof input.createBy !== 'string') {
             errors.createBy = 'The creator of the course is mandatory information.';
-
         } else if (/["`'#%&,:;<>=@{}~$()*+/?[\]^|]+/.test(input.createBy)) {
             errors.createBy = 'The creators name can not contain special characters.';
         };
     }
     if (input.price) {
-        if (!input.price || typeof input.price !== 'number' || input.price < 0) {
-            errors.price = 'The price of the course must be completed with the $0.00 USD format.';
+        if (!input.price || typeof input.price !== 'number' || input.price <= 0) {
+            errors.price = 'The price of the course must be completed with the $0.00 USD format and not equal to 0.';
         };
     }
     if (input.stock) {
-        if (!input.stock || typeof input.stock !== 'number') {
-            errors.stock = 'The course should have at least one vacancy and must be an interger';
+        if (!input.stock || typeof input.stock !== 'number' || input.stock === 0) {
+            errors.stock = 'The course should have at least one vacancy and must be an interger (max 99 vancancies).';
         };
     }
     if (Object.keys(errors).length) {
-        return errors
+        console.log(errors)
+        return errors;
     } else {
-        return {}
+        return {};
     }
 };
 
