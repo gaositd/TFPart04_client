@@ -10,6 +10,7 @@ export const PAGINATION = "PAGINATION";
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
+export const CREATEREVIEW = "CREATEREVIEW";
 
 
 export const getProducts = () => {
@@ -129,6 +130,17 @@ export function signUp(user) {
         console.log(resp)
         if (typeof (resp.data) === 'string') alert(resp.data)
         else alert('Welcome to our platform')
+      })
+      .catch(error => console.log('El error en cuestion: ', error))
+  };
+};
+
+export function createReview(data) {
+  return function (dispatch) {
+    return axios.post("http://localhost:3001/product/review", data)
+      .then(resp => {
+        console.log('OK', resp, data);
+        return dispatch({ type: CREATEREVIEW, payload: resp.data })
       })
       .catch(error => console.log('El error en cuestion: ', error))
   };

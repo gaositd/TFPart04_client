@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { getProductById } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
+import { createReview } from '../../redux/actions';
 
 function LeaveReview() {
+    const dispatch = useDispatch();
 
+    //CONNECT WITH REAL DATA WHEN THE ROUTE IS MODIFIED FROM BACK. CHANGE USER ID FOR USER EMAIL.
     let userData = {
         name: 'Pepe Grillo',
         id: '1'
@@ -41,8 +42,9 @@ function LeaveReview() {
             productId: product.id,
             userId: userData.id
         }
-        console.log(productData);
+        dispatch(createReview(productData));
     }
+
     return (
         <div>
             <div>
@@ -53,16 +55,16 @@ function LeaveReview() {
                     <div>
                         <form onSubmit={handleSubmit} className='mt-1'>
                             <label className='font-semibold'>{`¡${userData.name}, let the others know what do you think about the ${product.name} course and rate it!`}</label><br />
-                            <textarea placeholder="Type here" class="input input-bordered input-primary w-full max-w-xs mt-2" name='description' onChange={handleChange}></textarea>
-                            <div class="rating">
-                                <input type="radio" name="ranking" class="mask mask-star-2 bg-accent" onChange={handleChange} value="1" />
-                                <input type="radio" name="ranking" class="mask mask-star-2 bg-accent" onChange={handleChange} value="2" />
-                                <input type="radio" name="ranking" class="mask mask-star-2 bg-accent" onChange={handleChange} value="3" defaultChecked />
-                                <input type="radio" name="ranking" class="mask mask-star-2 bg-accent" onChange={handleChange} value="4" />
-                                <input type="radio" name="ranking" class="mask mask-star-2 bg-accent" onChange={handleChange} value="5" />
+                            <textarea placeholder="Type here" className="input input-bordered input-primary w-full max-w-xs mt-2" name='description' onChange={handleChange}></textarea>
+                            <div className="rating">
+                                <input type="radio" name="ranking" className="mask mask-star-2 bg-accent" onChange={handleChange} value="1" />
+                                <input type="radio" name="ranking" className="mask mask-star-2 bg-accent" onChange={handleChange} value="2" />
+                                <input type="radio" name="ranking" className="mask mask-star-2 bg-accent" onChange={handleChange} value="3" defaultChecked />
+                                <input type="radio" name="ranking" className="mask mask-star-2 bg-accent" onChange={handleChange} value="4" />
+                                <input type="radio" name="ranking" className="mask mask-star-2 bg-accent" onChange={handleChange} value="5" />
                             </div>
                             <div className="flex justify-end mt-4">
-                                <button type='submit' class="btn gap-2 btn-sm btn-secondary">
+                                <button type='submit' className="btn gap-2 btn-sm btn-secondary">
                                     Submit review
                                 </button>
                             </div>
