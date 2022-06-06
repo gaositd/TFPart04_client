@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../../../redux/actions';
-import { validate } from './validate';
+import { validateLogin } from './validateLogin';
 import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
@@ -12,7 +12,7 @@ export default function Login() {
   const [errors, setErrors] = useState('')
 
   function loginChange(e) {
-    setErrors(validate({ ...userLogin, [e.target.name]: e.target.value }))
+    setErrors(validateLogin({ ...userLogin, [e.target.name]: e.target.value }))
     setUserLogin({ ...userLogin, [e.target.name]: e.target.value })
   }
 

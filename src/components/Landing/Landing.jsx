@@ -42,17 +42,13 @@ function Landing() {
         <div className="col-span-2">
           <h1 className="font-bold text-3xl p-6">CodeCamp</h1>
         </div>
-        <div className="p-16 grid justify-items-center" >
+        <div className="p-0 grid justify-items-center" >
           <NavLink to='/home'>
             <div className="box-border w-40 bg-amber-900 text-white p-2 rounded-xl">
               Enter as guest
             </div>
           </NavLink>
-          <br />
-          <br />
-          <br />
-          <br />
-          <div>
+          <div className='mt-8'>
             {sign === '' &&
             <div className='flex justify-center gap-10'>
               {!localStorage.getItem("user")?
@@ -82,7 +78,7 @@ function Landing() {
         </div>
         <br />
         <br />
-        <div className="p-16 text-xs absolute inset-x-0 bottom-0">
+        <div className="p-5 text-xs absolute inset-x-0 bottom-0">
           <p>
             © 2022 Henry Part Time 04. Copyrights belongs to humanity...
           </p>

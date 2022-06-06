@@ -1,4 +1,4 @@
-export const validate = (input) => {
+export const validateSignup = (input) => {
   let errors = '';
 
   if(!input.email || !input.password) errors = 'Must provide e-mail and password'
