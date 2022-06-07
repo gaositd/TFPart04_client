@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getCategories, getProducts, login, logout, signUp } from '../../redux/actions';
+import { getCategories, getProducts, logout } from '../../redux/actions';
 
 import bgimage from "./bg_landing.jpg";
 import Login from '../Authentication/Login';
@@ -10,7 +10,7 @@ import Signup from '../Authentication/Signup';
 function Landing() {
   const dispatch = useDispatch();
 
-  const [ sign, setSign ] = useState('')
+  const [sign, setSign] = useState('')
 
   useEffect(() => {
     dispatch(getCategories())
@@ -49,26 +49,26 @@ function Landing() {
           </NavLink>
           <div className='mt-8'>
             {sign === '' &&
-            <div className='flex justify-center gap-10'>
-              {!localStorage.getItem("user")?
-                <button onClick={showLogin} className='box-border w-40 bg-amber-700 text-white p-2 rounded-xl'>Login</button>
-              :<button className="box-border w-40 bg-amber-500 text-white p-2 rounded-xl" onClick={handleLogout}>
-                Logout
-              </button>
-              }
-              <button onClick={showSignup} className='box-border w-40 bg-amber-700 text-white p-2 rounded-xl'>Sign Up</button>
-            </div>
+              <div className='flex justify-center gap-10'>
+                {!localStorage.getItem("user") ?
+                  <button onClick={showLogin} className='box-border w-40 bg-amber-700 text-white p-2 rounded-xl'>Login</button>
+                  : <button className="box-border w-40 bg-amber-500 text-white p-2 rounded-xl" onClick={handleLogout}>
+                    Logout
+                  </button>
+                }
+                <button onClick={showSignup} className='box-border w-40 bg-amber-700 text-white p-2 rounded-xl'>Sign Up</button>
+              </div>
             }
             {sign === 'login' &&
               <div>
-                <Login/>
+                <Login />
                 <br />
                 <button onClick={() => setSign('')} className='box-border w-20 h-10 bg-amber-600 text-xs text-white rounded-xl'>Volver</button>
               </div>
             }
             {sign === 'signup' &&
               <div>
-                <Signup/>
+                <Signup />
                 <br />
                 <button onClick={() => setSign('')} className='box-border w-20 h-10 bg-amber-600 text-xs text-white rounded-xl'>Volver</button>
               </div>
