@@ -10,6 +10,7 @@ export const PAGINATION = "PAGINATION";
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
+export const MODIFYPRODUCT = "MODIFYPRODUCT";
 
 
 export const getProducts = () => {
@@ -131,5 +132,20 @@ export function signUp(user) {
         else alert('Welcome to our platform')
       })
       .catch(error => console.log('El error en cuestion: ', error))
+  };
+};
+
+export function modifyProduct(data, id) {
+  return function () {
+    console.log(data)
+    return axios.put(`http://localhost:3001/product/update/${id}`, data, {
+      // headers: {
+      //   'Content-Type': 'multipart/form-data'
+      // }
+    })
+      .then(resp => {
+        console.log(resp)
+      })
+      .catch(error => console.log('El error en cuestion: ', error.message))
   };
 };
