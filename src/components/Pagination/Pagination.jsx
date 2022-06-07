@@ -8,21 +8,29 @@ function Pagination({ productsPerPage, totalProducts, paginate }) {
     };
     return (
         <div className="w-full justify-items-center">
-<nav className={style.container}>
+<nav className="">
             <ul className={style.pageList}>
                 {pageNumbers.map(number => {
                     return (
-                        <li
+
+                        // <div class="btn-group">
+                        //     <button class="btn">1</button>
+                        //     <button class="btn btn-active">2</button>
+                        //     <button class="btn">3</button>
+                        //     <button class="btn">4</button>
+                        // </div>
+
+                        <div
                             key={number}
-                            className={style.items}
+                            className=" btn-group"
                         >
-                            <a
+                            <button
                                 onClick={() => paginate(number)}
                                 href='#top'
-                                className={style.pages}
+                                className="btn"
                             >{number}
-                            </a>
-                        </li>
+                            </button>
+                        </div>
                     )
                 })}
             </ul>
