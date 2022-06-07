@@ -25,7 +25,6 @@ function Landing() {
   function handleLogout(e) {
     e.preventDefault()
     dispatch(logout())
-    localStorage.removeItem("user")
   }
 
   function showLogin() {

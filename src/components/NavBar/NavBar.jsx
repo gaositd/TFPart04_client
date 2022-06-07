@@ -2,31 +2,21 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { NavLink } from 'react-router-dom'
+
+let navigation = [
+  { name: 'Landing', href: '/'},
+  { name: 'Home', href: '/home'},
+  { name: 'About', href: '/about'},
+  { name: 'Cart', href: '/cart'},
+  { name: 'Admin', href: '/admin'},
+]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function NavBarBro() {
-
-  let navigation = [
-    { name: 'Landing', href: '/', current: true },
-    { name: 'Home', href: '/home', current: false },
-    { name: 'About', href: '/about', current: false },
-    { name: 'Cart', href: '/cart', current: false },
-    { name: 'Admin', href: '/admin', current: false },
-  ]
-
-  function setActive(e) {
-    navigation = navigation.map(object => {
-      if (object.name === e.target.key) {
-        // 👇️ change value of name property
-        return { ...object, current: 'true' };
-      } else {
-        return { ...object, current: 'false' }
-      }
-    });
-  }
 
   return (
     <Disclosure as="nav" className="bg-gray-800 mb-5">
@@ -61,18 +51,15 @@ export default function NavBarBro() {
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <NavLink
                         key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'px-3 py-2 rounded-md text-sm font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                        onClick={e => setActive(e)}
+                        to={item.href}
+                        className={({ isActive }) => (isActive
+                          ? 'nav-link bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'
+                          : 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium')}
                       >
                         {item.name}
-                      </a>
+                      </NavLink>
                     ))}
                   </div>
                 </div>
