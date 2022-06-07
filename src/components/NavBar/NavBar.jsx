@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux'
 let navigation = [
   { name: 'Landing', href: '/' },
   { name: 'Home', href: '/home' },
-  { name: 'About', href: '/about' },
   { name: 'Cart', href: '/cart' },
   { name: 'Admin', href: '/admin' },
 ]
