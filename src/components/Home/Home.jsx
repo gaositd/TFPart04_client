@@ -13,7 +13,6 @@ function Home() {
         <Search />
         <Filters />
         <ProductCards />
-
       </div>
     </>
   );

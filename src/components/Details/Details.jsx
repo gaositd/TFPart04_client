@@ -42,8 +42,8 @@ function Details() {
   isNaN(!starsAverageNumber) ? courseAverage = starsAverageNumber : courseAverage = 3
 
   return (
-
-    <div className=" rounded overflow-hidden border w-full lg:w-6/12 md:w-6/12 bg-white mx-3 md:mx-0 lg:mx-0">
+    <div className="grid justify-items-center">
+    <div className="grid justify-items-center rounded overflow-hidden border w-full lg:w-6/12 md:w-6/12 bg-white mx-3 md:mx-0 lg:mx-0">
       <div className="w-full flex justify-between p-3">
         <div className="flex">
         </div>
@@ -52,42 +52,47 @@ function Details() {
       <div className="px-3 pb-2">
         <div className="pt-2">
           <i className="far fa-heart cursor-pointer"></i>
-          <h1 className="text-lg text-gray-700 font-bold">{product.name}</h1>
+          <h1 className="text-xl text-orange-700 font-bold">{product.name}</h1>
+          <hr/>
         </div>
         <br></br>
-
-        <div className="text-sm mb-2 text-gray-400 cursor-pointer font-medium">Description:</div>
+      <div className="grid justify-items-start bg-gray-100 p-4 border shadow-md">
+        <div className="text-md mb-2 text-orange-700 font-bold">Description:</div>
         <div className="pt-1">
           <div className="mb-2 text-sm">
             {product.description}
           </div>
         </div>
 
-        <div className="text-sm mb-2 text-gray-400 cursor-pointer font-medium">Price:</div>
+        <div className="text-md mb-2 text-orange-700 font-bold">Price:</div>
         <div className="pt-1">
           <div className="mb-2 text-sm">
             ${product.price} USD
           </div>
         </div>
 
-        <div className="text-sm mb-2 text-gray-400 cursor-pointer font-medium">Ranking:</div>
+        <div className="text-md mb-2 text-orange-700 font-bold">Ranking:</div>
         <div className="pt-1">
           <div className="mb-2 text-sm">
             {product.ranking}
           </div>
         </div>
 
-        <div className="text-sm mb-2 text-gray-400 cursor-pointer font-medium">Stock:</div>
+        <div className="text-md mb-2 text-orange-700 font-bold">Stock:</div>
         <div className="pt-1">
           <div className="mb-2 text-sm">
             {product.stock} places
           </div>
         </div>
 
-        <div className="text-sm mb-2 text-gray-400 cursor-pointer font-medium">Categories:</div>
+        <div className="text-md mb-2 text-orange-700 font-bold">Categories:</div>
         <div className="pt-1">
           <div className="mb-2 text-sm">{product.categories}
           </div>
+        </div>
+        <div className="w-full grid justify-items-center">
+        <button className="btn btn-primary">Add To Cart</button>
+        </div>
         </div>
 
         <br></br>
@@ -162,6 +167,7 @@ function Details() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
