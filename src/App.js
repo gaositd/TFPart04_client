@@ -15,6 +15,8 @@ import { useSelector } from 'react-redux';
 import NotFound from './components/NotFound/NotFound';
 import ShoppingCart from './components/Cart/ShoppingCart';
 import AdminSite from './components/AdminSite/AdminSite';
+import Resources from './components/Resources/Resources';
+import ModificationForm from './components/ModificationForm/ModificationForm';
 
 function App() {
 
@@ -49,6 +51,9 @@ function App() {
         <Route path='/details/:id' element={<Details />} />
         <Route path='/cart' element={<ShoppingCart />} />
         <Route path='/admin' element={<AdminSite />} />
+        <Route path='/resources' element={<Resources />} />
+        <Route path='/creationform' element={<ProductCreationForm />} />
+        <Route path='/modificationForm/:id' element={<ModificationForm />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </div>

@@ -8,7 +8,9 @@ import {
   PAGINATION,
   CREATE_PRODUCT,
   LOGIN,
-  LOGOUT
+  LOGOUT,
+  CREATEREVIEW,
+  MODIFYPRODUCT
 } from "./actions"
 
 const initialState = {
@@ -60,6 +62,12 @@ export function rootReducer(state = initialState, { type, payload }) {
       }
 
     case CREATE_PRODUCT:
+      return state;
+
+    case CREATEREVIEW:
+      return state;
+
+    case MODIFYPRODUCT:
       return state
 
     case LOGIN:
@@ -74,6 +82,9 @@ export function rootReducer(state = initialState, { type, payload }) {
 
     case 'GET_USERS':
       return {...state, users: payload}
+
+    case LOGOUT:
+      return { ...state, loggedUser: {} }
 
     default: return state;
   }

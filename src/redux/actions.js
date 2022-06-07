@@ -11,6 +11,8 @@ export const CREATE_PRODUCT = "CREATE_PRODUCT";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const PERMISSION = "PERMISSION";
+export const CREATEREVIEW = "CREATEREVIEW";
+export const MODIFYPRODUCT = "MODIFYPRODUCT";
 
 export const getProducts = () => {
   return function (dispatch) {
@@ -28,11 +30,6 @@ export const getProductById = (id) => {
       .then(resp => dispatch({ type: GET_PRODUCT_ID, payload: resp.data }))
       .catch(error => console.log('Action error in getProductById: ', error))
   }
-  // return function(dispatch){
-  //   return axios.get(`http://localhost:3001/*BACK ROUTE PENDING*/${id}`)
-  //     .then(resp => dispatch({type: GET_PRODUCT_ID, payload: resp.data}))
-  //     .catch(error => alert(error))
-  // }
 }
 
 export function byName(name) {
@@ -138,5 +135,31 @@ export function changePermission(user) {
     return axios.put("http://localhost:3001/user/permission", user)
       .then(console.log('Admin permissions changed'))
       .catch(error => console.log('Action error in changePermission: ', error))
+  };
+};
+
+export function createReview(data) {
+  return function (dispatch) {
+    return axios.post("http://localhost:3001/product/review", data)
+      .then(resp => {
+        console.log('OK', resp, data);
+        return dispatch({ type: CREATEREVIEW, payload: resp.data })
+      })
+      .catch(error => console.log('El error en cuestion: ', error))
+  };
+};
+
+export function modifyProduct(data, id) {
+  return function () {
+    console.log(data)
+    return axios.put(`http://localhost:3001/product/update/${id}`, data, {
+      // headers: {
+      //   'Content-Type': 'multipart/form-data'
+      // }
+    })
+      .then(resp => {
+        console.log(resp)
+      })
+      .catch(error => console.log('El error en cuestion: ', error.message))
   };
 };
