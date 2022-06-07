@@ -9,6 +9,7 @@ import {
   CREATE_PRODUCT,
   LOGIN,
   LOGOUT,
+  CREATEREVIEW,
   MODIFYPRODUCT
 } from "./actions"
 
@@ -60,7 +61,10 @@ export function rootReducer(state = initialState, { type, payload }) {
       }
 
     case CREATE_PRODUCT:
-      return state
+      return state;
+
+    case CREATEREVIEW:
+      return state;
 
     case MODIFYPRODUCT:
       return state
