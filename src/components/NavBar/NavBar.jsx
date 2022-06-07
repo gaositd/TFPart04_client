@@ -3,13 +3,15 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { NavLink } from 'react-router-dom'
+import { logout } from '../../redux/actions'
+import { useDispatch } from 'react-redux'
 
 let navigation = [
-  { name: 'Landing', href: '/'},
-  { name: 'Home', href: '/home'},
-  { name: 'About', href: '/about'},
-  { name: 'Cart', href: '/cart'},
-  { name: 'Admin', href: '/admin'},
+  { name: 'Landing', href: '/' },
+  { name: 'Home', href: '/home' },
+  { name: 'About', href: '/about' },
+  { name: 'Cart', href: '/cart' },
+  { name: 'Admin', href: '/admin' },
 ]
 
 function classNames(...classes) {
@@ -17,6 +19,7 @@ function classNames(...classes) {
 }
 
 export default function NavBarBro() {
+  const dispatch = useDispatch();
 
   return (
     <Disclosure as="nav" className="bg-gray-800 mb-5">
@@ -97,23 +100,25 @@ export default function NavBarBro() {
                     <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
-                          <a className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}>
+                          <button className={classNames(active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-sm text-gray-700')}>
                             Your Profile
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}>
+                          <button className={classNames(active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-sm text-gray-700')}>
                             Settings
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}>
+                          <button className={classNames(active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-sm text-gray-700')}
+                            onClick={() => dispatch(logout())}
+                          >
                             Sign out
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                     </Menu.Items>
