@@ -9,7 +9,8 @@ import {
   CREATE_PRODUCT,
   LOGIN,
   LOGOUT,
-  CREATEREVIEW
+  CREATEREVIEW,
+  MODIFYPRODUCT
 } from "./actions"
 
 const initialState = {
@@ -64,6 +65,9 @@ export function rootReducer(state = initialState, { type, payload }) {
 
     case CREATEREVIEW:
       return state;
+
+    case MODIFYPRODUCT:
+      return state
 
     case LOGIN:
       if (Object.keys(payload).length) alert('Successfull login!')

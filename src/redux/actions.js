@@ -11,6 +11,7 @@ export const CREATE_PRODUCT = "CREATE_PRODUCT";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const CREATEREVIEW = "CREATEREVIEW";
+export const MODIFYPRODUCT = "MODIFYPRODUCT";
 
 
 export const getProducts = () => {
@@ -143,5 +144,20 @@ export function createReview(data) {
         return dispatch({ type: CREATEREVIEW, payload: resp.data })
       })
       .catch(error => console.log('El error en cuestion: ', error))
+  }
+}
+
+export function modifyProduct(data, id) {
+  return function () {
+    console.log(data)
+    return axios.put(`http://localhost:3001/product/update/${id}`, data, {
+      // headers: {
+      //   'Content-Type': 'multipart/form-data'
+      // }
+    })
+      .then(resp => {
+        console.log(resp)
+      })
+      .catch(error => console.log('El error en cuestion: ', error.message))
   };
 };
