@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 import { getCategories, getProducts, login, logout, signUp } from '../../redux/actions';
 
 import bgimage from "./bg_landing.jpg";
-import Login from './Authentication/Login';
-import Signup from './Authentication/Signup';
+import Login from '../Authentication/Login';
+import Signup from '../Authentication/Signup';
 
 function Landing() {
   const dispatch = useDispatch();
