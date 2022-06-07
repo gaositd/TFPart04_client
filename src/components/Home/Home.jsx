@@ -5,7 +5,6 @@ import Search from '../Search/Search';
 import styles from './Home.module.css';
 import LeaveReview from '../LeaveReview/LeaveReview';
 
-
 function Home() {
 
   return (

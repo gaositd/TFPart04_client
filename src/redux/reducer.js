@@ -19,7 +19,8 @@ const initialState = {
   productDet: {},
   pagination: 0,
   categories: [],
-  loggedUser: {}
+  loggedUser: '',
+  users: []
 }
 
 export function rootReducer(state = initialState, { type, payload }) {
@@ -72,7 +73,15 @@ export function rootReducer(state = initialState, { type, payload }) {
     case LOGIN:
       if (Object.keys(payload).length) alert('Successfull login!')
       if (!Object.keys(payload).length) alert('Wrong password')
-      return { ...state, loggedUser: payload }
+      localStorage.setItem("user", payload.mail)
+      return { ...state, loggedUser: payload.mail}
+
+    case LOGOUT:
+      localStorage.removeItem("user")
+      return { ...state, loggedUser: ''}
+
+    case 'GET_USERS':
+      return {...state, users: payload}
 
     case LOGOUT:
       return { ...state, loggedUser: {} }

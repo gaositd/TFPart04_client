@@ -3,38 +3,23 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon, ShoppingCartIcon } from '@heroicons/react/outline'
 import {NavLink} from 'react-router-dom'
+import { logout } from '../../redux/actions'
+import { useDispatch } from 'react-redux'
+
+let navigation = [
+  { name: 'Landing', href: '/' },
+  { name: 'Home', href: '/home' },
+  { name: 'About', href: '/about' },
+  { name: 'Cart', href: '/cart' },
+  { name: 'Admin', href: '/admin' },
+]
 
 function classNames(...classes) {
-
- 
-
   return classes.filter(Boolean).join(' ')
 }
 
 export default function NavBarBro() {
-
-  let navigation = [
-    { name: 'Landing', href: '/', current: false },
-    { name: 'Home', href: '/home', current: false },
-    { name: 'About', href: '/about', current: false },
-    { name: 'Admin', href: '/admin', current: false },
-    { name: 'Cart', href: '/cart', current: false },
-  ]
-
-  function setActive(e) {
-    console.log("target" + e.target.key)
-    navigation = navigation.map(object => {
-      if (object.name === e.target.key) {
-        // 👇️ change value of name property
-        console.log('El que tiene que ser true: ',object)
-        return {...object, current: true};
-      } else {
-        console.log('Los que tienen que ser false: ',object)
-        return {...object, current: false}
-      }
-    });
-    console.log('Navi: ',navigation)
-  }
+  const dispatch = useDispatch();
   let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
 
   return (
@@ -61,18 +46,15 @@ export default function NavBarBro() {
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <NavLink
                         key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current ? 'bg-secondary text-white' : 'text-black font-bold hover:bg-secondary hover:text-white',
-                          'px-3 py-2 rounded-md text-sm font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                        onClick={e => setActive(e)}
+                        to={item.href}
+                        className={({ isActive }) => (isActive
+                          ? 'nav-link bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'
+                          : 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium')}
                       >
                         {item.name}
-                      </a>
+                      </NavLink>
                     ))}
                   </div>
                 </div>
@@ -93,7 +75,7 @@ export default function NavBarBro() {
                 </NavLink>
 
                 {/* Profile dropdown */}
-                <Menu as="div" className="ml-3 relative">
+                <Menu as="div" className="ml-3 relative z-50">
                   <div>
                     <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                       <span className="sr-only">Open user menu</span>
@@ -116,32 +98,25 @@ export default function NavBarBro() {
                     <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
+                          <button className={classNames(active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-sm text-gray-700')}>
                             Your Profile
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
+                          <button className={classNames(active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-sm text-gray-700')}>
                             Settings
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                          <button className={classNames(active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-sm text-gray-700')}
+                            onClick={() => dispatch(logout())}
                           >
                             Sign out
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                     </Menu.Items>
