@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductById, modifyProduct, getCategories } from '../../redux/actions';
 import { useParams } from 'react-router-dom';
 import _ from "lodash";
+import { AdvancedImage } from '@cloudinary/react';
+import { Cloudinary } from "@cloudinary/url-gen";
+
 
 function ModificationForm() {
     const dispatch = useDispatch();
@@ -45,12 +48,12 @@ function ModificationForm() {
     });
 
 
-    const imageName = '../../img_products/' + product.image + '.jpg';
+    // const imageName = '../../img_products/' + product.image + '.jpg';
 
     const handleInputChange = function (e) {
         let data;
         if (e.target.name === 'image') {
-            // data = e.target.files[0];
+            data = e.target.files[0];
         }
         if (e.target.name === 'ranking') {
             data = Number(e.target.value)
@@ -125,14 +128,14 @@ function ModificationForm() {
             }
         }
     };
-
+    console.log(product)
     return (
         <div className="grid grid-cols-2 justify-items-center">
 
             <div className="card w-[25rem] bg-base-100 shadow-xl justify-center items-center">
                 <span className="font-bold pt-3 text-lg">Current product data:</span>
                 <figure className="px-10 pt-3 w-[20rem]">
-                    <img src={imageName} alt={product.name} className="rounded-xl" />
+                    <img src={`https://res.cloudinary.com/da42wdmjv/image/upload/v1654727380/${product.image}`} alt={product.name} />
                 </figure>
                 <div className="card-body items-center text-center">
                     <div><span className="font-bold">Course name: </span>{product.name}</div>

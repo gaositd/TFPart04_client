@@ -149,16 +149,39 @@ export function createReview(data) {
   };
 };
 
+// export function modifyProduct(data, id) {
+//   return function () {
+//     console.log(data)
+//     return axios.put(`http://localhost:3001/product/update/${id}`, data, {
+//       // headers: {
+//       //   'Content-Type': 'multipart/form-data'
+//       // }
+//     })
+//       .then(resp => {
+//         console.log(resp)
+//       })
+//       .catch(error => console.log('El error en cuestion: ', error.message))
+//   };
+// };
+
+let upload_preset = 'd9vdlmyy'
+let CloudName = 'da42wdmjv'
+
 export function modifyProduct(data, id) {
   return function () {
-    console.log(data)
-    return axios.put(`http://localhost:3001/product/update/${id}`, data, {
-      // headers: {
-      //   'Content-Type': 'multipart/form-data'
-      // }
-    })
+    const formData = new FormData();
+    formData.append('file', data.image);
+    formData.append('upload_preset', upload_preset);
+    return axios.post(`https://api.cloudinary.com/v1_1/${CloudName}/upload`, formData)
       .then(resp => {
-        console.log(resp)
+        let updatedData = {
+          ...data,
+          image: resp.data.public_id
+        }
+        axios.put(`http://localhost:3001/product/update/${id}`, updatedData)
+      })
+      .then(resp => {
+        console.log('FUNCIONANDO')
       })
       .catch(error => console.log('El error en cuestion: ', error.message))
   };
