@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import style from './Search.module.css'
 import { byName } from '../../redux/actions.js'
 
 const Search = ({ allProducts }) => {
