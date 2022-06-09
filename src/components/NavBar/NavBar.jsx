@@ -6,13 +6,13 @@ import {NavLink} from 'react-router-dom'
 import { logout } from '../../redux/actions'
 import { useDispatch } from 'react-redux'
 
-let navigation = [
-  { name: 'Landing', href: '/' },
-  { name: 'Home', href: '/home' },
-  { name: 'About', href: '/about' },
-  { name: 'Cart', href: '/cart' },
-  { name: 'Admin', href: '/admin' },
-]
+// let navigation = [
+//   { name: 'Landing', href: '/' },
+//   { name: 'Home', href: '/home' },
+//   { name: 'About', href: '/about' },
+//   { name: 'Cart', href: '/cart' },
+//   { name: 'Admin', href: '/admin' },
+// ]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -21,6 +21,17 @@ function classNames(...classes) {
 export default function NavBarBro() {
   const dispatch = useDispatch();
   let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
+
+  let navigation = [
+    { name: 'Landing', href: '/' },
+    { name: 'Home', href: '/home' },
+    { name: 'About', href: '/about' },
+    { name: 'Cart', href: '/cart' },
+  ]
+
+  if (localStorage.usertype === 'Admin') {
+    navigation.push({ name: 'Admin', href: '/admin' })
+  }
 
   return (
     <Disclosure as="nav" className="bg-primary h-20 mb-2">

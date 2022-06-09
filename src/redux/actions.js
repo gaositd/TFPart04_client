@@ -105,6 +105,17 @@ export function createProduct(product) {
   };
 };
 
+export function signUp(user) {
+  return function () {
+    return axios.post("http://localhost:3001/user/signup", user)
+      .then(resp => {
+        if (typeof (resp.data) === 'string') alert(resp.data)
+        else alert('Welcome to our platform')
+      })
+      .catch(error => console.log('Action error in signup: ', error))
+  };
+};
+
 export function login(user) {
   return function (dispatch) {
     return axios.post("http://localhost:3001/user/login", user)
@@ -118,17 +129,6 @@ export function logout() {
     return dispatch({ type: LOGOUT })
   }
 }
-
-export function signUp(user) {
-  return function () {
-    return axios.post("http://localhost:3001/user/signup", user)
-      .then(resp => {
-        if (typeof (resp.data) === 'string') alert(resp.data)
-        else alert('Welcome to our platform')
-      })
-      .catch(error => console.log('Action error in signup: ', error))
-  };
-};
 
 export function changePermission(user) {
   return function () {
