@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePermission } from '../../redux/actions';
+import { changePermission, getUsers } from '../../redux/actions';
 import CreateCategory from '../CreateCategory/CreateCategory';
 import styles from './AdminSite.module.css';
 
@@ -10,26 +10,22 @@ export default function Users() {
 
   const users = useSelector(state => state.users)
 
-  const getProducts = () => {
-    return function (dispatch) {
-      return axios.get(`http://localhost:3001/user`)
-        .then(resp => dispatch({ type: 'GET_USERS', payload: resp.data }))
-        .catch(error => console.log('Action error in getProducts: ', error))
-    }
-  }
+  useEffect(() => {
+    dispatch(getUsers())
+  }, [])
 
-  function handlePermission(e) {
-    console.log(e)
+  async function handlePermission(e) {
     if (e.target.name === 'Admin') {
-      dispatch(changePermission({ email: e.target.id, usertype: 'User' }))
+      await dispatch(changePermission({ email: e.target.id, usertype: 'User' }))
     } else {
-      dispatch(changePermission({ email: e.target.id, usertype: 'Admin' }))
+      await dispatch(changePermission({ email: e.target.id, usertype: 'Admin' }))
     }
+    dispatch(getUsers())
   }
 
   return (
     <div>
-      <button onClick={() => dispatch(getProducts())}>Refresh users</button>
+      <button onClick={() => dispatch(getUsers())}>Refresh users</button>
       <div className="overflow-x-auto w-full z-50">
         <table className="table w-full">
           {/* <!-- head --> */}

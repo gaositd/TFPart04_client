@@ -8,6 +8,7 @@ export const FILTER_BY_PRICE = "FILTER_BY_PRICE";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const PAGINATION = "PAGINATION";
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
+export const GET_USERS = "GET_USERS";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const PERMISSION = "PERMISSION";
@@ -104,6 +105,14 @@ export function createProduct(product) {
     };
   };
 };
+
+export function getUsers() {
+  return function (dispatch) {
+    return axios.get(`http://localhost:3001/user`)
+      .then(resp => dispatch({ type: GET_USERS, payload: resp.data }))
+      .catch(error => console.log('Action error in getProducts: ', error))
+  }
+}
 
 export function signUp(user) {
   return function () {

@@ -7,6 +7,7 @@ import {
   GET_CATEGORIES,
   PAGINATION,
   CREATE_PRODUCT,
+  GET_USERS,
   LOGIN,
   LOGOUT,
   CREATEREVIEW,
@@ -70,7 +71,7 @@ export function rootReducer(state = initialState, { type, payload }) {
     case MODIFYPRODUCT:
       return state
 
-    case 'GET_USERS':
+    case GET_USERS:
       return { ...state, users: payload }
 
     case LOGIN:
