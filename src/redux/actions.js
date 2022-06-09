@@ -147,6 +147,18 @@ export function changePermission(user) {
   };
 };
 
+export function deleteUser(user) {
+  return function () {
+    return axios.post("http://localhost:3001/user/deletion", user)
+      .then(resp => {
+        if(resp.data.notFound) alert(resp.data.notFound)
+        else if(resp.data.success) alert(resp.data.success)
+        else console.log('No response')
+      })
+      .catch(error => console.log('Action error in changePermission: ', error))
+  };
+};
+
 export function createReview(data) {
   return function (dispatch) {
     return axios.post("http://localhost:3001/product/review", data)
