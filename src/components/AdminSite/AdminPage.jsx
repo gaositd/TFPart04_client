@@ -4,6 +4,7 @@ import  CreateCategory  from '../CreateCategory/CreateCategory';
 import ProductCreationForm from '../ProductCreationForm/ProductCreationForm';
 import { useState } from "react";
 import Users from "./Users";
+import NotFound from "../NotFound/NotFound";
 
 
 export default function AdminPage() {
@@ -22,6 +23,10 @@ export default function AdminPage() {
     setTimeout(function(){
       setAlert(false);
   }, 1000);
+  }
+
+  if(window.location.href === 'http://localhost:3000/admin' && localStorage.usertype !== 'Admin') {
+    return <NotFound/>
   }
 
   return (

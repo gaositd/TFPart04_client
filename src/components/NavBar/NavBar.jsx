@@ -25,7 +25,6 @@ export default function NavBarBro() {
   let navigation = [
     { name: 'Landing', href: '/' },
     { name: 'Home', href: '/home' },
-    { name: 'About', href: '/about' },
     { name: 'Cart', href: '/cart' },
   ]
 
