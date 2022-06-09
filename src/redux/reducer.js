@@ -79,7 +79,7 @@ export function rootReducer(state = initialState, { type, payload }) {
       else if (payload.wrongPass) alert('Wrong password')
       else if (payload.mail) {
         alert('Successfull login!')
-        localStorage.setItem("user", payload.email)
+        localStorage.setItem("user", payload.mail)
         localStorage.setItem("usertype", payload.usertype)
         return { ...state, loggedUser: payload.mail, usertype: payload.usertype }
       } else return { ...state, loggedUser: {}, usertype: 'User' }
