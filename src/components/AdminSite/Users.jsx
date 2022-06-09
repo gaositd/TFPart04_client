@@ -5,7 +5,7 @@ import { changePermission } from '../../redux/actions';
 import CreateCategory from '../CreateCategory/CreateCategory';
 import styles from './AdminSite.module.css';
 
-export default function AdminSite() {
+export default function Users() {
   const dispatch = useDispatch()
 
   const users = useSelector(state => state.users)
@@ -19,7 +19,6 @@ export default function AdminSite() {
   }
 
   function handlePermission(e) {
-    e.preventDefault()
     console.log(e)
     if (e.target.name === 'Admin') {
       dispatch(changePermission({ email: e.target.id, usertype: 'User' }))
