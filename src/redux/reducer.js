@@ -7,6 +7,7 @@ import {
   GET_CATEGORIES,
   PAGINATION,
   CREATE_PRODUCT,
+  GET_USERS,
   LOGIN,
   LOGOUT,
   CREATEREVIEW,
@@ -70,20 +71,22 @@ export function rootReducer(state = initialState, { type, payload }) {
     case MODIFYPRODUCT:
       return state
 
+    case GET_USERS:
+      return { ...state, users: payload }
+
     case LOGIN:
-      if (Object.keys(payload).length) alert('Successfull login!')
-      if (!Object.keys(payload).length) alert('Wrong password')
-      localStorage.setItem("user", payload.mail)
-      return { ...state, loggedUser: payload.mail}
+      if (!Object.keys(payload).length) alert('No account linked to that mail')
+      else if (payload.wrongPass) alert('Wrong password')
+      else if (payload.mail) {
+        alert('Successfull login!')
+        localStorage.setItem("user", payload.mail)
+        localStorage.setItem("usertype", payload.usertype)
+        return { ...state, loggedUser: payload.mail, usertype: payload.usertype }
+      } else return { ...state, loggedUser: {}, usertype: 'User' }
 
     case LOGOUT:
       localStorage.removeItem("user")
-      return { ...state, loggedUser: ''}
-
-    case 'GET_USERS':
-      return {...state, users: payload}
-
-    case LOGOUT:
+      localStorage.removeItem("usertype")
       return { ...state, loggedUser: {} }
 
     default: return state;

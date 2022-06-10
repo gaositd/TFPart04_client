@@ -1,50 +1,55 @@
 import React from "react";
 import ProductTable from "./ProductTable";
-import  CreateCategory  from '../CreateCategory/CreateCategory';
+import CreateCategory from '../CreateCategory/CreateCategory';
 import ProductCreationForm from '../ProductCreationForm/ProductCreationForm';
 import { useState } from "react";
 import Users from "./Users";
+import NotFound from "../NotFound/NotFound";
 
 
 export default function AdminPage() {
   const [Alert, setAlert] = useState(false);
   const [Page, setPage] = useState('course');
 
-  function HandlePage(e){
-   if(e === 'course')setPage('course')
-   else if(e === 'CreateCategory')setPage('CreateCategory')
-   else if(e === 'CreateCourse')setPage('CreateCourse')
-   else if(e === 'Users')setPage('Users')
+  function HandlePage(e) {
+    if (e === 'course') setPage('course')
+    else if (e === 'CreateCategory') setPage('CreateCategory')
+    else if (e === 'CreateCourse') setPage('CreateCourse')
+    else if (e === 'Users') setPage('Users')
   }
 
-  function alerta(){
+  function alerta() {
     setAlert(true);
-    setTimeout(function(){
+    setTimeout(function () {
       setAlert(false);
-  }, 1000);
+    }, 1000);
+  }
+
+  if (window.location.href === 'http://localhost:3000/admin' && localStorage.usertype !== 'Admin') {
+    return <NotFound />
   }
 
   return (
     <div>
       <div>
         {Alert ? (<div class="alert alert-success shadow-lg">
-      <div>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="stroke-current flex-shrink-0 h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        <span>course successfully removed!</span>
-      </div>
-    </div>):(<h1>Tabla de admin</h1>)}
+          <div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="stroke-current flex-shrink-0 h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>course successfully removed!</span>
+          </div>
+        </div>) : (<h1>Tabla de admin</h1>)}
       </div>
       <div class="flex flex-row">
         {/* //------------------------- menu lateral ------------------------------------- */}
@@ -54,7 +59,7 @@ export default function AdminPage() {
               <ul class="space-y-2">
                 <li>
                   <button
-                    onClick={()=>HandlePage('course')}
+                    onClick={() => HandlePage('course')}
                     class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-grey hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <svg
@@ -71,7 +76,7 @@ export default function AdminPage() {
                 </li>
                 <li>
                   <button
-                    onClick={()=>HandlePage('CreateCategory')}
+                    onClick={() => HandlePage('CreateCategory')}
                     class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-grey hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <svg
@@ -87,7 +92,7 @@ export default function AdminPage() {
                 </li>
                 <li>
                   <button
-                    onClick={()=>HandlePage('CreateCourse')}
+                    onClick={() => HandlePage('CreateCourse')}
                     class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-grey hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <svg
@@ -107,7 +112,7 @@ export default function AdminPage() {
                 </li>
                 <li>
                   <button
-                    onClick={()=>HandlePage('Users')}
+                    onClick={() => HandlePage('Users')}
                     class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-grey hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <svg
@@ -133,28 +138,28 @@ export default function AdminPage() {
         {/* //---------------------------------------- tabla ---------------------------------- */}
         <div class="flex-auto">
           {Page === 'course' &&
-          <div>
-            <ProductTable/>
-          </div> }
+            <div>
+              <ProductTable />
+            </div>}
           {Page === 'CreateCategory' &&
-              <div>
-                <CreateCategory/>
-              </div>
-            }
-            {Page === 'CreateCourse' &&
-              <div>
-                <ProductCreationForm/>
-              </div>
-            }
-            {Page === 'Users' &&
-              <div>
-                <Users/>
-              </div>
-            }
+            <div>
+              <CreateCategory />
+            </div>
+          }
+          {Page === 'CreateCourse' &&
+            <div>
+              <ProductCreationForm />
+            </div>
+          }
+          {Page === 'Users' &&
+            <div>
+              <Users />
+            </div>
+          }
         </div>
 
 
-        </div>
+      </div>
     </div>
   );
 }
