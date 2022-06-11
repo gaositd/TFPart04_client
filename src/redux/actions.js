@@ -13,6 +13,7 @@ export const LOGOUT = "LOGOUT";
 export const PERMISSION = "PERMISSION";
 export const CREATEREVIEW = "CREATEREVIEW";
 export const MODIFYPRODUCT = "MODIFYPRODUCT";
+export const LOADINGIMAGE = "LOADINGIMAGE"
 
 export const getProducts = () => {
   return function (dispatch) {
@@ -168,7 +169,7 @@ let upload_preset = 'd9vdlmyy'
 let CloudName = 'da42wdmjv'
 
 export function modifyProduct(data, id) {
-  return function () {
+  return function (dispatch) {
     const formData = new FormData();
     formData.append('file', data.image);
     formData.append('upload_preset', upload_preset);
@@ -182,7 +183,14 @@ export function modifyProduct(data, id) {
       })
       .then(resp => {
         console.log('FUNCIONANDO')
+        return dispatch({ type: MODIFYPRODUCT, payload: resp })
       })
       .catch(error => console.log('El error en cuestion: ', error.message))
   };
 };
+
+export function loadingImage(status) {
+  return function (dispatch) {
+    return dispatch({ type: LOADINGIMAGE, payload: status })
+  }
+}

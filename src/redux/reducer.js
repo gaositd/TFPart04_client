@@ -10,7 +10,8 @@ import {
   LOGIN,
   LOGOUT,
   CREATEREVIEW,
-  MODIFYPRODUCT
+  MODIFYPRODUCT,
+  LOADINGIMAGE
 } from "./actions"
 
 const initialState = {
@@ -20,7 +21,8 @@ const initialState = {
   pagination: 0,
   categories: [],
   loggedUser: '',
-  users: []
+  users: [],
+  imageLoading: false,
 }
 
 export function rootReducer(state = initialState, { type, payload }) {
@@ -68,20 +70,29 @@ export function rootReducer(state = initialState, { type, payload }) {
       return state;
 
     case MODIFYPRODUCT:
-      return state
+      return {
+        ...state,
+        imageLoading: false
+      }
+
+    case LOADINGIMAGE:
+      return {
+        ...state,
+        imageLoading: payload
+      }
 
     case LOGIN:
       if (Object.keys(payload).length) alert('Successfull login!')
       if (!Object.keys(payload).length) alert('Wrong password')
       localStorage.setItem("user", payload.mail)
-      return { ...state, loggedUser: payload.mail}
+      return { ...state, loggedUser: payload.mail }
 
     case LOGOUT:
       localStorage.removeItem("user")
-      return { ...state, loggedUser: ''}
+      return { ...state, loggedUser: '' }
 
     case 'GET_USERS':
-      return {...state, users: payload}
+      return { ...state, users: payload }
 
     case LOGOUT:
       return { ...state, loggedUser: {} }

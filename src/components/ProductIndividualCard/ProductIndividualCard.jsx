@@ -33,10 +33,10 @@ function ProductIndividualCard({
         }
     }
 
-    const imageName = '../../img_products/' + image + '.jpg';
+    const imageName = image.includes('product') ?
+        '../../img_products/' + image + '.jpg' :
+        `https://res.cloudinary.com/da42wdmjv/image/upload/v1654727380/${image}`
 
-
-    console.log(id)
     return (
         <>
             <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-10">
