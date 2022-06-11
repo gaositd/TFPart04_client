@@ -48,8 +48,6 @@ function ModificationForm() {
         stock: null,
     });
 
-    console.log(loading)
-
     const handleInputChange = function (e) {
         let data;
         if (e.target.name === 'image') {
@@ -117,9 +115,8 @@ function ModificationForm() {
                 }
                 try {
                     dispatch(loadingImage(true));
-                    dispatch(modifyProduct(input, product.id))
+                    dispatch(modifyProduct(input, product.id));
                     e.target.reset();
-                    alert('Changes made successfully')
                 } catch (err) {
                     console.log(err.message);
                 }
@@ -131,7 +128,15 @@ function ModificationForm() {
 
     return (
         <>
-            {loading ? <p>Cargando</p>
+            {loading ?
+                <>
+                    <div class="alert shadow-lg">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span>Uploading the image, please wait until you're redirected</span>
+                        </div>
+                    </div>
+                </>
                 :
                 <div className="grid grid-cols-2 justify-items-center">
                     <div className="card w-[25rem] bg-base-100 shadow-xl justify-center items-center">
@@ -185,7 +190,7 @@ function ModificationForm() {
 
                                     <label>ranking:</label>
                                     <div className="flex flex-row items-center justify-center indicator">
-                                        <input name="ranking" onChange={handleInputChange} placeholder="Ranking" className="input input-bordered input-accent w-full max-w-xs" />
+                                        <input name="ranking" onChange={() => handleInputChange} placeholder="Ranking" className="input input-bordered input-accent w-full max-w-xs" />
                                     </div>
                                     {errors.ranking && input.ranking ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.ranking}</span> : ''}<br />
 
@@ -268,6 +273,13 @@ export const validate = function (input) {
             errors.createBy = 'The creators name can not contain special characters.';
         };
     }
+    if (input.image?.name) {
+        let extention = input.image?.name.slice(input.image.name.length - 5, input.image.name.length)
+        let reg = /(\.jpg|\.jpeg|\.png)$/i
+        if (!reg.test(extention)) {
+            errors.image = 'The image must be a jpg, jpeg or a png file.';
+        }
+    }
     if (input.price) {
         if (!input.price || typeof input.price !== 'number' || input.price <= 0) {
             errors.price = 'The price of the course must be completed with the $0.00 USD format and not equal to 0.';
@@ -279,7 +291,6 @@ export const validate = function (input) {
         };
     }
     if (Object.keys(errors).length) {
-        console.log(errors)
         return errors;
     } else {
         return {};
