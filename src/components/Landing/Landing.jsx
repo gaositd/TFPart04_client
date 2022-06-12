@@ -43,34 +43,34 @@ function Landing() {
         </div>
         <div className="p-0 grid justify-items-center" >
           <NavLink to='/home'>
-            <div className="box-border w-40 bg-amber-900 text-white p-2 rounded-xl">
-              Enter as guest
+            <div className="btn btn-accent w[150px]">
+              Enter as a guest
             </div>
           </NavLink>
           <div className='mt-8'>
             {sign === '' &&
               <div className='flex justify-center gap-10'>
                 {!localStorage.getItem("user") ?
-                  <button onClick={showLogin} className='box-border w-40 bg-amber-700 text-white p-2 rounded-xl'>Login</button>
-                  : <button className="box-border w-40 bg-amber-500 text-white p-2 rounded-xl" onClick={handleLogout}>
+                  <button onClick={showLogin} className='btn btn-secondary w-1/2 mt-4 mb-1'>Login</button>
+                  : <button className="btn btn-warning w-1/2 mt-4 mb-1" onClick={handleLogout}>
                     Logout
                   </button>
                 }
-                <button onClick={showSignup} className='box-border w-40 bg-amber-700 text-white p-2 rounded-xl'>Sign Up</button>
+                <button onClick={showSignup} className='btn btn-secondary w-1/2 mt-4 mb-1'>Sign Up</button>
               </div>
             }
             {sign === 'login' &&
               <div>
                 <Login />
                 <br />
-                <button onClick={() => setSign('')} className='box-border w-20 h-10 bg-amber-600 text-xs text-white rounded-xl'>Volver</button>
+                <button onClick={() => setSign('')} className='btn btn-accent w-1/3 mt-4 mb-1'>Volver</button>
               </div>
             }
             {sign === 'signup' &&
               <div>
                 <Signup />
                 <br />
-                <button onClick={() => setSign('')} className='box-border w-20 h-10 bg-amber-600 text-xs text-white rounded-xl'>Volver</button>
+                <button onClick={() => setSign('')} className='btn btn-primary w-1/2'>Go back</button>
               </div>
             }
           </div>
