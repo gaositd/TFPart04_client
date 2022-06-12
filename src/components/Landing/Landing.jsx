@@ -6,6 +6,7 @@ import { getCategories, getProducts, logout } from '../../redux/actions';
 import bgimage from "./bg_landing.jpg";
 import Login from '../Authentication/Login';
 import Signup from '../Authentication/Signup';
+import logo from "./Logo.png";
 
 function Landing() {
   const dispatch = useDispatch();
@@ -38,8 +39,9 @@ function Landing() {
   return (
     <div className="grid grid-cols-3 gap-4 w-full h-screen">
       <div className="col-start-1 col-end-2 relative">
-        <div className="col-span-2">
-          <h1 className="font-bold text-3xl p-6">CodeCamp</h1>
+        <div className="flex flex-row justify-center ">
+          <h1 className="font-bold text-3xl p-4 mt-2">CodeCamp</h1>
+          <img src={logo} alt='logo' className='w-16 h-16 mt-1' />
         </div>
         <div className="p-0 grid justify-items-center" >
           <NavLink to='/home'>
