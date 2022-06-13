@@ -4,11 +4,6 @@ import CartItem from './CartItem.jsx'
 
 const ShoppingCart = () => {
   
-
-  // const clearCart = () => {
-  //   localStorage.removeItem("cartProduct");
-  // }
-
   return (
     <div className=" w-full h-full grid justify-items-center ">
           <div className="w-full grid justify-items-center">

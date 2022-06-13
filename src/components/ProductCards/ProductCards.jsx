@@ -11,7 +11,7 @@ function ProductCards({ allProducts }) {
 
     //PAGINATION
     const [currentPage, setCurrentPage] = useState(1);
-    const [productsPerPage] = useState(3);
+    const [productsPerPage] = useState(6);
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const paginate = function (pageNumber) {
@@ -26,7 +26,9 @@ function ProductCards({ allProducts }) {
     }, [holeState, filteredProducts]);
 
     return (
-        <div className="grid grid-cols-3 gap-4 w-full justify-items-center">
+        <div className="grid justify-items-center">
+        <div className="grid justify-items-center bg-white w-2/3 rounded shadow-sm border p-2">
+        <div className="grid grid-cols-3 gap-4 w-2/3">
             {currentProducts ? currentProducts.map((p, i) => {
                 return (
                     <React.Fragment key={i}>
@@ -49,6 +51,8 @@ function ProductCards({ allProducts }) {
                 totalProducts={products.length}
                 paginate={paginate}
             />
+        </div>
+        </div>
         </div>
     );
 };

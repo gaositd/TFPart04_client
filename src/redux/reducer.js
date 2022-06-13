@@ -12,7 +12,8 @@ import {
   LOGOUT,
   CREATEREVIEW,
   MODIFYPRODUCT,
-  LOADINGIMAGE
+  LOADINGIMAGE,
+  CREATE_ORDER
 } from "./actions"
 
 const initialState = {
@@ -24,7 +25,8 @@ const initialState = {
   loggedUser: '',
   users: [],
   imageLoading: false,
-  usertype: ''
+  usertype: '',
+  order: []
 }
 
 export function rootReducer(state = initialState, { type, payload }) {
@@ -69,6 +71,9 @@ export function rootReducer(state = initialState, { type, payload }) {
       return state;
 
     case CREATEREVIEW:
+      return state;
+
+    case CREATE_ORDER:
       return state;
 
     case MODIFYPRODUCT:

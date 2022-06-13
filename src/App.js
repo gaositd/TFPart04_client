@@ -16,6 +16,7 @@ import Resources from './components/Resources/Resources';
 import ProductCreationForm from './components/ProductCreationForm/ProductCreationForm'
 import ModificationForm from './components/ModificationForm/ModificationForm';
 import NotFound from './components/NotFound/NotFound';
+import Footer from './components/Footer/Footer'
 
 function App() {
 
@@ -26,7 +27,10 @@ function App() {
 
   return (
     <div className="App">
-      {pathname === '/' ? null : <NavBar />}
+      {
+      pathname === '/' ? null : <NavBar />
+      }
+
       <Routes>
         <Route path='/' element={<Landing />} />
         <Route path='/home' element={<Home />} />
@@ -38,6 +42,9 @@ function App() {
         <Route path='/modificationForm/:id' element={<ModificationForm />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
+      {
+      pathname === '/' ? null : <Footer />
+      }
     </div>
   );
 }
