@@ -13,6 +13,7 @@ export const LOGOUT = "LOGOUT";
 export const PERMISSION = "PERMISSION";
 export const CREATEREVIEW = "CREATEREVIEW";
 export const MODIFYPRODUCT = "MODIFYPRODUCT";
+export const CREATE_ORDER = "CREATE_ORDER";
 
 export const getProducts = () => {
   return function (dispatch) {
@@ -161,5 +162,16 @@ export function modifyProduct(data, id) {
         console.log(resp)
       })
       .catch(error => console.log('El error en cuestion: ', error.message))
+  };
+};
+
+export function createOrder(data) {
+  return function (dispatch) {
+    return axios.post("http://localhost:3001/order", data)
+      .then(resp => {
+        console.log('OK', resp, data);
+        return dispatch({ type: CREATE_ORDER, payload: resp.data })
+      })
+      .catch(error => console.log('El error en cuestion: ', error))
   };
 };

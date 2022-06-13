@@ -10,7 +10,8 @@ import {
   LOGIN,
   LOGOUT,
   CREATEREVIEW,
-  MODIFYPRODUCT
+  MODIFYPRODUCT,
+  CREATE_ORDER
 } from "./actions"
 
 const initialState = {
@@ -20,7 +21,8 @@ const initialState = {
   pagination: 0,
   categories: [],
   loggedUser: '',
-  users: []
+  users: [],
+  order: []
 }
 
 export function rootReducer(state = initialState, { type, payload }) {
@@ -67,6 +69,9 @@ export function rootReducer(state = initialState, { type, payload }) {
     case CREATEREVIEW:
       return state;
 
+    case CREATE_ORDER:
+      return state;
+
     case MODIFYPRODUCT:
       return state
 
@@ -83,8 +88,8 @@ export function rootReducer(state = initialState, { type, payload }) {
     case 'GET_USERS':
       return {...state, users: payload}
 
-    case LOGOUT:
-      return { ...state, loggedUser: {} }
+    // case LOGOUT:
+    //   return { ...state, loggedUser: {} }
 
     default: return state;
   }

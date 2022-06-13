@@ -5,6 +5,7 @@ import { MenuIcon, XIcon, ShoppingCartIcon } from '@heroicons/react/outline'
 import {NavLink} from 'react-router-dom'
 import { logout } from '../../redux/actions'
 import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 
 let navigation = [
   { name: 'Landing', href: '/' },
@@ -20,6 +21,7 @@ function classNames(...classes) {
 export default function NavBarBro() {
   const dispatch = useDispatch();
   let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
+
 
   return (
     <Disclosure as="nav" className="bg-primary h-20 mb-2">
@@ -49,8 +51,8 @@ export default function NavBarBro() {
                         key={item.name}
                         to={item.href}
                         className={({ isActive }) => (isActive
-                          ? 'nav-link bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium'
-                          : 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium')}
+                          ? 'nav-link bg-secondary text-gray-800 px-3 py-2 rounded-md text-sm font-medium'
+                          : 'text-gray-800 hover:bg-secondary hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium')}
                       >
                         {item.name}
                       </NavLink>
@@ -61,7 +63,7 @@ export default function NavBarBro() {
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <NavLink to="/cart" className="text-white">
                 <div
-                  className="bg-secondary p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white
+                  className="bg-secondary p-1 rounded-full text-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white
                   grid grid-cols-2"
                 >
                   <div>
