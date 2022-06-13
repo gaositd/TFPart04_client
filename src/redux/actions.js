@@ -148,8 +148,6 @@ export function login(user) {
   return function (dispatch) {
     return axios.get(`http://localhost:3001/user?email=${user.email}`, user)
       .then(resp => {
-        console.log(resp.data[0]);
-        console.log(user.password);
         let loggedUser = JSON.parse(localStorage.getItem("user"));
         if (loggedUser === user.email) return alert('You are already logged in');
         if (!Object.keys(resp.data).length) return alert('No account linked to that email');
