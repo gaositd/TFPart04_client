@@ -7,67 +7,103 @@ import {
   GET_CATEGORIES,
   PAGINATION,
   CREATE_PRODUCT,
+  GET_USERS,
   LOGIN,
-  LOGOUT
+  LOGOUT,
+  CREATEREVIEW,
+  MODIFYPRODUCT,
+  LOADINGIMAGE,
+  CREATE_ORDER
 } from "./actions"
 
-const initialState={
+const initialState = {
   products: [],
   filteredProducts: [],
   productDet: {},
   pagination: 0,
   categories: [],
-  loggedUser: {}
+  loggedUser: '',
+  users: [],
+  imageLoading: false,
+  usertype: '',
+  order: []
 }
 
-export function rootReducer(state = initialState, { type, payload }){
+export function rootReducer(state = initialState, { type, payload }) {
   switch (type) {
     case GET_PRODUCTS:
-      return {...state, products: payload}
+      return { ...state, products: payload }
 
     case GET_PRODUCT_ID:
-      return {...state, productDet: payload}
+      return { ...state, productDet: payload }
 
     case BY_NAME:
-      return {...state, filteredProducts: payload}
+      return { ...state, filteredProducts: payload }
 
     case FILTER_BY_CATEGORY:
-        let filteredProd = state.products.filter(p => p.categories.includes(payload));
-        return { ...state, filteredProducts: filteredProd }
+      let filteredProd = state.products.filter(p => p.categories.includes(payload));
+      return { ...state, filteredProducts: filteredProd }
 
     case GET_CATEGORIES:
-      return {...state, categories: payload}
+      return { ...state, categories: payload }
 
     case PAGINATION:
-      return {...state, pagination: payload}
+      return { ...state, pagination: payload }
 
     case FILTER_BY_PRICE:
-    {
-      let aux = []
-      let filtProducts
-      state.products.forEach(element => aux.push(element))
-      if (payload === 'highest') {
-        filtProducts = aux.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
-      };
-      if (payload === 'lowest') {
-        filtProducts = aux.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-      };
-      if(payload === 'all') {
-        filtProducts = aux;
+      {
+        let aux = []
+        let filtProducts
+        state.products.forEach(element => aux.push(element))
+        if (payload === 'highest') {
+          filtProducts = aux.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+        };
+        if (payload === 'lowest') {
+          filtProducts = aux.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+        };
+        if (payload === 'all') {
+          filtProducts = aux;
+        }
+        return { ...state, filteredProducts: filtProducts }
       }
-      return { ...state, filteredProducts: filtProducts }
-    }
 
     case CREATE_PRODUCT:
-      return state
+      return state;
+
+    case CREATEREVIEW:
+      return state;
+
+    case CREATE_ORDER:
+      return state;
+
+    case MODIFYPRODUCT:
+      return {
+        ...state,
+        imageLoading: false
+      }
+
+    case LOADINGIMAGE:
+      return {
+        ...state,
+        imageLoading: payload
+      }
+
+    case GET_USERS:
+      return { ...state, users: payload }
 
     case LOGIN:
-      if(Object.keys(payload).length) alert('Successfull login!')
-      if(!Object.keys(payload).length) alert('Wrong password')
-      return {...state, loggedUser: payload}
+      localStorage.setItem("user", payload.email)
+      localStorage.setItem("usertype", payload.usertype)
+      return {
+        ...state,
+        loggedUser: payload.email,
+        usertype: payload.usertype
+      }
 
     case LOGOUT:
-      return {...state, loggedUser: {}}
+      localStorage.removeItem("user")
+      localStorage.removeItem("usertype")
+      return { ...state, loggedUser: {} }
 
     default: return state;
   }

@@ -1,46 +1,47 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { MenuIcon, XIcon, ShoppingCartIcon } from '@heroicons/react/outline'
+import {NavLink} from 'react-router-dom'
+import { logout } from '../../redux/actions'
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+
+// let navigation = [
+//   { name: 'Landing', href: '/' },
+//   { name: 'Home', href: '/home' },
+//   { name: 'About', href: '/about' },
+//   { name: 'Cart', href: '/cart' },
+//   { name: 'Admin', href: '/admin' },
+// ]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function NavBarBro() {
+  const dispatch = useDispatch();
+  let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
 
   let navigation = [
-    { name: 'Landing', href: '/', current: true },
-    { name: 'Home', href: '/home', current: false },
-    { name: 'About', href: '/about', current: false },
-    { name: 'Cart', href: '/cart', current: false },
-    { name: 'Admin', href: '/admin', current: false },
+    { name: 'Landing', href: '/' },
+    { name: 'Home', href: '/home' },
+    { name: 'Cart', href: '/cart' },
   ]
 
-  function setActive(e) {
-    console.log(e.target.key)
-    navigation = navigation.map(object => {
-      if (object.name === e.target.key) {
-        // 👇️ change value of name property
-        console.log('El que tiene que ser true: ',object)
-        return {...object, current: 'true'};
-      } else {
-        console.log('Los que tienen que ser false: ',object)
-        return {...object, current: 'false'}
-      }
-    });
-    console.log('Navi: ',navigation)
+  if (localStorage.usertype === 'Admin') {
+    navigation.push({ name: 'Admin', href: '/admin' })
   }
 
   return (
-    <Disclosure as="nav" className="bg-gray-800 mb-5">
+    <Disclosure as="nav" className="bg-primary h-20 mb-2">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-black hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
                     <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -51,47 +52,41 @@ export default function NavBarBro() {
               </div>
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
-                  <img
-                    className="block lg:hidden h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                    alt="Workflow"
-                  />
-                  <img
-                    className="hidden lg:block h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                    alt="Workflow"
-                  />
+                  <p className="font-bold text-white">CODECAMP</p>
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <NavLink
                         key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'px-3 py-2 rounded-md text-sm font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                        onClick={e => setActive(e)}
+                        to={item.href}
+                        className={({ isActive }) => (isActive
+                          ? 'nav-link bg-secondary text-gray-800 px-3 py-2 rounded-md text-sm font-medium'
+                          : 'text-gray-800 hover:bg-secondary hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium')}
                       >
                         {item.name}
-                      </a>
+                      </NavLink>
                     ))}
                   </div>
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
-                  type="button"
-                  className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                <NavLink to="/cart" className="text-white">
+                <div
+                  className="bg-secondary p-1 rounded-full text-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white
+                  grid grid-cols-2"
                 >
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
+                  <div>
+                  <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                  </div>
+                  <div>
+                  <p>{dataCart && dataCart.length}</p>
+                  </div>
+                </div>
+                </NavLink>
 
                 {/* Profile dropdown */}
-                <Menu as="div" className="ml-3 relative">
+                <Menu as="div" className="ml-3 relative z-50">
                   <div>
                     <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                       <span className="sr-only">Open user menu</span>
@@ -114,32 +109,25 @@ export default function NavBarBro() {
                     <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
+                          <button className={classNames(active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-sm text-gray-700')}>
                             Your Profile
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
+                          <button className={classNames(active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-sm text-gray-700')}>
                             Settings
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                          <button className={classNames(active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-sm text-gray-700')}
+                            onClick={() => dispatch(logout())}
                           >
                             Sign out
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                     </Menu.Items>

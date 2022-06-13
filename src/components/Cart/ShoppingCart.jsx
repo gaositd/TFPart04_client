@@ -4,24 +4,15 @@ import CartItem from './CartItem.jsx'
 
 const ShoppingCart = () => {
   
-
-  const clearCart = () => {
-    localStorage.removeItem("cartProduct");
-  }
-
   return (
-    <div className="grid grid-cols-2 justify-items-center">
-      <div >
-        <button className="btn btn-primary btn-xs rounded-md p-1 s-1 bg-slate-400" onClick={clearCart}>Clear Cart</button>
-          <div>
+    <div className=" w-full h-full grid justify-items-center ">
+          <div className="w-full grid justify-items-center">
           <CartItem />
           </div>
-      </div>
-          <div>
-            <p>Datos para envio</p>
-          </div>
+        {/* <button className="btn btn-primary" onClick={clearCart}>Clear Cart</button> */}
     </div>
   )
 }
 
 export default ShoppingCart
+

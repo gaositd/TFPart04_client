@@ -101,71 +101,97 @@ function ProductCreationForm() {
     };
     console.log(errors, input)
     return (
-        <div className={style.mainContainer}>
-            <h2 className={style.title}>Create your course</h2>
-            <div className={style.container}>
+        <div>
+            <h1 className="font-bold text-lg pb-5">Create your course</h1>
 
-                <form onSubmit={handleSubmit} className={style.for}>
-                    <div className={style.fromNameToGenres}>
+            <div className="flex flex-col justify-center items-center">
+                <form onSubmit={handleSubmit} >
+                    <div className="flex flex-col justify-center items-center" >
+
                         <label>Course name:</label>
-                        <input name="name" onChange={handleInputChange} placeholder="Product's name" />
-                        <span>{errors.name}</span><br />
+                        <div class="flex flex-row items-center justify-center indicator">
+                            <span class="indicator-item badge bg-warning">Required</span>
+                            <input name="name" onChange={handleInputChange} placeholder="Product's name" class="input input-bordered input-accent w-full max-w-xs" />
+                        </div>
+                        {errors.name ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.name}</span> : ''}<br />
 
                         <label>Description:</label>
-                        <textarea
-                            placeholder="What`s the course about"
-                            name="description"
-                            onChange={handleInputChange}
-                            rows='3'
-                            cols='40' />
-                        <span>{errors.description}</span><br />
+                        <div class="flex flex-row items-center justify-center indicator mb-2">
+                            <span class="indicator-item badge bg-warning">Required</span>
+                            <textarea
+                                class="textarea textarea-accent"
+                                placeholder="What`s the course about"
+                                name="description"
+                                onChange={handleInputChange}
+                                rows='3'
+                                cols='40' ></textarea>
+                        </div>
+                        {errors.description ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.description}</span> : ''}<br />
 
                         <label>Image:</label>
-                        <input name="image" onChange={handleInputChange} placeholder="URL Image" />
-                        <span>{errors.image}</span><br />
+                        <div class="flex flex-row items-center justify-center indicator">
+                            <span class="indicator-item badge bg-warning">Required</span>
+                            <input name="image" onChange={handleInputChange} placeholder="URL Image" class="input input-bordered input-accent w-full max-w-xs" />
+                        </div>
+                        {errors.image ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.image}</span> : ''}<br />
 
-                        <label>Ranking:</label>
-                        <input name="ranking" onChange={handleInputChange} placeholder="Ranking" />
-                        <span>{errors.ranking}</span><br />
+                        <label>ranking:</label>
+                        <div class="flex flex-row items-center justify-center indicator">
+                            <span class="indicator-item badge bg-warning">Required</span>
+                            <input name="ranking" onChange={handleInputChange} placeholder="Ranking" class="input input-bordered input-accent w-full max-w-xs" />
+                        </div>
+                        {errors.ranking ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.ranking}</span> : ''}<br />
 
                         <label>Created by:</label>
-                        <input name="createBy" onChange={handleInputChange} placeholder="Created by" />
-                        <span>{errors.createBy}</span><br />
+                        <div class="flex flex-row items-center justify-center indicator">
+                            <span class="indicator-item badge bg-warning">Required</span>
+                            <input name="createBy" onChange={handleInputChange} placeholder="Created by" class="input input-bordered input-accent w-full max-w-xs" />
+                        </div>
+                        {errors.createBy ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.createBy}</span> : ''}<br />
+
 
                         <label>Price:</label>
-                        <input name="price" onChange={handleInputChange} placeholder="$0.00 USD" />
-                        <span>{errors.price}</span><br />
+                        <div class="flex flex-row items-center justify-center indicator">
+                            <span class="indicator-item badge bg-warning">Required</span>
+                            <input name="price" onChange={handleInputChange} placeholder="0.00 USD" class="input input-bordered input-accent w-full max-w-xs" />
+                        </div>
+                        {errors.price ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.price}</span> : ''}<br />
+
 
                         <label>Vacancies:</label>
-                        <input name="stock" onChange={handleInputChange} placeholder="Stock available" />
-                        <span>{errors.stock}</span><br />
+                        <div class="flex flex-row items-center justify-center indicator">
+                            <span class="indicator-item badge bg-warning">Required</span>
+                            <input name="stock" onChange={handleInputChange} placeholder="Stock available" class="input input-bordered input-accent w-full max-w-xs" />
+                        </div>
+                        {errors.stock ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.stock}</span> : ''}<br />
 
-                        <label>Categories:</label>
-                        <span className={style.asd}>{errors.gGenres}</span>
+                        <label>Categories:</label><span class="indicator-item badge bg-warning">Required</span>
                     </div>
+                    {errors.categories ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.categories}</span> : ''}<br />
 
-                    <div className={style.genres}>
+                    <div className="flex flex-row flex-wrap justify-between w-[21rem] ">
                         {allCategories ? allCategories.map(ctgry => {
                             return (
-                                <div key={ctgry.id} className={style.genresItems}>
-                                    <input
-                                        type='checkbox'
-                                        id={ctgry.name}
-                                        name='categories'
-                                        onChange={handleCheckboxChange}
-                                        value={JSON.stringify(
-                                            ctgry.id)}>
-                                    </input>
-                                    <label>{ctgry.name}</label>
+                                <div key={ctgry.id}>
+                                    <label class="cursor-pointer label">
+                                        <span class="label-text mr-1">{ctgry.name}</span>
+                                        <input type='checkbox'
+                                            id={ctgry.name}
+                                            name='categories'
+                                            onChange={handleCheckboxChange}
+                                            value={JSON.stringify(
+                                                ctgry.id)} class="checkbox checkbox-secondary" />
+                                    </label>
                                 </div>
                             )
                         }) : 'No funca'}
-
-                        <button type='submit' className={style.button}>Create Course</button>
                     </div>
+                    <button type='submit' class="btn btn-primary">
+                        Create product
+                    </button>
                 </form>
             </div>
-        </div>
+        </div >
     );
 };
 
