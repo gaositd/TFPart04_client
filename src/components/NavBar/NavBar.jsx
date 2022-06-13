@@ -23,7 +23,6 @@ export default function NavBarBro() {
   const dispatch = useDispatch();
   let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
 
-<<<<<<< HEAD
   let navigation = [
     { name: 'Landing', href: '/' },
     { name: 'Home', href: '/home' },
@@ -33,8 +32,6 @@ export default function NavBarBro() {
   if (localStorage.usertype === 'Admin') {
     navigation.push({ name: 'Admin', href: '/admin' })
   }
-=======
->>>>>>> origin/Felipe-cambios
 
   return (
     <Disclosure as="nav" className="bg-primary h-20 mb-2">
