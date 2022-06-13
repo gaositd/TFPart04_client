@@ -174,9 +174,10 @@ export function changePermission(user) {
   };
 };
 
-export function deleteUser(user) {
+export function deleteUser(emailUser) {
   return function () {
-    return axios.post("http://localhost:3001/user/deletion", user)
+    console.log(`http://localhost:3001/user/delete/${emailUser}`)
+    return axios.delete(`http://localhost:3001/user/delete/${emailUser}`)
       .then(resp => {
         if (resp.data.notFound) alert(resp.data.notFound)
         else if (resp.data.success) alert(resp.data.success)
