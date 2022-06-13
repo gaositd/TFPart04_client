@@ -11,7 +11,7 @@ import {
   LOGIN,
   LOGOUT,
   CREATEREVIEW,
-  MODIFYPRODUCT
+  MODIFYPRODUCT,
 } from "./actions"
 
 const initialState = {
@@ -21,7 +21,8 @@ const initialState = {
   pagination: 0,
   categories: [],
   loggedUser: '',
-  users: []
+  users: [],
+  usertype: ''
 }
 
 export function rootReducer(state = initialState, { type, payload }) {
@@ -75,14 +76,13 @@ export function rootReducer(state = initialState, { type, payload }) {
       return { ...state, users: payload }
 
     case LOGIN:
-      if (!Object.keys(payload).length) alert('No account linked to that mail')
-      else if (payload.wrongPass) alert('Wrong password')
-      else if (payload.mail) {
-        alert('Successfull login!')
-        localStorage.setItem("user", payload.mail)
-        localStorage.setItem("usertype", payload.usertype)
-        return { ...state, loggedUser: payload.mail, usertype: payload.usertype }
-      } else return { ...state, loggedUser: {}, usertype: 'User' }
+      localStorage.setItem("user", payload.email)
+      localStorage.setItem("usertype", payload.usertype)
+      return {
+        ...state,
+        loggedUser: payload.email,
+        usertype: payload.usertype
+      }
 
     case LOGOUT:
       localStorage.removeItem("user")
