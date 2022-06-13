@@ -1,14 +1,14 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { MenuIcon, XIcon, ShoppingCartIcon } from '@heroicons/react/outline'
-import {NavLink} from 'react-router-dom'
+import { MenuIcon, XIcon, ShoppingCartIcon, Trash, UserIcon } from '@heroicons/react/outline'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { logout } from '../../redux/actions'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 
 // let navigation = [
-//   { name: 'Landing', href: '/' },
+//   { name: 'Landing', href: '/' }
 //   { name: 'Home', href: '/home' },
 //   { name: 'About', href: '/about' },
 //   { name: 'Cart', href: '/cart' },
@@ -21,9 +21,9 @@ function classNames(...classes) {
 
 export default function NavBarBro() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
 
-<<<<<<< HEAD
   let navigation = [
     { name: 'Landing', href: '/' },
     { name: 'Home', href: '/home' },
@@ -33,8 +33,10 @@ export default function NavBarBro() {
   if (localStorage.usertype === 'Admin') {
     navigation.push({ name: 'Admin', href: '/admin' })
   }
-=======
->>>>>>> origin/Felipe-cambios
+
+  function redirectToSignup() {
+    navigate('/')
+  }
 
   return (
     <Disclosure as="nav" className="bg-primary h-20 mb-2">
@@ -75,29 +77,25 @@ export default function NavBarBro() {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <NavLink to="/cart" className="text-white">
-                <div
-                  className="bg-secondary p-1 rounded-full text-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white
+                  <div
+                    className="bg-secondary p-1 rounded-full text-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white
                   grid grid-cols-2"
-                >
-                  <div>
-                  <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                  >
+                    <div>
+                      <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                    </div>
+                    <div>
+                      <p>{dataCart && dataCart.length}</p>
+                    </div>
                   </div>
-                  <div>
-                  <p>{dataCart && dataCart.length}</p>
-                  </div>
-                </div>
                 </NavLink>
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="ml-3 relative z-50">
                   <div>
-                    <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                    <Menu.Button className="bg-secondary p-1 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                       <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
+                      <UserIcon className="h-6 w-6" aria-hidden="true" />
                     </Menu.Button>
                   </div>
                   <Transition
@@ -126,11 +124,17 @@ export default function NavBarBro() {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <button className={classNames(active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-sm text-gray-700')}
-                            onClick={() => dispatch(logout())}
-                          >
-                            Sign out
-                          </button>
+                          localStorage ?
+                            <button className={classNames(active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-sm text-gray-700')}
+                              onClick={() => dispatch(redirectToSignup())}
+                            >
+                              Sign in
+                            </button>
+                            : <button className={classNames(active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-sm text-gray-700')}
+                              onClick={() => dispatch(logout())}
+                            >
+                              Sign out
+                            </button>
                         )}
                       </Menu.Item>
                     </Menu.Items>

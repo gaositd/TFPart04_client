@@ -6,22 +6,22 @@ import { createOrder } from '../../redux/actions'
 const CartItem = () => {
   const dispatch = useDispatch()
   const [cart, setCart] = useState([])
-  
+
   let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
-  
-  
+
+
   const removeOneFromCart = (id) => {
     let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
     let dataCart2 = dataCart.filter(item => item.id !== id);
-    localStorage.setItem("cartProduct", JSON.stringify(dataCart2)); 
+    localStorage.setItem("cartProduct", JSON.stringify(dataCart2));
     setCart(dataCart2);
   }
-  
+
   const clearCart = () => {
     localStorage.removeItem("cartProduct");
     setCart(dataCart);
   }
-  
+
   let orderData = {
   }
 
@@ -51,8 +51,9 @@ const CartItem = () => {
                 </div>
                 {
                   dataCart && dataCart.map(product => {
+                    console.log('prodddddd:',product)
                     return (
-                      <div key={product.userId} className="grid grid-cols-2 px-2 py-2">
+                      <div key={product.id} className="grid grid-cols-2 px-2 py-2">
                         <div>
                           <h1 className="text-gray-900 grid justify-items-start font-bold text-base uppercase">{product.name}</h1>
                         </div>
@@ -91,7 +92,7 @@ const CartItem = () => {
               </div>
             </div>
             <div className="bg-gray-200">
-            <div> 
+            <div>
               <div>
               <p className="font-bold text-lg text-orange-800">User Info</p>
               </div>
@@ -153,7 +154,7 @@ const CartItem = () => {
               </div>
             </div>
             <div className="bg-gray-200">
-                  
+
             </div>
           </div>
 
