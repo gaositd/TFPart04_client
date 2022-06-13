@@ -168,7 +168,7 @@ export function logout() {
 
 export function changePermission(user) {
   return function () {
-    return axios.put("http://localhost:3001/user/permission", user)
+    return axios.put(`http://localhost:3001/user/update/${user.email}`, user)
       .then(console.log('Admin permissions changed'))
       .catch(error => console.log('Action error in changePermission: ', error))
   };
@@ -176,7 +176,6 @@ export function changePermission(user) {
 
 export function deleteUser(emailUser) {
   return function () {
-    console.log(`http://localhost:3001/user/delete/${emailUser}`)
     return axios.delete(`http://localhost:3001/user/delete/${emailUser}`)
       .then(resp => {
         if (resp.data.notFound) alert(resp.data.notFound)
