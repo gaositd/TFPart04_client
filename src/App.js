@@ -2,6 +2,7 @@ import './App.css';
 import React from 'react';
 import { Routes, Route, useLocation } from "react-router-dom";
 
+export const REACT_APP_GOOGLE_API_KEY = "AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik"
 // Hooks
 
 // Components
@@ -14,6 +15,8 @@ import ProductCreationForm from './components/ProductCreationForm/ProductCreatio
 import { useSelector } from 'react-redux';
 import NotFound from './components/NotFound/NotFound';
 import ShoppingCart from './components/Cart/ShoppingCart';
+
+import MapPage from './components/Map/MapPage.tsx'
 
 function App() {
 
@@ -29,6 +32,7 @@ function App() {
         {pathname === '/' ? null : <NavBar />}
         <Routes>
           <Route path='/' element={<Landing />} />
+          <Route path='/lolo' element={<MapPage />} />
           <Route path='/home' element={<Home />} />
           <Route path='/details/:id' element={<Details />} />
           <Route path='/admin' element={<CreateCategory />} />
@@ -45,6 +49,7 @@ function App() {
       {pathname === '/' ? null : <NavBar />}
       <Routes>
         <Route path='/' element={<Landing />} />
+        <Route path='/lolo' element={<MapPage />} />
         <Route path='/home' element={<Home />} />
         <Route path='/details/:id' element={<Details />} />
         <Route path='/admin' element={<CreateCategory />} />
