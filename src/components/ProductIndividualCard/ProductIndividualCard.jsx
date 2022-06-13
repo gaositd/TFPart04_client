@@ -25,7 +25,7 @@ function ProductIndividualCard({
         });
 
         if (!exist) {
-            prodCart.push({productId: addcar.id, name: addcar.name, price: addcar.price});
+            prodCart.push({idProduct: addcar.id, description: addcar.name, price: addcar.price});
             localStorage.setItem(`cartProduct`, JSON.stringify(prodCart));
             console.log(prodCart);
         } else if (exist) {
