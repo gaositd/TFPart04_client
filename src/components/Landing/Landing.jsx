@@ -49,7 +49,10 @@ function Landing() {
             </div>
           </NavLink>
           <br />
-          <FirebaseSignIn/>
+          {!localStorage.getItem("user") ?
+            <FirebaseSignIn />
+            : null
+          }
           <div className='mt-8'>
             {sign === '' &&
               <div className='flex justify-center gap-10'>
