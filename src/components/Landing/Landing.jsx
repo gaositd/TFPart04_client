@@ -6,6 +6,7 @@ import { getCategories, getProducts, logout } from '../../redux/actions';
 import bgimage from "./bg_landing.jpg";
 import Login from '../Authentication/Login';
 import Signup from '../Authentication/Signup';
+import MpButton from '../MPButton/MPButton';
 
 function Landing() {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ function Landing() {
               Enter as guest
             </div>
           </NavLink>
+          <MpButton/>
           <div className='mt-8'>
             {sign === '' &&
               <div className='flex justify-center gap-10'>
