@@ -8,12 +8,14 @@ export const FILTER_BY_PRICE = "FILTER_BY_PRICE";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const PAGINATION = "PAGINATION";
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
+export const GET_USERS = "GET_USERS";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const PERMISSION = "PERMISSION";
 export const CREATEREVIEW = "CREATEREVIEW";
 export const MODIFYPRODUCT = "MODIFYPRODUCT";
 export const LOADINGIMAGE = "LOADINGIMAGE"
+
 
 export const getProducts = () => {
   return function (dispatch) {
@@ -106,10 +108,54 @@ export function createProduct(product) {
   };
 };
 
+export function getUsers() {
+  return function (dispatch) {
+    return axios.get(`http://localhost:3001/user`)
+      .then(resp => dispatch({ type: GET_USERS, payload: resp.data }))
+      .catch(error => console.log('Action error in getProducts: ', error))
+  }
+}
+
+export function signUp(user) {
+  return function (dispatch) {
+    return axios.get(`http://localhost:3001/user?email=${user.email}`)
+      .then(resp => {
+        if (resp.data.length) {
+          return alert('The email is already in use')
+        } else {
+          return axios.post("http://localhost:3001/user", user)
+            .then(resp => {
+              if (resp.data === 'user created successfully') {
+                alert('Account created successfully. Welcome to our platform')
+                dispatch({
+                  type: LOGIN,
+                  payload: {
+                    email: user.email,
+                    password: user.password,
+                    usertype: 'user'
+                  }
+                })
+              } else {
+                console.log(resp.data)
+              }
+            })
+        };
+      })
+      .catch(error => console.log('Action error in signup: ', error))
+  };
+};
+
 export function login(user) {
   return function (dispatch) {
-    return axios.post("http://localhost:3001/user/login", user)
-      .then(resp => dispatch({ type: LOGIN, payload: resp.data }))
+    return axios.get(`http://localhost:3001/user?email=${user.email}`, user)
+      .then(resp => {
+        let loggedUser = JSON.parse(localStorage.getItem("user"));
+        if (loggedUser === user.email) return alert('You are already logged in');
+        if (!Object.keys(resp.data).length) return alert('No account linked to that email');
+        if (resp.data[0].password !== user.password) return alert('Wrong password');
+        dispatch({ type: LOGIN, payload: resp.data[0] });
+        alert('Successfull login!');
+      })
       .catch(error => console.log('Action error in login: ', error))
   };
 };
@@ -120,21 +166,22 @@ export function logout() {
   }
 }
 
-export function signUp(user) {
-  return function () {
-    return axios.post("http://localhost:3001/user/signup", user)
-      .then(resp => {
-        if (typeof (resp.data) === 'string') alert(resp.data)
-        else alert('Welcome to our platform')
-      })
-      .catch(error => console.log('Action error in signup: ', error))
-  };
-};
-
 export function changePermission(user) {
   return function () {
     return axios.put("http://localhost:3001/user/permission", user)
       .then(console.log('Admin permissions changed'))
+      .catch(error => console.log('Action error in changePermission: ', error))
+  };
+};
+
+export function deleteUser(user) {
+  return function () {
+    return axios.post("http://localhost:3001/user/deletion", user)
+      .then(resp => {
+        if (resp.data.notFound) alert(resp.data.notFound)
+        else if (resp.data.success) alert(resp.data.success)
+        else console.log('No response')
+      })
       .catch(error => console.log('Action error in changePermission: ', error))
   };
 };

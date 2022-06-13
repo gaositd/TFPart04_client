@@ -1,21 +1,21 @@
 import './App.css';
 import React from 'react';
 import { Routes, Route, useLocation } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 // Hooks
 
 // Components
 import Landing from './components/Landing/Landing.jsx'
+import NavBar from './components/NavBar/NavBar';
 import Home from './components/Home/Home.jsx'
 import Details from './components/Details/Details';
-import NavBar from './components/NavBar/NavBar';
-import ProductCreationForm from './components/ProductCreationForm/ProductCreationForm'
-import { useSelector } from 'react-redux';
-import NotFound from './components/NotFound/NotFound';
 import ShoppingCart from './components/Cart/ShoppingCart';
-import Resources from './components/Resources/Resources';
-import ModificationForm from './components/ModificationForm/ModificationForm';
 import AdminPage from './components/AdminSite/AdminPage';
+import Resources from './components/Resources/Resources';
+import ProductCreationForm from './components/ProductCreationForm/ProductCreationForm'
+import ModificationForm from './components/ModificationForm/ModificationForm';
+import NotFound from './components/NotFound/NotFound';
 
 function App() {
 

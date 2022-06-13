@@ -18,6 +18,15 @@ export default function Login() {
 
   async function handleLogin(e) {
     e.preventDefault()
+    let actualInput = Object.keys(userLogin);
+    let isValid = true;
+    actualInput.forEach(key => {
+      if (userLogin[key].includes(' ')) {
+        isValid = false;
+        return;
+      };
+    });
+    if (!isValid) return alert('No blank spaces allowed!');
     if (Object.keys(errors).length) {
       return alert('Please fill the right way')
     }
@@ -29,18 +38,20 @@ export default function Login() {
   }
 
   return (
-    <div className='border-solid border-2 border-sky-500 p-2'>
-      {Object.keys(errors).length ? <p>{errors}</p> : null}
-      <input className="mt-1 block w-60 px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400focus:outline-none
-          focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none "
-        type="text" placeholder='User'
-        onChange={loginChange} name='email' value={userLogin.email} />
-      <input className="mt-1 block w-60 px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none
-          focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none justify-center"
-        type="password" placeholder='Password'
-        onChange={loginChange} name='password' value={userLogin.password} />
+    <div className='border-solid border-2 border-accent p-2 w-[300px] rounded-lg'>
+      <div className="tooltip tooltip-right tooltip-warning w-full max-w-xs" data-tip="required">
+        <input className="input input-bordered input-secondary w-full max-w-xs mt-1 "
+          type="text" placeholder='User' onChange={loginChange} name='email' value={userLogin.email} />
+        {Object.keys(errors).length ? <span class="indicator-item indicator-middle indicator-center badge badge-warning w-[260px] h-9 rounded-lg mt-2">{errors}</span> : ''}
+      </div>
+
+      <div className="tooltip tooltip-right tooltip-warning w-full max-w-xs" data-tip="required">
+        <input className="input input-bordered input-secondary w-full max-w-xs mt-4"
+          type="password" placeholder='Password'
+          onChange={loginChange} name='password' value={userLogin.password} />
+      </div>
       <br />
-      <button className="box-border w-40 bg-amber-500 text-white p-2 rounded-xl" onClick={handleLogin}>
+      <button className="btn btn-secondary w-1/3 mb-1 mt-4" onClick={handleLogin}>
         Login
       </button>
     </div>

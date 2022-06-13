@@ -7,6 +7,7 @@ import {
   GET_CATEGORIES,
   PAGINATION,
   CREATE_PRODUCT,
+  GET_USERS,
   LOGIN,
   LOGOUT,
   CREATEREVIEW,
@@ -23,6 +24,7 @@ const initialState = {
   loggedUser: '',
   users: [],
   imageLoading: false,
+  usertype: ''
 }
 
 export function rootReducer(state = initialState, { type, payload }) {
@@ -81,20 +83,21 @@ export function rootReducer(state = initialState, { type, payload }) {
         imageLoading: payload
       }
 
+    case GET_USERS:
+      return { ...state, users: payload }
+
     case LOGIN:
-      if (Object.keys(payload).length) alert('Successfull login!')
-      if (!Object.keys(payload).length) alert('Wrong password')
-      localStorage.setItem("user", payload.mail)
-      return { ...state, loggedUser: payload.mail }
+      localStorage.setItem("user", payload.email)
+      localStorage.setItem("usertype", payload.usertype)
+      return {
+        ...state,
+        loggedUser: payload.email,
+        usertype: payload.usertype
+      }
 
     case LOGOUT:
       localStorage.removeItem("user")
-      return { ...state, loggedUser: '' }
-
-    case 'GET_USERS':
-      return { ...state, users: payload }
-
-    case LOGOUT:
+      localStorage.removeItem("usertype")
       return { ...state, loggedUser: {} }
 
     default: return state;
