@@ -12,6 +12,7 @@ import {
   LOGOUT,
   CREATEREVIEW,
   MODIFYPRODUCT,
+  LOADINGIMAGE
 } from "./actions"
 
 const initialState = {
@@ -22,6 +23,7 @@ const initialState = {
   categories: [],
   loggedUser: '',
   users: [],
+  imageLoading: false,
   usertype: ''
 }
 
@@ -70,7 +72,16 @@ export function rootReducer(state = initialState, { type, payload }) {
       return state;
 
     case MODIFYPRODUCT:
-      return state
+      return {
+        ...state,
+        imageLoading: false
+      }
+
+    case LOADINGIMAGE:
+      return {
+        ...state,
+        imageLoading: payload
+      }
 
     case GET_USERS:
       return { ...state, users: payload }

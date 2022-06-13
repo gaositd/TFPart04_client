@@ -14,6 +14,7 @@ export const LOGOUT = "LOGOUT";
 export const PERMISSION = "PERMISSION";
 export const CREATEREVIEW = "CREATEREVIEW";
 export const MODIFYPRODUCT = "MODIFYPRODUCT";
+export const LOADINGIMAGE = "LOADINGIMAGE"
 
 
 export const getProducts = () => {
@@ -196,17 +197,41 @@ export function createReview(data) {
   };
 };
 
+let uploadPreset = 'd9vdlmyy'
+let cloudName = 'da42wdmjv'
+
 export function modifyProduct(data, id) {
-  return function () {
-    console.log(data)
-    return axios.put(`http://localhost:3001/product/update/${id}`, data, {
-      // headers: {
-      //   'Content-Type': 'multipart/form-data'
-      // }
-    })
-      .then(resp => {
-        console.log(resp)
-      })
-      .catch(error => console.log('El error en cuestion: ', error.message))
+  return function (dispatch) {
+    if (data.image?.name) {
+      const formData = new FormData();
+      formData.append('file', data.image);
+      formData.append('upload_preset', uploadPreset);
+      return axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, formData)
+        .then(resp => {
+          let updatedData = {
+            ...data,
+            image: resp.data.public_id
+          }
+          return axios.put(`http://localhost:3001/product/update/${id}`, updatedData)
+        })
+        .then(resp => {
+          window.location.href = '/home'
+          return dispatch({ type: MODIFYPRODUCT, payload: resp })
+        })
+        .catch(error => console.log('Error: ', error.message))
+    } else {
+      return axios.put(`http://localhost:3001/product/update/${id}`, data)
+        .then(resp => {
+          window.location.href = '/home'
+          return dispatch({ type: MODIFYPRODUCT, payload: resp })
+        })
+        .catch(error => console.log('Error: ', error.message))
+    }
   };
 };
+
+export function loadingImage(status) {
+  return function (dispatch) {
+    return dispatch({ type: LOADINGIMAGE, payload: status })
+  }
+}
