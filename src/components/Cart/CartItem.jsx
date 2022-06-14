@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { createOrder, cartItems } from '../../redux/actions'
+import axios from 'axios'
 
 
 
@@ -11,8 +12,26 @@ const CartItem = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useState([])
 
+  // Mercado Pago-------
+  const backendURL = "http://localhost:3001/mercadopago/new"
+
   let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
 
+  const MpPaymentHandler = async (cookies) => {
+    if(dataCart){
+    const response = await axios.post(backendURL, cookies);
+    window.location.href = response.data.init_point;
+  }
+  };
+
+  let cookies = []
+
+
+  dataCart?.forEach(item => {
+    let data = { title: item.description, unit_price: item.price, quantity: 1 }
+    cookies.push(data)
+  }
+  )
 
   const removeOneFromCart = (id) => {
     dispatch(cartItems(-1))
@@ -33,17 +52,22 @@ const CartItem = () => {
 
   let handleSubmit = (e) => {
     e.preventDefault();
-    orderData = {
-      ...orderData,
-      currency: 'USD',
-      userEmail: localStorage.getItem('user'),
-      orders: dataCart
+    let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
+    if (dataCart) {
+      orderData = {
+        ...orderData,
+        currency: 'USD',
+        userEmail: localStorage.getItem('user'),
+        orders: dataCart
+      }
+      dispatch(cartItems(0))
+      dispatch(createOrder(orderData));
+      localStorage.removeItem("cartProduct");
+      setCart(dataCart);
+      // navigate('/successOrder')
+    } else {
+      alert('Cart is empty')
     }
-    dispatch(cartItems(0))
-    dispatch(createOrder(orderData));
-    localStorage.removeItem("cartProduct");
-    setCart(dataCart);
-    navigate('/successOrder')
   }
 
 
@@ -97,7 +121,7 @@ const CartItem = () => {
               <div className="grid grid-cols-2 ">
                 <div className="grid justify-items-center m-3">
                   <form onSubmit={handleSubmit} className=''>
-                    <button className="btn btn-primary w-40" type='submit'>Buy</button>
+                    <button className="btn btn-primary w-40" type='submit' onClick={() => MpPaymentHandler({ cookies })}>Buy</button>
                   </form>
                 </div>
                 <div>
