@@ -142,11 +142,12 @@ function ModificationForm() {
                     </div>
                 </>
                 :
-                <div className="grid grid-cols-2 justify-items-center">
-                    <div className="card w-[25rem] bg-base-100 shadow-xl justify-center items-center">
+                <div className="grid justify-items-center ">
+                <div className="grid grid-cols-2 w-2/3 m-4 p-4 bg-white shadow rounded-lg border ">
+                    <div className="card bg-base-100 ">
                         <span className="font-bold pt-3 text-lg">Current product data:</span>
-                        <figure className="px-10 pt-3 w-[20rem]">
-                            <img src={imageName} alt={product.name} />
+                        <figure className="px-10 pt-3">
+                            <img className="borde border-4 border-primary" src={imageName} alt={product.name} />
                         </figure>
                         <div className="card-body items-center text-center">
                             <div><span className="font-bold">Course name: </span>{product.name}</div>
@@ -246,7 +247,8 @@ function ModificationForm() {
                             </form >
                         </div >
                     </div >
-                </div >}
+                </div >
+                </div>}
         </>
     )
 }
