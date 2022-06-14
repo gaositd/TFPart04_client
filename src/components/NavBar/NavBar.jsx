@@ -2,7 +2,7 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon, ShoppingCartIcon } from '@heroicons/react/outline'
-import {NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { logout } from '../../redux/actions'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
@@ -23,8 +23,12 @@ export default function NavBarBro() {
   const dispatch = useDispatch();
   let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
 
-  let navigation = [
-    { name: 'Landing', href: '/' },
+  let navigation;
+  localStorage.user ? navigation = [
+    { name: 'Home', href: '/home' },
+    { name: 'Cart', href: '/cart' },
+  ] : navigation = [
+    { name: 'Login', href: '/' },
     { name: 'Home', href: '/home' },
     { name: 'Cart', href: '/cart' },
   ]
@@ -72,17 +76,17 @@ export default function NavBarBro() {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <NavLink to="/cart" className="text-white">
-                <div
-                  className="bg-secondary p-1 rounded-full text-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white
+                  <div
+                    className="bg-secondary p-1 rounded-full text-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white
                   grid grid-cols-2"
-                >
-                  <div>
-                  <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                  >
+                    <div>
+                      <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                    </div>
+                    <div>
+                      <p>{dataCart && dataCart.length}</p>
+                    </div>
                   </div>
-                  <div>
-                  <p>{dataCart && dataCart.length}</p>
-                  </div>
-                </div>
                 </NavLink>
 
                 {/* Profile dropdown */}
