@@ -1,4 +1,6 @@
 import axios from "axios";
+// import { useNavigate } from 'react-router-dom';
+// const navigate = useNavigate();
 
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCT_ID = "GET_PRODUCT_ID";
@@ -215,15 +217,15 @@ export function modifyProduct(data, id) {
           return axios.put(`http://localhost:3001/product/update/${id}`, updatedData)
         })
         .then(resp => {
-          window.location.href = '/home'
-          return dispatch({ type: MODIFYPRODUCT, payload: resp })
+          // window.location.href = '/home'
+          return dispatch({ type: MODIFYPRODUCT })
         })
         .catch(error => console.log('Error: ', error.message))
     } else {
       return axios.put(`http://localhost:3001/product/update/${id}`, data)
         .then(resp => {
-          window.location.href = '/home'
-          return dispatch({ type: MODIFYPRODUCT, payload: resp })
+          // window.location.href = '/home'
+          return dispatch({ type: MODIFYPRODUCT })
         })
         .catch(error => console.log('Error: ', error.message))
     }

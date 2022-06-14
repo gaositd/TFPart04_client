@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductById, modifyProduct, getCategories, loadingImage } from '../../redux/actions';
 import { useParams } from 'react-router-dom';
 import _ from "lodash";
+import { useNavigate } from 'react-router-dom';
 
 function ModificationForm() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { id } = useParams();
     const product = useSelector(state => state.productDet)
@@ -92,7 +94,7 @@ function ModificationForm() {
         };
     };
 
-    const handleSubmit = function (e) {
+    const handleSubmit = async function (e) {
         e.preventDefault();
         let validation = validate(input);
         if (Object.keys(validation).length) {
@@ -114,8 +116,9 @@ function ModificationForm() {
                     })
                 }
                 try {
-                    dispatch(loadingImage(true));
-                    dispatch(modifyProduct(input, product.id));
+                    await dispatch(loadingImage(true));
+                    await dispatch(modifyProduct(input, product.id));
+                    navigate('/home');
                     e.target.reset();
                 } catch (err) {
                     console.log(err.message);
@@ -250,7 +253,7 @@ function ModificationForm() {
 export const validate = function (input) {
     let errors = {};
     if (input.name) {
-        if (!input.name || input.name.length < 2 || typeof input.name !== 'string') {
+        if (!input.name || input.name.length < 1 || typeof input.name !== 'string') {
             errors.name = 'The course name must be at least 2 characters long.';
         } else if (/["`'#%&,:;<>=@{}~$()*+/!?[\]^|]+/.test(input.name)) {
             errors.name = 'The course name can not contain special characters.';
