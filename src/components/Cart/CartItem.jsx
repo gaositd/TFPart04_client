@@ -94,6 +94,8 @@ const CartItem = () => {
               </div>
             </div>
             <div className="bg-gray-200">
+
+            <div>
               <div>
                 <div>
                   <p className="font-bold text-lg text-orange-800">User Info</p>

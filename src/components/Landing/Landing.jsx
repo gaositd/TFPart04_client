@@ -6,6 +6,7 @@ import { getCategories, getProducts, logout, cartItems } from '../../redux/actio
 import bgimage from "./bg_landing.jpg";
 import Login from '../Authentication/Login';
 import Signup from '../Authentication/Signup';
+import FirebaseSignIn from '../Firebase/FirebaseSignIn';
 import logo from "./Logo.png";
 
 function Landing() {
@@ -49,6 +50,11 @@ function Landing() {
               Enter as a guest
             </div>
           </NavLink>
+          <br />
+          {!localStorage.getItem("user") ?
+            <FirebaseSignIn />
+            : null
+          }
           <div className='mt-8'>
             {sign === '' &&
               <div className='flex justify-center gap-10'>

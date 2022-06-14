@@ -122,6 +122,16 @@ export function signUp(user) {
     return axios.get(`http://localhost:3001/user?email=${user.email}`)
       .then(resp => {
         if (resp.data.length) {
+          if (resp.data[0].email.split('@'[1] === 'gmail.com')) {
+            dispatch({
+              type: LOGIN,
+              payload: {
+                email: user.email,
+                usertype: 'User'
+              }
+            })
+            return alert('Successfull login!')
+          }
           return alert('The email is already in use')
         } else {
           return axios.post("http://localhost:3001/user", user)
@@ -132,8 +142,7 @@ export function signUp(user) {
                   type: LOGIN,
                   payload: {
                     email: user.email,
-                    password: user.password,
-                    usertype: 'user'
+                    usertype: 'User'
                   }
                 })
               } else {
