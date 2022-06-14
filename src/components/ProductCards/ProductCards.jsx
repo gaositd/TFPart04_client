@@ -27,8 +27,8 @@ function ProductCards({ allProducts }) {
 
     return (
         <div className="grid justify-items-center">
-        <div className="grid justify-items-center bg-white w-2/3 rounded shadow-sm border p-2">
-        <div className="grid grid-cols-3 gap-4 w-2/3">
+        <div className="grid justify-items-center bg-white w-2/3 rounded shadow-sm border p-2 m-6">
+        <div className="grid grid-cols-3 gap-4 w-full justify-items-center">
             {currentProducts ? currentProducts.map((p, i) => {
                 return (
                     <React.Fragment key={i}>

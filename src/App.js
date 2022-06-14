@@ -17,6 +17,7 @@ import ProductCreationForm from './components/ProductCreationForm/ProductCreatio
 import ModificationForm from './components/ModificationForm/ModificationForm';
 import NotFound from './components/NotFound/NotFound';
 import Footer from './components/Footer/Footer'
+import CheckoutCart from './components/Cart/CheckoutCart'
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
         <Route path='/resources' element={<Resources />} />
         <Route path='/creationform' element={<ProductCreationForm />} />
         <Route path='/modificationForm/:id' element={<ModificationForm />} />
+        <Route path='/successOrder' element={<CheckoutCart />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
       {
