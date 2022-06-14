@@ -55,7 +55,7 @@ const CartItem = () => {
                     return (
                       <div key={product.id} className="grid grid-cols-2 px-2 py-2">
                         <div>
-                          <h1 className="text-gray-900 grid justify-items-start font-bold text-base uppercase">{product.name}</h1>
+                          <h1 className="text-gray-900 grid justify-items-start font-bold text-base uppercase">{product.description}</h1>
                         </div>
                         <div>
                           <p className="text-gray-600 text-sm mt-1">${product.price} USD</p>
