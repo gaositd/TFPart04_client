@@ -1,5 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import { cartItems } from '../../redux/actions';
+
 
 function ProductIndividualCard({
     id,
@@ -9,6 +12,7 @@ function ProductIndividualCard({
     categories,
     ranking,
 }) {
+    const dispatch = useDispatch();
 
     let addcar = { id, name, price };
 
@@ -25,7 +29,8 @@ function ProductIndividualCard({
         });
 
         if (!exist) {
-            prodCart.push({idProduct: addcar.id, description: addcar.name, price: addcar.price});
+            dispatch(cartItems())
+            prodCart.push({ idProduct: addcar.id, description: addcar.name, price: addcar.price });
             localStorage.setItem(`cartProduct`, JSON.stringify(prodCart));
             console.log(prodCart);
         } else if (exist) {

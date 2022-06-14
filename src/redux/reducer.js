@@ -13,7 +13,8 @@ import {
   CREATEREVIEW,
   MODIFYPRODUCT,
   LOADINGIMAGE,
-  CREATE_ORDER
+  CREATE_ORDER,
+  CART_ITEMS
 } from "./actions"
 
 const initialState = {
@@ -26,7 +27,8 @@ const initialState = {
   users: [],
   imageLoading: false,
   usertype: '',
-  order: []
+  order: [],
+  cartItems: 0
 }
 
 export function rootReducer(state = initialState, { type, payload }) {
@@ -104,6 +106,12 @@ export function rootReducer(state = initialState, { type, payload }) {
       localStorage.removeItem("user")
       localStorage.removeItem("usertype")
       return { ...state, loggedUser: {} }
+
+    case CART_ITEMS:
+      return {
+        ...state,
+        cartItems: state.cartItems + 1
+      }
 
     default: return state;
   }
