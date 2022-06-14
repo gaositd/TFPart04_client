@@ -24,7 +24,7 @@ export default function Users() {
   }
 
   async function handleDelete(e) {
-    await dispatch(deleteUser({ email: e.target.id }))
+    await dispatch(deleteUser(e.target.id))
     dispatch(getUsers())
   }
 
@@ -50,14 +50,14 @@ export default function Users() {
           <tbody>
             {users.length ?
               users.map(u => {
-                return <tr>
+                return <tr key={u.email}>
                   <th>
                     <label>
                       <input type="checkbox" className="checkbox" />
                     </label>
                   </th>
                   <th>
-                    <button id={u.mail} name={u.usertype} onClick={e => handlePermission(e)}>Change to {u.usertype === 'Admin' ? 'User' : 'Admin'}</button>
+                    <button id={u.email} name={u.usertype} onClick={e => handlePermission(e)}>Change to {u.usertype === 'Admin' ? 'User' : 'Admin'}</button>
                   </th>
                   <td>
                     <div className="flex items-center space-x-3">
@@ -80,18 +80,18 @@ export default function Users() {
                   <td>
                     <button name={u.usertype} onClick={e => handleDelete(e)}>
                       <svg
-                        id={u.mail}
+                        id={u.email}
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
+                        className="h-6 w-6"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
-                        stroke-width="2"
+                        strokeWidth="2"
                       >
                         <path
-                          id={u.mail}
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          id={u.email}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                           d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                         />
                       </svg>

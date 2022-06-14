@@ -25,7 +25,7 @@ function ProductIndividualCard({
         });
 
         if (!exist) {
-            prodCart.push(addcar);
+            prodCart.push({idProduct: addcar.id, description: addcar.name, price: addcar.price});
             localStorage.setItem(`cartProduct`, JSON.stringify(prodCart));
             console.log(prodCart);
         } else if (exist) {
@@ -33,16 +33,16 @@ function ProductIndividualCard({
         }
     }
 
-    const imageName = '../../img_products/' + image + '.jpg';
+    const imageName = image.includes('product') ?
+        '../../img_products/' + image + '.jpg' :
+        `https://res.cloudinary.com/da42wdmjv/image/upload/v1654727380/${image}`
 
-
-    console.log(id)
     return (
         <>
             <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-10">
                 <NavLink to={`/details/${id}`}>
                     <div className="px-4 py-2">
-                        <h1 className="text-gray-900 font-bold text-3xl uppercase">{name}</h1>
+                        <h1 className="text-gray-900 font-bold text-3xl">{name}</h1>
                         <p className="text-gray-600 text-sm mt-1">{categories}</p>
                     </div>
                     <img className="h-56 w-full object-cover mt-2" src={imageName} alt='asd' />

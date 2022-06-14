@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@cloudinary/react": "^1.4.1",
+    "@cloudinary/url-gen": "^1.8.0",
     "@headlessui/react": "^1.6.2",
     "@heroicons/react": "^1.0.6",
     "@reduxjs/toolkit": "^1.8.1",

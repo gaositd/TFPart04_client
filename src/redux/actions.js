@@ -14,6 +14,8 @@ export const LOGOUT = "LOGOUT";
 export const PERMISSION = "PERMISSION";
 export const CREATEREVIEW = "CREATEREVIEW";
 export const MODIFYPRODUCT = "MODIFYPRODUCT";
+export const LOADINGIMAGE = "LOADINGIMAGE";
+export const CREATE_ORDER = "CREATE_ORDER";
 
 export const getProducts = () => {
   return function (dispatch) {
@@ -115,11 +117,29 @@ export function getUsers() {
 }
 
 export function signUp(user) {
-  return function () {
-    return axios.post("http://localhost:3001/user/signup", user)
+  return function (dispatch) {
+    return axios.get(`http://localhost:3001/user?email=${user.email}`)
       .then(resp => {
-        if (typeof (resp.data) === 'string') alert(resp.data)
-        else alert('Welcome to our platform')
+        if (resp.data.length) {
+          return alert('The email is already in use')
+        } else {
+          return axios.post("http://localhost:3001/user", user)
+            .then(resp => {
+              if (resp.data === 'user created successfully') {
+                alert('Account created successfully. Welcome to our platform')
+                dispatch({
+                  type: LOGIN,
+                  payload: {
+                    email: user.email,
+                    password: user.password,
+                    usertype: 'user'
+                  }
+                })
+              } else {
+                console.log(resp.data)
+              }
+            })
+        };
       })
       .catch(error => console.log('Action error in signup: ', error))
   };
@@ -127,8 +147,15 @@ export function signUp(user) {
 
 export function login(user) {
   return function (dispatch) {
-    return axios.post("http://localhost:3001/user/login", user)
-      .then(resp => dispatch({ type: LOGIN, payload: resp.data }))
+    return axios.get(`http://localhost:3001/user?email=${user.email}`, user)
+      .then(resp => {
+        let loggedUser = JSON.parse(localStorage.getItem("user"));
+        if (loggedUser === user.email) return alert('You are already logged in');
+        if (!Object.keys(resp.data).length) return alert('No account linked to that email');
+        if (resp.data[0].password !== user.password) return alert('Wrong password');
+        dispatch({ type: LOGIN, payload: resp.data[0] });
+        alert('Successfull login!');
+      })
       .catch(error => console.log('Action error in login: ', error))
   };
 };
@@ -141,18 +168,18 @@ export function logout() {
 
 export function changePermission(user) {
   return function () {
-    return axios.put("http://localhost:3001/user/permission", user)
+    return axios.put(`http://localhost:3001/user/update/${user.email}`, user)
       .then(console.log('Admin permissions changed'))
       .catch(error => console.log('Action error in changePermission: ', error))
   };
 };
 
-export function deleteUser(user) {
+export function deleteUser(emailUser) {
   return function () {
-    return axios.post("http://localhost:3001/user/deletion", user)
+    return axios.delete(`http://localhost:3001/user/delete/${emailUser}`)
       .then(resp => {
-        if(resp.data.notFound) alert(resp.data.notFound)
-        else if(resp.data.success) alert(resp.data.success)
+        if (resp.data.notFound) alert(resp.data.notFound)
+        else if (resp.data.success) alert(resp.data.success)
         else console.log('No response')
       })
       .catch(error => console.log('Action error in changePermission: ', error))
@@ -170,17 +197,51 @@ export function createReview(data) {
   };
 };
 
+let uploadPreset = 'd9vdlmyy'
+let cloudName = 'da42wdmjv'
+
 export function modifyProduct(data, id) {
-  return function () {
-    console.log(data)
-    return axios.put(`http://localhost:3001/product/update/${id}`, data, {
-      // headers: {
-      //   'Content-Type': 'multipart/form-data'
-      // }
-    })
+  return function (dispatch) {
+    if (data.image?.name) {
+      const formData = new FormData();
+      formData.append('file', data.image);
+      formData.append('upload_preset', uploadPreset);
+      return axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, formData)
+        .then(resp => {
+          let updatedData = {
+            ...data,
+            image: resp.data.public_id
+          }
+          return axios.put(`http://localhost:3001/product/update/${id}`, updatedData)
+        })
+        .then(resp => {
+          window.location.href = '/home'
+          return dispatch({ type: MODIFYPRODUCT, payload: resp })
+        })
+        .catch(error => console.log('Error: ', error.message))
+    } else {
+      return axios.put(`http://localhost:3001/product/update/${id}`, data)
+        .then(resp => {
+          window.location.href = '/home'
+          return dispatch({ type: MODIFYPRODUCT, payload: resp })
+        })
+        .catch(error => console.log('Error: ', error.message))
+    }
+  };
+};
+
+export function loadingImage(status) {
+  return function (dispatch) {
+    return dispatch({ type: LOADINGIMAGE, payload: status })
+  }
+}
+export function createOrder(data) {
+  return function (dispatch) {
+    return axios.post("http://localhost:3001/order", data)
       .then(resp => {
-        console.log(resp)
+        console.log('OK', resp, data);
+        return dispatch({ type: CREATE_ORDER, payload: resp.data })
       })
-      .catch(error => console.log('El error en cuestion: ', error.message))
+      .catch(error => console.log('El error en cuestion: ', error))
   };
 };
