@@ -1,10 +1,13 @@
 import React from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { createOrder } from '../../redux/actions'
+
 
 const CartItem = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate();
   const [cart, setCart] = useState([])
   
   let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
@@ -12,7 +15,7 @@ const CartItem = () => {
   
   const removeOneFromCart = (id) => {
     let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
-    let dataCart2 = dataCart.filter(item => item.id !== id);
+    let dataCart2 = dataCart.filter(item => item.idProduct !== id);
     localStorage.setItem("cartProduct", JSON.stringify(dataCart2)); 
     setCart(dataCart2);
   }
@@ -36,10 +39,15 @@ const CartItem = () => {
     dispatch(createOrder(orderData));
     localStorage.removeItem("cartProduct");
     setCart(dataCart);
+    navigate('/successOrder')
 }
 
+  let handleLogin = () => {
+    navigate('/')
+  }
+
   return (
-    <div className="grid grid-cols-2 w-full justify-items-center overflow-hidden my-10">
+    <div className="grid w-full justify-items-center overflow-hidden my-10">
       {
         localStorage.getItem('user') ?
           <div className="grid grid-cols-2 bg-white w-full shadow-lg rounded-lg overflow-hidden my-10">
@@ -52,13 +60,13 @@ const CartItem = () => {
                 {
                   dataCart && dataCart.map(product => {
                     return (
-                      <div key={product.userId} className="grid grid-cols-2 px-2 py-2">
+                      <div key={product.idProduct} className="grid grid-cols-2 px-2 py-2">
                         <div>
                           <h1 className="text-gray-900 grid justify-items-start font-bold text-base uppercase">{product.description}</h1>
                         </div>
                         <div>
                           <p className="text-gray-600 text-sm mt-1">${product.price} USD</p>
-                          <button onClick={() => removeOneFromCart(product.id)} className="text-blue-400">Clear Item</button>
+                          <button onClick={() => removeOneFromCart(product.idProduct)} className="text-blue-400">Clear Item</button>
                           <br /><br />
                         </div>
                       </div>
@@ -79,14 +87,14 @@ const CartItem = () => {
                 </div>
                 <hr />
               </div>
-              <div className="grid grid-cols-2">
-                <div className="mt-2 grid justify-items-center ">
-                <form onSubmit={handleSubmit} className='mt-1'>
+              <div className="grid grid-cols-2 ">
+                <div className="grid justify-items-center m-3">
+                <form onSubmit={handleSubmit} className=''>
                   <button className="btn btn-primary w-40" type='submit'>Buy</button>
                 </form>
                 </div>
                 <div>
-                  <button className="btn btn-primary w-40 m-2" onClick={clearCart}>Clear Cart</button>
+                  <button className="btn btn-primary w-40 m-3" onClick={clearCart}>Clear Cart</button>
                 </div>
               </div>
             </div>
@@ -115,13 +123,13 @@ const CartItem = () => {
                 {
                   dataCart && dataCart.map(product => {
                     return (
-                      <div key={product.id} className="grid grid-cols-2 px-2 py-2">
+                      <div key={product.idProduct} className="grid grid-cols-2 px-2 py-2">
                         <div>
-                          <h1 className="text-gray-900 grid justify-items-start font-bold text-base uppercase">{product.name}</h1>
+                          <h1 className="text-gray-900 grid justify-items-start font-bold text-base uppercase">{product.description}</h1>
                         </div>
                         <div>
                           <p className="text-gray-600 text-sm mt-1">${product.price} USD</p>
-                          <button onClick={() => removeOneFromCart(product.id)} className="text-blue-400">Clear Item</button>
+                          <button onClick={() => removeOneFromCart(product.idProduct)} className="text-blue-400">Clear Item</button>
                           <br /><br />
                         </div>
                       </div>
@@ -145,7 +153,7 @@ const CartItem = () => {
               <div className="grid grid-cols-2">
 
                 <div className="mt-2 grid justify-items-center ">
-                  <button className="btn btn-primary w-40">Login to Buy</button>
+                  <button className="btn btn-primary w-40" onClick={handleLogin}>Login to Buy</button>
                 </div>
                 <div>
                   <button className="btn btn-primary w-40 m-2" onClick={clearCart}>Clear Cart</button>

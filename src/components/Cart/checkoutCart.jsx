@@ -1,14 +1,12 @@
 import React from 'react'
 
 const checkoutCart = () => {
-  
-    let userInfo = JSON.parse(localStorage.getItem("user"));
-    let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
-
-    
+   
   
     return (
-    <div>checkoutCart</div>
+      <div className="grid justify-items-center">
+        <div className="grid justify-items-center bg-white border rounded-lg shadow w-1/3 p-6 m-6">Congratulation, you can see your courses in your profile</div>
+      </div>
   )
 }
 
