@@ -13,8 +13,8 @@ const Search = ({ allProducts }) => {
         let matches = [];
         if (e.target.value.length) {
             matches = allProducts.filter(data => {
-                const regex = new RegExp(`^${e.target.value}`);
-                return data.name.match(regex);
+                const regex = new RegExp(`^${e.target.value.toLowerCase()}`);
+                return data.name.toLowerCase().match(regex);
             })
             setSuggestions(matches);
             setInput(e.target.value);
@@ -52,10 +52,6 @@ const Search = ({ allProducts }) => {
                             <div key={i} onClick={() => handleClick(suggestion.name)} className="roundmenu rounded-box bg-neutral mb-1 flex justify-center cursor-pointer">
                                 {suggestion.name}
                             </div >
-                            //     <li>{suggestion.name}
-                            //         {/* <div onClick={handleClick} className="cursor-pointer">{suggestion.name}</div> */}
-                            //     </li>
-                            // </ul>
                         )
                     }) : ''}
                 </div> : null}
