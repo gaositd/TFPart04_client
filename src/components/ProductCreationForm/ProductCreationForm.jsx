@@ -109,84 +109,84 @@ function ProductCreationForm() {
                     <div className="flex flex-col justify-center items-center" >
 
                         <label>Course name:</label>
-                        <div class="flex flex-row items-center justify-center indicator">
-                            <span class="indicator-item badge bg-warning">Required</span>
-                            <input name="name" onChange={handleInputChange} placeholder="Product's name" class="input input-bordered input-accent w-full max-w-xs" />
+                        <div className="flex flex-row items-center justify-center indicator">
+                            <span className="indicator-item badge bg-warning">Required</span>
+                            <input name="name" onChange={handleInputChange} placeholder="Product's name" className="input input-bordered input-accent w-full max-w-xs" />
                         </div>
-                        {errors.name ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.name}</span> : ''}<br />
+                        {errors.name ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.name}</span> : ''}<br />
 
                         <label>Description:</label>
-                        <div class="flex flex-row items-center justify-center indicator mb-2">
-                            <span class="indicator-item badge bg-warning">Required</span>
+                        <div className="flex flex-row items-center justify-center indicator mb-2">
+                            <span className="indicator-item badge bg-warning">Required</span>
                             <textarea
-                                class="textarea textarea-accent"
+                                className="textarea textarea-accent"
                                 placeholder="What`s the course about"
                                 name="description"
                                 onChange={handleInputChange}
                                 rows='3'
                                 cols='40' ></textarea>
                         </div>
-                        {errors.description ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.description}</span> : ''}<br />
+                        {errors.description ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.description}</span> : ''}<br />
 
                         <label>Image:</label>
-                        <div class="flex flex-row items-center justify-center indicator">
-                            <span class="indicator-item badge bg-warning">Required</span>
-                            <input name="image" onChange={handleInputChange} placeholder="URL Image" class="input input-bordered input-accent w-full max-w-xs" />
+                        <div className="flex flex-row items-center justify-center indicator">
+                            <span className="indicator-item badge bg-warning">Required</span>
+                            <input name="image" onChange={handleInputChange} placeholder="URL Image" className="input input-bordered input-accent w-full max-w-xs" />
                         </div>
-                        {errors.image ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.image}</span> : ''}<br />
+                        {errors.image ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.image}</span> : ''}<br />
 
                         <label>ranking:</label>
-                        <div class="flex flex-row items-center justify-center indicator">
-                            <span class="indicator-item badge bg-warning">Required</span>
-                            <input name="ranking" onChange={handleInputChange} placeholder="Ranking" class="input input-bordered input-accent w-full max-w-xs" />
+                        <div className="flex flex-row items-center justify-center indicator">
+                            <span className="indicator-item badge bg-warning">Required</span>
+                            <input name="ranking" onChange={handleInputChange} placeholder="Ranking" className="input input-bordered input-accent w-full max-w-xs" />
                         </div>
-                        {errors.ranking ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.ranking}</span> : ''}<br />
+                        {errors.ranking ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.ranking}</span> : ''}<br />
 
                         <label>Created by:</label>
-                        <div class="flex flex-row items-center justify-center indicator">
-                            <span class="indicator-item badge bg-warning">Required</span>
-                            <input name="createBy" onChange={handleInputChange} placeholder="Created by" class="input input-bordered input-accent w-full max-w-xs" />
+                        <div className="flex flex-row items-center justify-center indicator">
+                            <span className="indicator-item badge bg-warning">Required</span>
+                            <input name="createBy" onChange={handleInputChange} placeholder="Created by" className="input input-bordered input-accent w-full max-w-xs" />
                         </div>
-                        {errors.createBy ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.createBy}</span> : ''}<br />
+                        {errors.createBy ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.createBy}</span> : ''}<br />
 
 
                         <label>Price:</label>
-                        <div class="flex flex-row items-center justify-center indicator">
-                            <span class="indicator-item badge bg-warning">Required</span>
-                            <input name="price" onChange={handleInputChange} placeholder="0.00 USD" class="input input-bordered input-accent w-full max-w-xs" />
+                        <div className="flex flex-row items-center justify-center indicator">
+                            <span className="indicator-item badge bg-warning">Required</span>
+                            <input name="price" onChange={handleInputChange} placeholder="0.00 USD" className="input input-bordered input-accent w-full max-w-xs" />
                         </div>
-                        {errors.price ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.price}</span> : ''}<br />
+                        {errors.price ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.price}</span> : ''}<br />
 
 
                         <label>Vacancies:</label>
-                        <div class="flex flex-row items-center justify-center indicator">
-                            <span class="indicator-item badge bg-warning">Required</span>
-                            <input name="stock" onChange={handleInputChange} placeholder="Stock available" class="input input-bordered input-accent w-full max-w-xs" />
+                        <div className="flex flex-row items-center justify-center indicator">
+                            <span className="indicator-item badge bg-warning">Required</span>
+                            <input name="stock" onChange={handleInputChange} placeholder="Stock available" className="input input-bordered input-accent w-full max-w-xs" />
                         </div>
-                        {errors.stock ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.stock}</span> : ''}<br />
+                        {errors.stock ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.stock}</span> : ''}<br />
 
-                        <label>Categories:</label><span class="indicator-item badge bg-warning">Required</span>
+                        <label>Categories:</label><span className="indicator-item badge bg-warning">Required</span>
                     </div>
-                    {errors.categories ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.categories}</span> : ''}<br />
+                    {errors.categories ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.categories}</span> : ''}<br />
 
                     <div className="flex flex-row flex-wrap justify-between w-[21rem] ">
                         {allCategories ? allCategories.map(ctgry => {
                             return (
                                 <div key={ctgry.id}>
-                                    <label class="cursor-pointer label">
-                                        <span class="label-text mr-1">{ctgry.name}</span>
+                                    <label className="cursor-pointer label">
+                                        <span className="label-text mr-1">{ctgry.name}</span>
                                         <input type='checkbox'
                                             id={ctgry.name}
                                             name='categories'
                                             onChange={handleCheckboxChange}
                                             value={JSON.stringify(
-                                                ctgry.id)} class="checkbox checkbox-secondary" />
+                                                ctgry.id)} className="checkbox checkbox-secondary" />
                                     </label>
                                 </div>
                             )
                         }) : 'No funca'}
                     </div>
-                    <button type='submit' class="btn btn-primary">
+                    <button type='submit' className="btn btn-primary">
                         Create product
                     </button>
                 </form>
