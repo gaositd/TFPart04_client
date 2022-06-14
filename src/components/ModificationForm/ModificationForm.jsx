@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductById, modifyProduct, getCategories, loadingImage } from '../../redux/actions';
 import { useParams } from 'react-router-dom';
 import _ from "lodash";
+import { useNavigate } from 'react-router-dom';
 
 function ModificationForm() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { id } = useParams();
     const product = useSelector(state => state.productDet)
@@ -93,7 +95,7 @@ function ModificationForm() {
         };
     };
 
-    const handleSubmit = function (e) {
+    const handleSubmit = async function (e) {
         e.preventDefault();
         let validation = validate(input);
         if (Object.keys(validation).length) {
@@ -115,8 +117,9 @@ function ModificationForm() {
                     })
                 }
                 try {
-                    dispatch(loadingImage(true));
-                    dispatch(modifyProduct(input, product.id));
+                    await dispatch(loadingImage(true));
+                    await dispatch(modifyProduct(input, product.id));
+                    navigate('/home');
                     e.target.reset();
                 } catch (err) {
                     console.log(err.message);
@@ -148,10 +151,10 @@ function ModificationForm() {
                         <div className="card-body items-center text-center">
                             <div><span className="font-bold">Course name: </span>{product.name}</div>
                             <div><span className="font-bold">Description: </span>{product.description}</div>
-                            <div><span className="font-bold">Ranking: </span>{product.price}</div>
+                            <div><span className="font-bold">Ranking: </span>{product.ranking}</div>
                             <div><span className="font-bold">Created by: </span>{product.createBy}</div>
                             <div><span className="font-bold">Stock: </span>{product.stock}</div>
-                            <div><span className="font-bold">Categories: </span>{product.categories}</div>
+                            <div><span className="font-bold">Categories: </span>{product?.categories ? product.categories.join(' / ') : ''}</div>
                             <div><span className="font-bold">Price: </span>{product.price} USD</div>
                             <p className="text-xs"><span className="font-bold">Product ID: </span> {product.id}</p>
                         </div>
@@ -182,16 +185,16 @@ function ModificationForm() {
                                     </div>
                                     {errors.description && input.description ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.description}</span> : ''}<br />
 
-                                    <label>Image</label>
-                                    <label className="btn btn-secondary w-full max-w-xs cursor-pointer">
-                                        Select an image from your device
+                                    <label>Image:</label>
+                                    <label className={input.image?.name ? "btn btn-success w-[150px] cursor-pointer" : "btn btn-secondary w-full max-w-xs cursor-pointer"}>
+                                        {input.image?.name ? "Image Selected" : "Select an image from your device"}
                                         <input type='file' accept=".png, .jpg, .jpeg" name="image" onChange={handleInputChange} className="bg-transparent w-full max-w-xs cursor-pointer hidden" />
                                     </label>
                                     {errors.image && input.image ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.image}</span> : ''}<br />
 
                                     <label>ranking:</label>
                                     <div className="flex flex-row items-center justify-center indicator">
-                                        <input name="ranking" onChange={() => handleInputChange} placeholder="Ranking" className="input input-bordered input-accent w-full max-w-xs" />
+                                        <input name="ranking" onChange={handleInputChange} placeholder="Ranking" className="input input-bordered input-accent w-full max-w-xs" />
                                     </div>
                                     {errors.ranking && input.ranking ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.ranking}</span> : ''}<br />
 
@@ -251,7 +254,7 @@ function ModificationForm() {
 export const validate = function (input) {
     let errors = {};
     if (input.name) {
-        if (!input.name || input.name.length < 2 || typeof input.name !== 'string') {
+        if (!input.name || input.name.length < 1 || typeof input.name !== 'string') {
             errors.name = 'The course name must be at least 2 characters long.';
         } else if (/["`'#%&,:;<>=@{}~$()*+/!?[\]^|]+/.test(input.name)) {
             errors.name = 'The course name can not contain special characters.';
@@ -263,7 +266,7 @@ export const validate = function (input) {
         };
     }
     if (input.ranking) {
-        if (!input.ranking || input.ranking > 5 || input.ranking <= 0 || input.ranking % 1 !== 0 || typeof input.ranking !== 'number') {
+        if (!input.ranking || input.ranking > 5 || input.ranking < 0 || input.ranking % 1 !== 0 || typeof input.ranking !== 'number') {
             errors.ranking = 'The ranking must be a integer between 1 and 5.';
         };
     }

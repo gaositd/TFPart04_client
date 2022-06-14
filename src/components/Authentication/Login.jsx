@@ -30,9 +30,13 @@ export default function Login() {
     if (Object.keys(errors).length) {
       return alert('Please fill the right way')
     }
-    await dispatch(login(userLogin))
-    if (localStorage.user) {
-      navigate('/home')
+    if(userLogin.email.split('@')[1] === 'gmail.com') {
+      alert("For Google mails please use Google's sign in")
+    } else {
+      await dispatch(login(userLogin))
+      if (localStorage.user) {
+        navigate('/home')
+      }
     }
     setUserLogin({ email: '', password: '' })
   }

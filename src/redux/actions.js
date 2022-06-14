@@ -1,4 +1,6 @@
 import axios from "axios";
+// import { useNavigate } from 'react-router-dom';
+// const navigate = useNavigate();
 
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCT_ID = "GET_PRODUCT_ID";
@@ -16,6 +18,7 @@ export const CREATEREVIEW = "CREATEREVIEW";
 export const MODIFYPRODUCT = "MODIFYPRODUCT";
 export const LOADINGIMAGE = "LOADINGIMAGE";
 export const CREATE_ORDER = "CREATE_ORDER";
+export const CART_ITEMS = 'CART_ITEMS'
 
 export const getProducts = () => {
   return function (dispatch) {
@@ -121,6 +124,16 @@ export function signUp(user) {
     return axios.get(`http://localhost:3001/user?email=${user.email}`)
       .then(resp => {
         if (resp.data.length) {
+          if (resp.data[0].email.split('@'[1] === 'gmail.com')) {
+            dispatch({
+              type: LOGIN,
+              payload: {
+                email: user.email,
+                usertype: 'User'
+              }
+            })
+            return alert('Successfull login!')
+          }
           return alert('The email is already in use')
         } else {
           return axios.post("http://localhost:3001/user", user)
@@ -131,8 +144,7 @@ export function signUp(user) {
                   type: LOGIN,
                   payload: {
                     email: user.email,
-                    password: user.password,
-                    usertype: 'user'
+                    usertype: 'User'
                   }
                 })
               } else {
@@ -215,15 +227,15 @@ export function modifyProduct(data, id) {
           return axios.put(`http://localhost:3001/product/update/${id}`, updatedData)
         })
         .then(resp => {
-          window.location.href = '/home'
-          return dispatch({ type: MODIFYPRODUCT, payload: resp })
+          // window.location.href = '/home'
+          return dispatch({ type: MODIFYPRODUCT })
         })
         .catch(error => console.log('Error: ', error.message))
     } else {
       return axios.put(`http://localhost:3001/product/update/${id}`, data)
         .then(resp => {
-          window.location.href = '/home'
-          return dispatch({ type: MODIFYPRODUCT, payload: resp })
+          // window.location.href = '/home'
+          return dispatch({ type: MODIFYPRODUCT })
         })
         .catch(error => console.log('Error: ', error.message))
     }
@@ -235,6 +247,7 @@ export function loadingImage(status) {
     return dispatch({ type: LOADINGIMAGE, payload: status })
   }
 }
+
 export function createOrder(data) {
   return function (dispatch) {
     return axios.post("http://localhost:3001/order", data)
@@ -245,3 +258,10 @@ export function createOrder(data) {
       .catch(error => console.log('El error en cuestion: ', error))
   };
 };
+
+export function cartItems(counter) {
+  return function (dispatch) {
+    console.log(counter)
+    return dispatch({ type: CART_ITEMS, payload: counter })
+  }
+}
