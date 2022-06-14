@@ -23,13 +23,13 @@ function ProductIndividualCard({
 
         let exist = false;
         prodCart.forEach(item => {
-            if (item.id === addcar.id) {
+            if (item.idProduct === addcar.id) {
                 exist = true;
             }
         });
 
         if (!exist) {
-            dispatch(cartItems())
+            dispatch(cartItems(prodCart.length + 1))
             prodCart.push({ idProduct: addcar.id, description: addcar.name, price: addcar.price });
             localStorage.setItem(`cartProduct`, JSON.stringify(prodCart));
             console.log(prodCart);

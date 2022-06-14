@@ -248,8 +248,9 @@ export function createOrder(data) {
   };
 };
 
-export function cartItems() {
+export function cartItems(counter) {
   return function (dispatch) {
-    return dispatch({ type: CART_ITEMS })
+    console.log(counter)
+    return dispatch({ type: CART_ITEMS, payload: counter })
   }
 }

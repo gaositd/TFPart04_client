@@ -3,10 +3,13 @@ import axios from "axios";
 import ProductCards from '../ProductCards/ProductCards';
 import Filters from '../Filters/Filters';
 import Search from '../Search/Search';
-import styles from './Home.module.css';
+import { useDispatch } from 'react-redux';
+import { cartItems } from '../../redux/actions';
 
 function Home() {
   const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+  let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -14,6 +17,10 @@ function Home() {
       setProducts(response.data);
     }
     loadProducts();
+    if (dataCart?.length) {
+      console.log(dataCart)
+      dispatch(cartItems(dataCart.length))
+    }
   }, [products.length]);
 
   return (

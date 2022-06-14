@@ -108,9 +108,22 @@ export function rootReducer(state = initialState, { type, payload }) {
       return { ...state, loggedUser: {} }
 
     case CART_ITEMS:
-      return {
-        ...state,
-        cartItems: state.cartItems + 1
+      if (payload === 0) {
+        return {
+          ...state,
+          cartItems: 0
+        }
+      }
+      if (payload === -1) {
+        return {
+          ...state,
+          cartItems: state.cartItems + payload
+        }
+      } else {
+        return {
+          ...state,
+          cartItems: payload
+        }
       }
 
     default: return state;

@@ -26,8 +26,7 @@ export default function NavBarBro() {
   let numberOfCartItems = useSelector(state => state.cartItems)
 
   useEffect(() => {
-
-  }, [numberOfCartItems]);
+  }, [numberOfCartItems])
 
   let navigation = [
     { name: 'Landing', href: '/' },
