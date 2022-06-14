@@ -185,12 +185,14 @@ function ProductCreationForm() {
                                 </div>
                                 {errors.createBy ? <span class="indicator-item indicator-middle indicator-center badge badge-warning">{errors.createBy}</span> : ''}<br />
 
-                        <label>Price:</label>
-                        <div className="flex flex-row items-center justify-center indicator">
-                            <span className="indicator-item badge bg-warning">Required</span>
-                            <input name="price" onChange={handleInputChange} placeholder="0.00 USD" className="input input-bordered input-accent w-full max-w-xs" />
-                        </div>
-                        {errors.price ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.price}</span> : ''}<br />
+                                <label>Price:</label>
+                                <div className="tooltip tooltip-right tooltip-warning max-w-xs p-1" data-tip="required">
+
+                                    <div className="flex flex-row items-center justify-center indicator">
+                                        <input name="price" onChange={handleInputChange} placeholder="0.00 USD" className="input input-bordered input-accent w-full max-w-xs" />
+                                    </div>
+                                </div>
+                                {errors.price ? <span className="indicator-item indicator-middle indicator-center badge badge-warning">{errors.price}</span> : ''}<br />
                                 <label>Vacancies:</label>
                                 <div className="tooltip tooltip-right tooltip-warning max-w-xs p-1" data-tip="required">
                                     <div class="flex flex-row items-center justify-center indicator">
