@@ -18,6 +18,11 @@ import ModificationForm from './components/ModificationForm/ModificationForm';
 import NotFound from './components/NotFound/NotFound';
 import Footer from './components/Footer/Footer'
 
+//mapas
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
+import Maps from './components/Map/Maps'
+
 function App() {
 
   const loggedUser = useSelector(state => state.loggedUser)
@@ -40,6 +45,7 @@ function App() {
         <Route path='/resources' element={<Resources />} />
         <Route path='/creationform' element={<ProductCreationForm />} />
         <Route path='/modificationForm/:id' element={<ModificationForm />} />
+        <Route exact path="/maps" element={<Maps/>}></Route>
         <Route path='*' element={<NotFound />} />
       </Routes>
       {
