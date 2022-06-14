@@ -13,7 +13,11 @@ import {
   CREATEREVIEW,
   MODIFYPRODUCT,
   LOADINGIMAGE,
-  CREATE_ORDER
+  CREATE_ORDER,
+  GET_ORDERS,
+  GET_ORDERS_ID,
+  GET_USER_REVIEW,
+  GET_USER_ORDERS
 } from "./actions"
 
 const initialState = {
@@ -26,7 +30,10 @@ const initialState = {
   users: [],
   imageLoading: false,
   usertype: '',
-  order: []
+  orders:[],
+  userOrders:[],
+  orderDet:[],
+  userReview:[]
 }
 
 export function rootReducer(state = initialState, { type, payload }) {
@@ -104,6 +111,34 @@ export function rootReducer(state = initialState, { type, payload }) {
       localStorage.removeItem("user")
       localStorage.removeItem("usertype")
       return { ...state, loggedUser: {} }
+    
+    case GET_ORDERS_ID:
+      return {...state, orderDet:payload}
+
+    case GET_ORDERS:
+      {
+        const email = payload.map(o=>o.userEmail)
+        let arreglounico=[];
+
+        for (let i = 0; i < email.length; i++) {
+          if(arreglounico.includes(email[i])){
+            console.log("se repite " + email[i])
+          }
+          else{
+            arreglounico.push(email[i])
+            console.log(arreglounico)
+          }
+          
+        }
+
+        return{...state, orders:arreglounico}
+      }
+
+    case GET_USER_REVIEW:
+      return{...state, userReview:payload}
+    
+    case GET_USER_ORDERS:
+      return{...state, userOrders:payload}
 
     default: return state;
   }

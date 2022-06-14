@@ -17,6 +17,10 @@ import ProductCreationForm from './components/ProductCreationForm/ProductCreatio
 import ModificationForm from './components/ModificationForm/ModificationForm';
 import NotFound from './components/NotFound/NotFound';
 import Footer from './components/Footer/Footer'
+import Orders from './components/Orders/Orders';
+import OrderDetail from './components/Orders/OrderDetail';
+import UserOrder from './components/Orders/UserOrder';
+
 
 function App() {
 
@@ -37,6 +41,9 @@ function App() {
         <Route path='/details/:id' element={<Details />} />
         <Route path='/cart' element={<ShoppingCart />} />
         <Route path='/admin' element={<AdminPage />} />
+        <Route path='/orders' element={<Orders />} />
+        <Route path='/userOrder/:email' element={<UserOrder />} />
+        <Route path='/OrderDetail/:id' element={<OrderDetail/>} />
         <Route path='/resources' element={<Resources />} />
         <Route path='/creationform' element={<ProductCreationForm />} />
         <Route path='/modificationForm/:id' element={<ModificationForm />} />

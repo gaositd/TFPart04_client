@@ -10,11 +10,8 @@ import axios from "axios";
 export default function UserOrder() {
     const {email} = useParams();
     const dispatch = useDispatch();
-    const userOrder = useSelector((state)=> state.userOrders)
-
-    const ordersHeads = userOrder.orders_heads
-
-    userOrder.map(o=>{console.log(o)})
+    const userOrder = useSelector((state)=> state.userOrders.orders_heads)
+    console.log(userOrder.length)
 
     useEffect(() => {
         dispatch(getuserOrders(email));
@@ -38,7 +35,7 @@ export default function UserOrder() {
         <tbody>
           {/* <!-- row 1 --> */}
           {userOrder &&
-            userOrder.map(order => {
+            (order => {
               return (
                 <tr>
                   <td>

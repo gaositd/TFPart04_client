@@ -16,6 +16,10 @@ export const CREATEREVIEW = "CREATEREVIEW";
 export const MODIFYPRODUCT = "MODIFYPRODUCT";
 export const LOADINGIMAGE = "LOADINGIMAGE";
 export const CREATE_ORDER = "CREATE_ORDER";
+export const GET_ORDERS = "GET_ORDERS";
+export const GET_ORDERS_ID="GET_ORDERS_ID";
+export const GET_USER_REVIEW="GET_USER_REVIEW";
+export const GET_USER_ORDERS = "GET_USER_ORDERS";
 
 export const getProducts = () => {
   return function (dispatch) {
@@ -245,3 +249,35 @@ export function createOrder(data) {
       .catch(error => console.log('El error en cuestion: ', error))
   };
 };
+
+export function getorderbyid(id){
+  return function (dispatch) {
+    return axios.get(`http://localhost:3001/order/getbyorder/${id}`)
+      .then(resp => dispatch({ type: GET_ORDERS_ID, payload: resp.data }))
+      .catch(error => console.log('Action error in getOrders: ', error))
+  }
+}
+
+export function getorder(id){
+  return function (dispatch) {
+    return axios.get(`http://localhost:3001/order/getbyorder/${id}`)
+      .then(resp => dispatch({ type: GET_ORDERS, payload: resp.data }))
+      .catch(error => console.log('Action error in getOrders: ', error))
+  }
+}
+
+export function getuserReview(email){
+  return function (dispatch) {
+    return axios.get(`http://localhost:3001/review/user/${email}`)
+      .then(resp => dispatch({ type: GET_USER_REVIEW, payload: resp.data }))
+      .catch(error => console.log('Action error in getOrders: ', error))
+  }
+}
+
+export function getuserOrders(email){
+  return function (dispatch) {
+    return axios.get(`http://localhost:3001/order/${email}`)
+      .then(resp => dispatch({ type: GET_USER_ORDERS, payload: resp.data }))
+      .catch(error => console.log('Action error in getOrders: ', error))
+  }
+}
