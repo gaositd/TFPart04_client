@@ -28,7 +28,7 @@ function Details() {
   if (loading) {
     return <h2>Loading...</h2>;
   }
-  const imageName = '../../img_products/' + product.img + '.jpg';
+  let imageName = '../../img_products/' + product.image + '.jpg';
   console.log(product)
 
   let starsAverage = product.reviews ? product.reviews.map(r => {
@@ -43,20 +43,12 @@ function Details() {
 
   return (
     <div className="grid justify-items-center">
-    <div className="grid justify-items-center rounded overflow-hidden border w-full lg:w-6/12 md:w-6/12 bg-white mx-3 md:mx-0 lg:mx-0">
-      <div className="w-full flex justify-between p-3">
-        <div className="flex">
-        </div>
-        <span className="px-2 hover:bg-gray-300 cursor-pointer rounded"><i className="fas fa-ellipsis-h pt-2 text-lg"></i></span>
-      </div>
-      <div className="px-3 pb-2">
-        <div className="pt-2">
-          <i className="far fa-heart cursor-pointer"></i>
+    <div className="grid grid-cols-2 justify-items-center rounded w-2/3 m-4 p-4  border bg-white">
+        <div className="w-2/3">
+        <div className="grid pt-2 justify-items-center">
           <h1 className="text-xl text-orange-700 font-bold">{product.name}</h1>
-          <hr/>
         </div>
-        <br></br>
-      <div className="grid justify-items-start bg-gray-100 p-4 border shadow-md">
+      <div className="grid justify-items-start w-full bg-gray-100 p-4 border shadow-md">
         <div className="text-md mb-2 text-orange-700 font-bold">Description:</div>
         <div className="pt-1">
           <div className="mb-2 text-sm">
@@ -94,9 +86,10 @@ function Details() {
         <button className="btn btn-primary">Add To Cart</button>
         </div>
         </div>
-
-        <br></br>
-        <br></br>
+        </div>
+        <div className='mt-8'>
+        <img className="grid shadow-lg rounded-lg " src={imageName} alt={product.name} />
+        <br/><br/>
         <div className="rating rating-sm">
           {
             courseAverage === 1 ? <input type="radio" name={`rating-6-Product`} className="mask mask-star-2 bg-orange-400" style={{ cursor: 'default' }} checked disabled />
@@ -119,10 +112,9 @@ function Details() {
             :
             <input type="radio" name={`rating-6-Product`} className="mask mask-star-2 bg-orange-400" style={{ cursor: 'default' }} disabled />}
         </div>
-
-        <br></br>
-
         <div className="text-sm mb-2 text-gray-400 cursor-pointer font-medium">User reviews:</div>
+        </div>
+
         <div className="pt-1">
           <div className="mb-2 text-sm">
             {product.reviews ? product.reviews.map((r, i) => {
@@ -166,7 +158,6 @@ function Details() {
             }) : <p>No reviews yet!</p>}
           </div>
         </div>
-      </div>
     </div>
     </div>
   );
