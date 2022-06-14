@@ -1,46 +1,52 @@
-import React from 'react'
+import { React, useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { createOrder } from '../../redux/actions'
+import { createOrder, cartItems } from '../../redux/actions'
+
 
 
 const CartItem = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const [cart, setCart] = useState([])
-  
+
   let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
-  
-  
+
+
   const removeOneFromCart = (id) => {
+    dispatch(cartItems(-1))
     let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
     let dataCart2 = dataCart.filter(item => item.idProduct !== id);
     localStorage.setItem("cartProduct", JSON.stringify(dataCart2)); 
     setCart(dataCart2);
   }
-  
+
   const clearCart = () => {
+    dispatch(cartItems(0))
     localStorage.removeItem("cartProduct");
     setCart(dataCart);
   }
-  
+
   let orderData = {
   }
 
   let handleSubmit = (e) => {
     e.preventDefault();
     orderData = {
-        ...orderData,
-        currency: 'USD',
-        userEmail: localStorage.getItem('user'),
-        orders: dataCart
+      ...orderData,
+      currency: 'USD',
+      userEmail: localStorage.getItem('user'),
+      orders: dataCart
     }
+    dispatch(cartItems(0))
     dispatch(createOrder(orderData));
     localStorage.removeItem("cartProduct");
     setCart(dataCart);
     navigate('/successOrder')
 }
+
+
 
   let handleLogin = () => {
     navigate('/')
@@ -58,7 +64,7 @@ const CartItem = () => {
                   <br />
                 </div>
                 {
-                  dataCart && dataCart.map(product => {
+                  dataCart && dataCart.map((product) => {
                     return (
                       <div key={product.idProduct} className="grid grid-cols-2 px-2 py-2">
                         <div>
@@ -99,12 +105,14 @@ const CartItem = () => {
               </div>
             </div>
             <div className="bg-gray-200">
-            <div> 
+
+            <div>
               <div>
-              <p className="font-bold text-lg text-orange-800">User Info</p>
-              </div>
-              <div>
-                <p className="text-gray-600 font-semibold text-md">{localStorage.getItem('user')}</p>
+                <div>
+                  <p className="font-bold text-lg text-orange-800">User Info</p>
+                </div>
+                <div>
+                  <p className="text-gray-600 font-semibold text-md">{localStorage.getItem('user')}</p>
                 </div>
               </div>
             </div>
@@ -161,7 +169,7 @@ const CartItem = () => {
               </div>
             </div>
             <div className="bg-gray-200">
-                  
+
             </div>
           </div>
 
