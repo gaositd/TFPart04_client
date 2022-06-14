@@ -46,6 +46,7 @@ function ModificationForm() {
         price: null,
         categories: [],
         stock: null,
+        createBy: ''
     });
 
     const handleInputChange = function (e) {
