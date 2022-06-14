@@ -7,15 +7,19 @@ import bgimage from "./bg_landing.jpg";
 import Login from '../Authentication/Login';
 import Signup from '../Authentication/Signup';
 import logo from "./Logo.png";
+import { useNavigate } from 'react-router-dom';
 
 function Landing() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate()
   const [sign, setSign] = useState('')
 
   useEffect(() => {
     dispatch(getCategories())
     dispatch(getProducts())
+    if (localStorage.user) {
+      navigate('/home')
+    }
   }, [dispatch])
 
   const backgroundImageStyle = {
