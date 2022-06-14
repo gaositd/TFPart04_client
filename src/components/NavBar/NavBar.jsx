@@ -27,12 +27,12 @@ export default function NavBarBro() {
   const navigate = useNavigate();
   let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
 
-
-  let navigation = [
-    { name: 'Landing', href: '/' },
+  let navigation;
+  localStorage.user ? navigation = [
     { name: 'Home', href: '/home' },
     { name: 'Cart', href: '/cart' },
-  ]
+  ] : navigation = [
+    { name: 'Login', href: '/' },
 
   if (localStorage.usertype === 'Admin') {
     navigation.push({ name: 'Admin', href: '/admin' })
@@ -85,7 +85,7 @@ export default function NavBarBro() {
                       <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
                     </div>
                     <div>
-                      <p className='font-semibold'>{numberOfCartItems && numberOfCartItems}</p>
+                      <p>{dataCart && dataCart.length}</p>
                     </div>
                   </div>
                 </NavLink>
