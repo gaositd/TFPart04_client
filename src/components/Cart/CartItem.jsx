@@ -18,7 +18,7 @@ const CartItem = () => {
     dispatch(cartItems(-1))
     let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
     let dataCart2 = dataCart.filter(item => item.idProduct !== id);
-    localStorage.setItem("cartProduct", JSON.stringify(dataCart2)); 
+    localStorage.setItem("cartProduct", JSON.stringify(dataCart2));
     setCart(dataCart2);
   }
 
@@ -44,7 +44,7 @@ const CartItem = () => {
     localStorage.removeItem("cartProduct");
     setCart(dataCart);
     navigate('/successOrder')
-}
+  }
 
 
 
@@ -54,6 +54,7 @@ const CartItem = () => {
 
   return (
     <div className="grid w-full justify-items-center overflow-hidden my-10">
+
       {
         localStorage.getItem('user') ?
           <div className="grid grid-cols-2 bg-white w-full shadow-lg rounded-lg overflow-hidden my-10">
@@ -95,9 +96,9 @@ const CartItem = () => {
               </div>
               <div className="grid grid-cols-2 ">
                 <div className="grid justify-items-center m-3">
-                <form onSubmit={handleSubmit} className=''>
-                  <button className="btn btn-primary w-40" type='submit'>Buy</button>
-                </form>
+                  <form onSubmit={handleSubmit} className=''>
+                    <button className="btn btn-primary w-40" type='submit'>Buy</button>
+                  </form>
                 </div>
                 <div>
                   <button className="btn btn-primary w-40 m-3" onClick={clearCart}>Clear Cart</button>
@@ -106,13 +107,14 @@ const CartItem = () => {
             </div>
             <div className="bg-gray-200">
 
-            <div>
               <div>
                 <div>
-                  <p className="font-bold text-lg text-orange-800">User Info</p>
-                </div>
-                <div>
-                  <p className="text-gray-600 font-semibold text-md">{localStorage.getItem('user')}</p>
+                  <div>
+                    <p className="font-bold text-lg text-orange-800">User Info</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600 font-semibold text-md">{localStorage.getItem('user')}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -172,7 +174,6 @@ const CartItem = () => {
 
             </div>
           </div>
-
       }
     </div>
   )

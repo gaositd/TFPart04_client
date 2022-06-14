@@ -17,7 +17,7 @@ import ProductCreationForm from './components/ProductCreationForm/ProductCreatio
 import ModificationForm from './components/ModificationForm/ModificationForm';
 import NotFound from './components/NotFound/NotFound';
 import Footer from './components/Footer/Footer'
-import CheckoutCart from './components/Cart/CheckoutCart'
+import CheckoutCart from './components/Cart/checkoutCart'
 
 function App() {
 
@@ -29,7 +29,7 @@ function App() {
   return (
     <div className="App">
       {
-      pathname === '/' ? null : <NavBar />
+        pathname === '/' ? null : <NavBar />
       }
 
       <Routes>
@@ -45,7 +45,7 @@ function App() {
         <Route path='*' element={<NotFound />} />
       </Routes>
       {
-      pathname === '/' ? null : <Footer />
+        pathname === '/' ? null : <Footer />
       }
     </div>
   );

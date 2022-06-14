@@ -1,19 +1,11 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Disclosure } from '@headlessui/react'
 import { MenuIcon, XIcon, ShoppingCartIcon } from '@heroicons/react/outline'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { logout } from '../../redux/actions'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux';
-
-// let navigation = [
-//   { name: 'Landing', href: '/' },
-//   { name: 'Home', href: '/home' },
-//   { name: 'About', href: '/about' },
-//   { name: 'Cart', href: '/cart' },
-//   { name: 'Admin', href: '/admin' },
-// ]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -33,6 +25,9 @@ export default function NavBarBro() {
     { name: 'Cart', href: '/cart' },
   ] : navigation = [
     { name: 'Login', href: '/' },
+    { name: 'Home', href: '/home' },
+    { name: 'Cart', href: '/cart' },
+  ]
 
   if (localStorage.usertype === 'Admin') {
     navigation.push({ name: 'Admin', href: '/admin' })
