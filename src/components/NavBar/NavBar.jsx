@@ -1,11 +1,11 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
+import { Disclosure } from '@headlessui/react'
 import { MenuIcon, XIcon, ShoppingCartIcon } from '@heroicons/react/outline'
 import { NavLink } from 'react-router-dom'
 import { logout } from '../../redux/actions'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux';
 
 // let navigation = [
 //   { name: 'Landing', href: '/' },
@@ -21,6 +21,10 @@ function classNames(...classes) {
 
 export default function NavBarBro() {
   const dispatch = useDispatch();
+  let numberOfCartItems = useSelector(state => state.cartItems)
+  useEffect(() => {
+  }, [numberOfCartItems])
+  const navigate = useNavigate();
   let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
 
   let navigation;
@@ -29,9 +33,6 @@ export default function NavBarBro() {
     { name: 'Cart', href: '/cart' },
   ] : navigation = [
     { name: 'Login', href: '/' },
-    { name: 'Home', href: '/home' },
-    { name: 'Cart', href: '/cart' },
-  ]
 
   if (localStorage.usertype === 'Admin') {
     navigation.push({ name: 'Admin', href: '/admin' })
@@ -88,55 +89,28 @@ export default function NavBarBro() {
                     </div>
                   </div>
                 </NavLink>
-
-                {/* Profile dropdown */}
-                <Menu as="div" className="ml-3 relative z-50">
-                  <div>
-                    <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                      <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
-                    </Menu.Button>
+                {localStorage.user ?
+                  <>
+                    <div className='bg-secondary p-1 px-3 rounded-full text-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'>
+                      {localStorage.user.split('@')[0]}
+                    </div>
+                    <button
+                      onClick={() => dispatch(logout())}
+                      className='bg-secondary p-1 px-3 rounded-full text-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
+                    >Logout
+                    </button>
+                  </>
+                  : <div>
+                    <NavLink to="/"
+                      className="bg-secondary p-1 px-3 rounded-full text-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                      Login
+                    </NavLink>
+                    <NavLink to="/"
+                      className="bg-secondary p-1 px-3 rounded-full text-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                      Sign Up
+                    </NavLink>
                   </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <button className={classNames(active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-sm text-gray-700')}>
-                            Your Profile
-                          </button>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <button className={classNames(active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-sm text-gray-700')}>
-                            Settings
-                          </button>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <button className={classNames(active ? 'bg-gray-100' : '', 'block w-full px-4 py-2 text-sm text-gray-700')}
-                            onClick={() => dispatch(logout())}
-                          >
-                            Sign out
-                          </button>
-                        )}
-                      </Menu.Item>
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
+                }
               </div>
             </div>
           </div>
