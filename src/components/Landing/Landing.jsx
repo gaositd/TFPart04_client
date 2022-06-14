@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getCategories, getProducts, logout } from '../../redux/actions';
+import { getCategories, getProducts, logout, cartItems } from '../../redux/actions';
 
 import bgimage from "./bg_landing.jpg";
 import Login from '../Authentication/Login';

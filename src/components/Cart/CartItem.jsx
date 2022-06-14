@@ -1,7 +1,7 @@
-import React from 'react'
+import { React, useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { createOrder } from '../../redux/actions'
+import { createOrder, cartItems } from '../../redux/actions'
 
 const CartItem = () => {
   const dispatch = useDispatch()
@@ -11,13 +11,15 @@ const CartItem = () => {
 
 
   const removeOneFromCart = (id) => {
+    dispatch(cartItems(-1))
     let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
-    let dataCart2 = dataCart.filter(item => item.id !== id);
+    let dataCart2 = dataCart.filter(item => item.idProduct !== id);
     localStorage.setItem("cartProduct", JSON.stringify(dataCart2));
     setCart(dataCart2);
   }
 
   const clearCart = () => {
+    dispatch(cartItems(0))
     localStorage.removeItem("cartProduct");
     setCart(dataCart);
   }
@@ -28,15 +30,16 @@ const CartItem = () => {
   let handleSubmit = (e) => {
     e.preventDefault();
     orderData = {
-        ...orderData,
-        currency: 'USD',
-        userEmail: localStorage.getItem('user'),
-        orders: dataCart
+      ...orderData,
+      currency: 'USD',
+      userEmail: localStorage.getItem('user'),
+      orders: dataCart
     }
+    dispatch(cartItems(0))
     dispatch(createOrder(orderData));
     localStorage.removeItem("cartProduct");
     setCart(dataCart);
-}
+  }
 
   return (
     <div className="grid grid-cols-2 w-full justify-items-center overflow-hidden my-10">
@@ -50,16 +53,15 @@ const CartItem = () => {
                   <br />
                 </div>
                 {
-                  dataCart && dataCart.map(product => {
-                    console.log('prodddddd:',product)
+                  dataCart && dataCart.map((product) => {
                     return (
-                      <div key={product.id} className="grid grid-cols-2 px-2 py-2">
+                      <div key={product.idProduct} className="grid grid-cols-2 px-2 py-2">
                         <div>
                           <h1 className="text-gray-900 grid justify-items-start font-bold text-base uppercase">{product.description}</h1>
                         </div>
                         <div>
                           <p className="text-gray-600 text-sm mt-1">${product.price} USD</p>
-                          <button onClick={() => removeOneFromCart(product.id)} className="text-blue-400">Clear Item</button>
+                          <button onClick={() => removeOneFromCart(product.idProduct)} className="text-blue-400">Clear Item</button>
                           <br /><br />
                         </div>
                       </div>
@@ -82,9 +84,9 @@ const CartItem = () => {
               </div>
               <div className="grid grid-cols-2">
                 <div className="mt-2 grid justify-items-center ">
-                <form onSubmit={handleSubmit} className='mt-1'>
-                  <button className="btn btn-primary w-40" type='submit'>Buy</button>
-                </form>
+                  <form onSubmit={handleSubmit} className='mt-1'>
+                    <button className="btn btn-primary w-40" type='submit'>Buy</button>
+                  </form>
                 </div>
                 <div>
                   <button className="btn btn-primary w-40 m-2" onClick={clearCart}>Clear Cart</button>
@@ -92,12 +94,14 @@ const CartItem = () => {
               </div>
             </div>
             <div className="bg-gray-200">
+
             <div>
               <div>
-              <p className="font-bold text-lg text-orange-800">User Info</p>
-              </div>
-              <div>
-                <p className="text-gray-600 font-semibold text-md">{localStorage.getItem('user')}</p>
+                <div>
+                  <p className="font-bold text-lg text-orange-800">User Info</p>
+                </div>
+                <div>
+                  <p className="text-gray-600 font-semibold text-md">{localStorage.getItem('user')}</p>
                 </div>
               </div>
             </div>
@@ -116,13 +120,13 @@ const CartItem = () => {
                 {
                   dataCart && dataCart.map(product => {
                     return (
-                      <div key={product.id} className="grid grid-cols-2 px-2 py-2">
+                      <div key={product.idProduct} className="grid grid-cols-2 px-2 py-2">
                         <div>
-                          <h1 className="text-gray-900 grid justify-items-start font-bold text-base uppercase">{product.name}</h1>
+                          <h1 className="text-gray-900 grid justify-items-start font-bold text-base uppercase">{product.description}</h1>
                         </div>
                         <div>
                           <p className="text-gray-600 text-sm mt-1">${product.price} USD</p>
-                          <button onClick={() => removeOneFromCart(product.id)} className="text-blue-400">Clear Item</button>
+                          <button onClick={() => removeOneFromCart(product.idProduct)} className="text-blue-400">Clear Item</button>
                           <br /><br />
                         </div>
                       </div>

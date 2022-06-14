@@ -16,6 +16,7 @@ export const CREATEREVIEW = "CREATEREVIEW";
 export const MODIFYPRODUCT = "MODIFYPRODUCT";
 export const LOADINGIMAGE = "LOADINGIMAGE";
 export const CREATE_ORDER = "CREATE_ORDER";
+export const CART_ITEMS = 'CART_ITEMS'
 
 export const getProducts = () => {
   return function (dispatch) {
@@ -244,6 +245,7 @@ export function loadingImage(status) {
     return dispatch({ type: LOADINGIMAGE, payload: status })
   }
 }
+
 export function createOrder(data) {
   return function (dispatch) {
     return axios.post("http://localhost:3001/order", data)
@@ -254,3 +256,10 @@ export function createOrder(data) {
       .catch(error => console.log('El error en cuestion: ', error))
   };
 };
+
+export function cartItems(counter) {
+  return function (dispatch) {
+    console.log(counter)
+    return dispatch({ type: CART_ITEMS, payload: counter })
+  }
+}

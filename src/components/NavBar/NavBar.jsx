@@ -1,9 +1,19 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Disclosure } from '@headlessui/react'
 import { MenuIcon, XIcon, ShoppingCartIcon } from '@heroicons/react/outline'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { logout } from '../../redux/actions'
 import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux';
+
+// let navigation = [
+//   { name: 'Landing', href: '/' },
+//   { name: 'Home', href: '/home' },
+//   { name: 'About', href: '/about' },
+//   { name: 'Cart', href: '/cart' },
+//   { name: 'Admin', href: '/admin' },
+// ]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -11,8 +21,12 @@ function classNames(...classes) {
 
 export default function NavBarBro() {
   const dispatch = useDispatch();
+  let numberOfCartItems = useSelector(state => state.cartItems)
+  useEffect(() => {
+  }, [numberOfCartItems])
   const navigate = useNavigate();
   let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
+
 
   let navigation = [
     { name: 'Landing', href: '/' },
@@ -62,10 +76,18 @@ export default function NavBarBro() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <NavLink to="/cart"
-                  className="bg-secondary p-1 rounded-full text-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white grid grid-cols-2">
-                  <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
-                  <p>{dataCart && dataCart.length}</p>
+                <NavLink to="/cart" className="text-white">
+                  <div
+                    className="bg-secondary p-1 rounded-full text-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white
+                  grid grid-cols-2"
+                  >
+                    <div>
+                      <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                    </div>
+                    <div>
+                      <p className='font-semibold'>{numberOfCartItems && numberOfCartItems}</p>
+                    </div>
+                  </div>
                 </NavLink>
                 {localStorage.user ?
                   <>
