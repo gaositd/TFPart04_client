@@ -17,7 +17,8 @@ import ProductCreationForm from './components/ProductCreationForm/ProductCreatio
 import ModificationForm from './components/ModificationForm/ModificationForm';
 import NotFound from './components/NotFound/NotFound';
 import Footer from './components/Footer/Footer'
-
+import CheckoutCart from './components/Cart/checkoutCart'
+import Password from './components/Password/Password'; //AGCH
 function App() {
 
   const loggedUser = useSelector(state => state.loggedUser)
@@ -28,7 +29,7 @@ function App() {
   return (
     <div className="App">
       {
-      pathname === '/' ? null : <NavBar />
+        pathname === '/' ? null : <NavBar />
       }
 
       <Routes>
@@ -40,10 +41,12 @@ function App() {
         <Route path='/resources' element={<Resources />} />
         <Route path='/creationform' element={<ProductCreationForm />} />
         <Route path='/modificationForm/:id' element={<ModificationForm />} />
+        <Route path='/successOrder' element={<CheckoutCart />} />
+        <Route path='/password/:mail' element={<Password />} />{/*AGCH*/}
         <Route path='*' element={<NotFound />} />
       </Routes>
       {
-      pathname === '/' ? null : <Footer />
+        pathname === '/' ? null : <Footer />
       }
     </div>
   );

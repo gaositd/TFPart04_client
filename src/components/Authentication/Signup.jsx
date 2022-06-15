@@ -42,9 +42,13 @@ export default function Signup() {
     if (Object.keys(errors).length) {
       return alert('Please, complete all the fields with the correct information')
     }
-    await dispatch(signUp(userSignup))
-    if (localStorage.user) {
-      navigate('/home')
+    if(userSignup.email.split('@')[1] === 'gmail.com') {
+      alert("For Google mails please use Google's sign in")
+    } else {
+      await dispatch(signUp(userSignup))
+      if (localStorage.user) {
+        navigate('/home')
+      }
     }
     setUserSignup({ email: '', password: '', nickName: '', firstName: '', lastName: '', phone: '', birthdate: '', country: '' })
   }

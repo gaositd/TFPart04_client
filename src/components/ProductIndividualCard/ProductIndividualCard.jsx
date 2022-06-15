@@ -1,5 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { cartItems } from '../../redux/actions';
+
+
 
 function ProductIndividualCard({
     id,
@@ -9,6 +13,7 @@ function ProductIndividualCard({
     categories,
     ranking,
 }) {
+    const dispatch = useDispatch();
 
     let addcar = { id, name, price };
 
@@ -19,13 +24,15 @@ function ProductIndividualCard({
 
         let exist = false;
         prodCart.forEach(item => {
-            if (item.id === addcar.id) {
+            if (item.idProduct === addcar.id) {
                 exist = true;
             }
+
         });
 
         if (!exist) {
-            prodCart.push({idProduct: addcar.id, description: addcar.name, price: addcar.price});
+            dispatch(cartItems(prodCart.length + 1))
+            prodCart.push({ idProduct: addcar.id, description: addcar.name, price: addcar.price });
             localStorage.setItem(`cartProduct`, JSON.stringify(prodCart));
             console.log(prodCart);
         } else if (exist) {
@@ -37,19 +44,28 @@ function ProductIndividualCard({
         '../../img_products/' + image + '.jpg' :
         `https://res.cloudinary.com/da42wdmjv/image/upload/v1654727380/${image}`
 
+
     return (
         <>
-            <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-10">
+
+            <div class="card card-compact w-96 bg-orange-100 shadow-xl my-4">
                 <NavLink to={`/details/${id}`}>
-                    <div className="px-4 py-2">
-                        <h1 className="text-gray-900 font-bold text-3xl">{name}</h1>
-                        <p className="text-gray-600 text-sm mt-1">{categories}</p>
-                    </div>
-                    <img className="h-56 w-full object-cover mt-2" src={imageName} alt='asd' />
+                    <figure><img src={imageName} /></figure>
                 </NavLink>
-                <div className="flex items-center justify-between px-4 py-2 bg-amber-700">
-                    <h1 className="text-gray-200 font-bold text-xl">${price} - Ranking: {ranking}</h1>
-                    <button className="px-3 py-1 bg-gray-200 text-sm text-gray-900 font-semibold rounded" onClick={() => addToCart(addcar)}>Add To Cart</button>
+                <div className="card-body">
+                    <h2 className="card-title">{name}</h2>
+                    <div className="grid grid-cols-2 justify-items-start">
+                        <div>Categories: </div>
+                        <div><p>{categories}</p></div>
+                    </div>
+                    <div className="grid grid-cols-2 justify-items-start">
+                        <div>Price: </div>
+                        <div><p>{price} USD</p></div>
+                    </div>
+                    
+                    <div className="card-actions justify-end">
+                        <button className="btn btn-primary" onClick={() => addToCart(addcar)}>Add to Cart</button>
+                    </div>
                 </div>
             </div>
         </>
