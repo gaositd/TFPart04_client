@@ -11,9 +11,9 @@ const CartItem = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const [cart, setCart] = useState([])
-
+  const HTTPS = "https://54.227.99.93";
   // Mercado Pago-------
-  const backendURL = "http://localhost:3001/mercadopago/new"
+  const backendURL = `${HTTPS}:3001/mercadopago/new`;
 
   let dataCart = JSON.parse(localStorage.getItem("cartProduct"));
 

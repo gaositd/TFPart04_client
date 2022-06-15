@@ -9,10 +9,10 @@ import axios from "axios";
 export default function ProductTable(alerta) {
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.products);
-
+  const HTTPS = "https://54.227.99.93"
 
   async function deletePost(id) {
-    await axios.delete(`http://localhost:3001/product/delete/${id}`);
+    await axios.delete(`${HTTPS}:3001/product/delete/${id}`);
     alert('Delete successful');
     window.location.reload(true);
   }
