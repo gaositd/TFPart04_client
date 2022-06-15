@@ -64,7 +64,7 @@ export function filterByPrice(optionSelected) {
 
 export function createCategory(category) {
   return function () {
-    return axios.post("${HTTPS}:3001/category", category)
+    return axios.post(`${HTTPS}:3001/category`, category)
       // return axios.post("/category", category)
       .then(alert('Category created successfully!'))
       .catch(error => console.log('Action error in createCategory: ', error))
@@ -91,7 +91,7 @@ export function createProduct(product) {
   return function (dispatch) {
     console.log(product)
     try {
-      return axios.post("${HTTPS}:3001/product", product)
+      return axios.post(`${HTTPS}:3001/product`, product)
         // return axios.post("/product", product)
         .then(res => {
           alert('Product created Successfully');
@@ -137,7 +137,7 @@ export function signUp(user) {
           }
           return alert('The email is already in use')
         } else {
-          return axios.post("${HTTPS}:3001/user", user)
+          return axios.post(`${HTTPS}:3001/user`, user)
             .then(resp => {
               if (resp.data === 'user created successfully') {
                 alert('Account created successfully. Welcome to our platform')
@@ -201,7 +201,7 @@ export function deleteUser(emailUser) {
 
 export function createReview(data) {
   return function (dispatch) {
-    return axios.post("${HTTPS}:3001/product/review", data)
+    return axios.post(`${HTTPS}:3001/product/review`, data)
       .then(resp => {
         console.log('OK', resp, data);
         return dispatch({ type: CREATEREVIEW, payload: resp.data })
@@ -251,7 +251,7 @@ export function loadingImage(status) {
 
 export function createOrder(data) {
   return function (dispatch) {
-    return axios.post("${HTTPS}:3001/order", data)
+    return axios.post(`${HTTPS}:3001/order`, data)
       .then(resp => {
         console.log('OK', resp, data);
         return dispatch({ type: CREATE_ORDER, payload: resp.data })
