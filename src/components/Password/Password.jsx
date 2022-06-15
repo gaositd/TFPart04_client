@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { sendPassword } from './SendPassword.js';
-export default function Password(mail) {
+export default function Password() {
   const navigate = useNavigate();
 
   function checkPassword(e) {
@@ -9,7 +9,10 @@ export default function Password(mail) {
       alert("No match passwords, please check");
       return;
     }
-    sendPassword(mail, document.getElementById("password").value);
+    const url = window.location.toString();
+    const mail = url.split("/");
+    console.log(mail[mail.length - 1]);
+    sendPassword(mail[mail.length - 1], document.getElementById("password").value);
   }
 
 
