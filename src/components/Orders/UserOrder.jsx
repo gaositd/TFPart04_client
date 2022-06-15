@@ -1,150 +1,112 @@
 import React, { useEffect, useState } from "react";
-import {useParams} from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getuserOrders } from "../../redux/actions";
 import axios from "axios";
 
-
-
 export default function UserOrder() {
-    const {email} = useParams();
-    const dispatch = useDispatch();
-    const userOrder = useSelector((state)=> state.userOrders.orders_heads)
-    console.log(userOrder.length)
+  const { email } = useParams();
+  const dispatch = useDispatch();
+  const userOrder = useSelector((state) => state.userOrders);
+  const ordersheads = userOrder.orders_heads;
+  const [Alert, setAlert] = useState({});
+  console.log(ordersheads);
 
-    useEffect(() => {
-        dispatch(getuserOrders(email));
-      }, [dispatch]);
+  console.log(Alert);
 
+  useEffect(() => {
+    dispatch(getuserOrders(email));
+  }, [dispatch]);
+
+  const handlechangeStatus = (e) => {
+    // setStatus({})
+  };
 
   return (
     <div class="overflow-x-auto w-full">
+      <div className="grid justify-items-center">
+        <div className="grid justify-items-center rounded overflow-hidden border w-full lg:w-6/12 md:w-6/12 bg-white mx-3 md:mx-0 lg:mx-0">
+          <div className="w-full flex justify-between p-3">
+            <div className="flex"></div>
+            <span className="px-2 hover:bg-gray-300 cursor-pointer rounded">
+              <i className="fas fa-ellipsis-h pt-2 text-lg"></i>
+            </span>
+          </div>
+          <div className="px-3 pb-2">
+            <div className="pt-2">
+              <i className="far fa-heart cursor-pointer"></i>
+              <h1 className="text-xl text-orange-700 font-bold">
+                {userOrder.firstName} {userOrder.lastName}
+              </h1>
+              <hr />
+            </div>
+            <br></br>
+            <div className="grid justify-items-start bg-gray-100 p-4 border shadow-md">
+              <div className="text-md mb-2 text-orange-700 font-bold">
+                Orders:
+              </div>
+              <div className="pt-1">
+                <div className="mb-2 text-sm">{ordersheads.length}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <table class="table w-full">
         {/* <!-- head --> */}
         <thead>
           <tr>
-            <th>User</th>
             <th>Products</th>
             <th>Price</th>
             <th>Status</th>
-
+            <th>Actions</th>
             <th></th>
           </tr>
         </thead>
+
         <tbody>
-          {/* <!-- row 1 --> */}
-          {userOrder &&
-            (order => {
+          {ordersheads.length > 1 &&
+            ordersheads.map(o => {
               return (
                 <tr>
                   <td>
                     <div class="flex items-center space-x-3">
-                      <div class="avatar">
-                        <div>
-                          {order.status === "cancelle" && (
-                            <th>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                stroke-width="2"
-                              >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                              </svg>
-                            </th>
-                          )}
-                          {order.status === "pending" && (
-                            <th>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                stroke-width="2"
-                              >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                                />
-                              </svg>
-                            </th>
-                          )}
-                          {order.status === "complete" && (
-                            <th>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                stroke-width="2"
-                              >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                              </svg>
-                            </th>
-                          )}
+                      <td>
+                        <div class="font-bold">
+                          {o.orders_pos.length} Products
                         </div>
-                      </div>
-                      <div>
-                        <div>{order.userEmail}</div>
-                      </div>
+                      </td>
                     </div>
                   </td>
+                  <td>{o.total} ARS </td>
+                  <td>{o.status}</td>
                   <td>
-                    <NavLink to={`/OrderDetail/${order.id}`}>
-                      <div class="font_bold">
-                        {order.orders.length} courses purchased
-                      </div>
-                    </NavLink>
+                    <button>hola</button>
                   </td>
-                  <td>
-                    {order.total}
-                    {order.currency}
-                  </td>
-                  <td>
-                    <div class="dropdown dropdown-hover">
-                      <label tabindex="0" class="btn m-1">
-                      {order.status}
-                      </label>
-                      <ul
-                        tabindex="0"
-                        class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-                      >
-                        <li>
-                          <a>Item 1</a>
-                        </li>
-                        <li>
-                          <a>Item 2</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </td>
-                  <th>
-                    {order.status === "pending" && (
-                      <th>
-                        <button class="btn btn-ghost btn-xs">Cancelle</button>
-                      </th>
-                    )}
-                    {order.status === "complete" && <th></th>}
-                  </th>
                 </tr>
               );
             })}
+
+          {ordersheads.length < 2 && (
+            <tr>
+            <td>
+              <div class="flex items-center space-x-3">
+                <td>
+                  <div class="font-bold">
+                    {ordersheads.orders_pos.length} Products
+                  </div>
+                </td>
+              </div>
+            </td>
+            <td>{ordersheads.total} ARS </td>
+            <td>{ordersheads.status}</td>
+            <td>
+              <button>hola</button>
+            </td>
+          </tr>
+          )}
         </tbody>
-        {/* <!-- foot --> */}
       </table>
     </div>
   );

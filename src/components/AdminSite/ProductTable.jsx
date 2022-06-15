@@ -13,8 +13,6 @@ export default function ProductTable() {
   const filteredProducts = useSelector(state => state.filteredProducts);
   const products = filteredProducts.length ? filteredProducts : allProducts;
   const [Alert, setAlert] = useState(false);
-
-  console.log(products)
   
 
   async function deletePost(id) {

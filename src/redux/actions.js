@@ -63,6 +63,7 @@ export function filterByPrice(optionSelected) {
 };
 
 export function createCategory(category) {
+  console.log(category)
   return function () {
     return axios.post("http://localhost:3001/category", category)
       // return axios.post("/category", category)
@@ -281,3 +282,11 @@ export function getuserOrders(email){
       .catch(error => console.log('Action error in getOrders: ', error))
   }
 }
+
+export function changeStatus(status) {
+  return function () {
+    return axios.put(`http://localhost:3001/order`, status)
+      .then(console.log('Change status success'))
+      .catch(error => console.log('Action error in change status: ', error))
+  };
+};
