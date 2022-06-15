@@ -34,7 +34,7 @@ const FirebaseSignIn = () => {
     } else alert('No response from google')
     // await dispatch(login(googleResponse.user.email))
     // if (localStorage.user) {
-    // navigate('/home')
+    // navigate('/home')  
     // }
   }
 
