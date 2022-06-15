@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { login } from '../../redux/actions';
 import { validateLogin } from './validateLogin';
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { sendMail } from '../Password/SendPassword.js';
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -58,6 +60,15 @@ export default function Login() {
       <button className="btn btn-secondary w-1/3 mb-1 mt-4" onClick={handleLogin}>
         Login
       </button>
+      <div>
+       <Link to={'#'} onClick={() =>{
+        const email = userLogin.email.trim();
+        if(email !== '') {
+          sendMail(userLogin.email);
+          alert("We send a Email, please check your email and follow the instructions");
+        }else{ alert("providing the mail");}
+       }}>Forgot your password?</Link> 
+      </div>
     </div>
   );
 };
